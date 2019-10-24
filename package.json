@@ -1,0 +1,25 @@
+{
+  "name": "bumpertanks",
+  "version": "1.0.0",
+  "description": "**PROJECT PROPOSAL – TEAM FoodIsGood**",
+  "main": "gameCanvas.js",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "node": "^12.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinaylohana/BumperTanks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinaylohana/BumperTanks/issues"
+  },
+  "homepage": "https://github.com/vinaylohana/BumperTanks#readme"
+}
