@@ -1,9 +1,12 @@
 
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+
 // Class to create tank objects
 class Tank{
   constructor(canvasWidth, canvasHeight)
   {
-    this.width = 20;
+    this.width = 30;
     this.height = 15;
     this.x = 0;
     this.y = 0;
@@ -40,8 +43,7 @@ class Tank{
 
   draw(ctx)
   {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(image, this.x, this.y, this.width, this.height);
   }
 
   update(frameRate)
@@ -55,8 +57,14 @@ class Tank{
     if(this.x < 0)
       this.x = 0;
 
-    if(this.x + this.width > CANVAS_WIDTH)
-      this.x = CANVAS_WIDTH - this.width;
+    if(this.y < 0)
+      this.y = 0;
+
+    if( this.x + this.width > 300 )
+      this.x = 300 - this.width;
+
+    if( this.y + this.height > 150 )
+        this.y = 150 - this.height;
   }
 };
 
@@ -111,11 +119,10 @@ class InputHandler{
   }
 };
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
 
 let canvas = document.getElementById("gameScreen");
 let gameScreen = canvas.getContext('2d');
+const image = document.getElementById('tank');
 
 // Creates new tanks
 let tank1 = new Tank(CANVAS_WIDTH, CANVAS_HEIGHT);
