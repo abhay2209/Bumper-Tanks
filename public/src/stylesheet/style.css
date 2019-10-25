@@ -8,4 +8,14 @@
     width: 800px;
     height: 600px;
     border: 1px solid black;
+    background-color: black;
+  }
+
+  .centerAlign {
+        margin: 10px auto 20px;
+        display: block;
+  }
+
+  body{
+    background-image: url("background.jpg");
   }
