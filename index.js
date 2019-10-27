@@ -14,9 +14,10 @@ pool = new Pool({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/matter-build', express.static(__dirname + '/node_modules/matter-js/build/'))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.get('/', (req, res) => {res.sendFile('/home/vlohana/cmpt276/BumperTanks/views/pages/gameCanvas.html')}); // Renders Home Page
+app.get('/', (req, res) => {res.sendFile(__dirname + '/public/src/gameCanvas.html');}); // Renders Home Page
   /*
 app.get('/db', async (req, res) => {
     try {
