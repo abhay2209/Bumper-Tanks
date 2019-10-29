@@ -6,8 +6,8 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/Home.css">
 </head>
 <body>
-
-
+    <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
+<div id="home">
 
 <div class="tab">
   <button class="tablinks" onclick="openGameTab(event, 'Login')">Log-in</button>
@@ -20,10 +20,10 @@
       <h1>Login</h1>
   
       <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Enter username" id="username" required>
+      <input class="login" type="text" placeholder="Enter username" id="username" required>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="psw" required>
+      <input class="login" type="password" placeholder="Enter Password" id="psw" required>
   
       <button type="submit" class="btn">Login</button>
 
@@ -32,27 +32,31 @@
 <div class="form-popup" id="myForm">
   <form action="/post" class="form-container">
     <h1>Sign-Up</h1>
+    <label for="email"><b>Email id</b></label>
+    <br>
+    <input class="signUp" type="text" placeholder="Enter Your Email" id="email" required>
+    <br>
     <br>
     <label for="firstName"><b>First Name</b></label>
     <br>
-    <input type="text" placeholder="Enter First Name" id="FirstName" required>
+    <input class="signUp" type="text" placeholder="Enter First Name" id="FirstName" required>
     <br>
     <label for="lastName"><b>Last Name</b></label>
     <br>
-    <input type="text" placeholder="Enter Last Name" id="lastName" required>
+    <input class="signUp" type="text" placeholder="Enter Last Name" id="lastName" required>
     
     <br>
     <label for="username_signup"><b>Username</b></label>
     <br>
-    <input type="text" placeholder="Enter username" id="username_signup" required>
+    <input class="signUp" type="text" placeholder="Enter username" id="username_signup" required>
     <br>
     <label for="rpsw"><b>New Password</b></label>
     <br>
-    <input type="password" placeholder="Enter Password" id="rpsw" required>
+    <input class="signUp" type="password" placeholder="Enter Password" id="rpsw" required>
     <br>
     <label for="rpsw"><b>Re-enter Password</b></label>
     <br>
-    <input type="password" placeholder="Enter Password" id="spsw" required>
+    <input class="signUp" type="password" placeholder="Enter Password" id="spsw" required>
    <br>
     <button type="submit" class="btn">Sign-Up</button>
     <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
@@ -61,13 +65,14 @@
 </div>
 
 <div id="About" class="tabcontent">
-  About the Game
+  <p>About the Game
+  Bumper Tanks is a drive around fun bumping shooting game. The Goal of the game is to stand up until the last among all your friends.</p>
+  <p> Have real-time weather experience inside the game with the cool weather themes. </p>
+</div>
 </div>
 
-
-
-<script>
-function openForm() {
+<script
+>function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
 
@@ -87,8 +92,7 @@ function openGameTab(evt, tabName) {
   }
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
-}
-</script>
+}</script>
    
 </body>
 </html> 
