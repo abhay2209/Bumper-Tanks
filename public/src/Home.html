@@ -24,11 +24,6 @@
 
       <label for="psw"><b>Password</b></label>
       <input class="login" type="password" placeholder="Enter Password" name = "password_login" id="psw" required>
-
-      <p><% results.forEach(function(r) { %>
-        <%= r.id %> - <%= r.name %>
-      <% }); %></p>
-
       <button type="submit" class="btn">Login</button>
 
       <button class="open-button" onclick="openForm()">Sign-Up</button>
@@ -52,7 +47,7 @@
     <br>
     <input class="signUp" type="text" placeholder="Enter username" name = "username_signup" id="username_signup" required>
     <br>
-    <label for="rpsw"><b>New Password</b></label>
+    <label for="rpsw"><b>New Password</b></label>//res.send("you are account has been created. You can login to play the game!")
     <br>
     <input class="signUp" type="password" placeholder="Enter Password" name = "password" id="rpsw" required>
     <br>
