@@ -14,15 +14,15 @@ const pool = new Pool({
   ssl: true
 });
 
-// app.use(session({
-//   resave: false,
-//   saveUninitialized: false,
-//   secret: SESSION_SECRET,
-//   name:SESSION_NAME,
-//     cookie: {
-//       samSite:true
-//     }
-// }))
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: SESSION_SECRET,
+  name:SESSION_NAME,
+    cookie: {
+      samSite:true
+    }
+}))
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'secret',resave: true,saveUninitialized: true}));
@@ -32,7 +32,6 @@ app.use('/matter-build', express.static(__dirname + '/node_modules/matter-js/bui
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {res.sendFile(__dirname + '/public/src/Home.html');}); // Renders Home Page
-
 
 
 //get player info from login page
@@ -64,13 +63,24 @@ app.post("/:id",(req, res) => {
       var password = req.body.password_login;
 
       var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}' AND password = '${password}';`;
+
       pool.query(check_password_username,(err,result)=>{
-        //check if password matches
-        //redirect to gameCanvas
+        if(err){
+          res.send(err);
+        }else if(result.rows.length){
+          req.session.loggedin = true;
+				  req.session.username = username;
+          console.log(username);
+          res.redirect('/gameCanvas');
+        }else{
+          res.send("Incorrect Username and/or Password!");
+        }
+
       });
 
     }
 });
+app.get('/gameCanvas', (req, res) => {res.sendFile(__dirname + '/public/src/gameCanvas.html');});
 
 
 // app.get('/db', async (req, res) => {
