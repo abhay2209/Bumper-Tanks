@@ -8,21 +8,24 @@ const {
 const { Pool } = require('pg');
 const session = require('express-session')
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 var app = express();
+app.use(cookieParser());
+const router = express.Router();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true
 });
 
+
 app.use(session({
-  resave: false,
+  name: 'mycookie',
+  secret: 'keyboard cat',
+  resave: true,
   saveUninitialized: false,
-  secret: SESSION_SECRET,
-  name:SESSION_NAME,
-    cookie: {
-      samSite:true
-    }
 }))
+
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'secret',resave: true,saveUninitialized: true}));
@@ -30,8 +33,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/matter-build', express.static(__dirname + '/node_modules/matter-js/build/'))
 app.set('views', path.join(__dirname, 'views'));
+//app.set('pages', path.join(__dirname, 'public/src'));
 app.set('view engine', 'ejs');
-app.get('/', (req, res) => {res.sendFile(__dirname + '/public/src/Home.html');}); // Renders Home Page
+app.get('/cookie',function(req, res){
+     res.cookie(cookie_name , 'cookie_value').send('Cookie is set');
+});
+
+var sessionChecker = (req, res, next) => {
+    if (req.session.loggedin ) {
+        console.log("user is logged in");
+        res.redirect('/gameCanvas');
+    } else {
+        next();
+    }
+};
+
+app.get('/',sessionChecker, (req, res) => {res.sendFile(__dirname + '/public/src/Home.html');
+console.log("Cookies :  ", req.cookies);
+
+}); // Renders Home Page
+
 
 
 //get player info from login page
@@ -51,8 +72,12 @@ app.post("/:id",(req, res) => {
       var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
                           values ('${email}','${firstName}','${lastName}','${userName}','${password}')`;
       pool.query(insertQuerry,(error)=>{
-            if (error){
-              res.end("Your account creation was not successful try again");
+            if(error){
+              if (error.code == "23505"){
+                res.send("We could not make your account!")
+              }else{
+                res.end(error)
+              }
             }else{
               res.redirect('/');
             }
@@ -70,8 +95,7 @@ app.post("/:id",(req, res) => {
         }else if(result.rows.length){
           req.session.loggedin = true;
 				  req.session.username = username;
-          console.log(username);
-          res.redirect('/gameCanvas');
+          res.redirect('/gameCanvas')
         }else{
           res.send("Incorrect Username and/or Password!");
         }
@@ -80,7 +104,17 @@ app.post("/:id",(req, res) => {
 
     }
 });
-app.get('/gameCanvas', (req, res) => {res.sendFile(__dirname + '/public/src/gameCanvas.html');});
+app.get('/gameCanvas', (req, res) => {
+
+
+    if (req.session.loggedin){
+       res.sendFile(__dirname + '/public/src/gameCanvas.html');
+       res.cookie('mycookie' , 'value', {expire :3000});
+    }else{
+      res.send("You could not log in");
+    }
+    //res.end();
+});
 
 
 // app.get('/db', async (req, res) => {
