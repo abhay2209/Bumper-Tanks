@@ -47,24 +47,27 @@ body {font-family: Arial;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+  float:left;
+  opacity:0.8;
 }
 
 /*For the sign-up*/
 #myForm
 {background-color:rgb(198,193,193,0.9);
-  margin: 10px auto 20px;
+  margin: 5px auto 20px;
 }
 .form-popup {
     display: none;
-    position: fixed;
+   float:right;
     bottom: 10px;
     
- 
+    opacity:0.8;
     right: 15px;
     border: 3px solid #f1f1f1;
     z-index: 9;
   }
   
+
 
   .form-container {
     max-width: 250px;
@@ -86,8 +89,18 @@ body {font-family: Arial;
     outline: none;
   }
   
-  .form-container .btn {
+  .form-container .btn  {
     background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  #signbtn{
+    background-color: #4169E1;
     color: white;
     padding: 16px 20px;
     border: none;
@@ -103,4 +116,8 @@ body {font-family: Arial;
   
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
+  }
+
+  #About{
+    background-color:white;
   }
