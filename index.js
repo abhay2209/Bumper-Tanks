@@ -1,7 +1,17 @@
 const express = require('express');
 const path = require('path');
-const PORT = process.env.PORT || 5000
+var http = require('http');
 var app = express();
+var socketIO = require('socket.io');
+var server = http.Server(app);
+var io = socketIO(server);
+
+const PORT = process.env.PORT || 5000
+
+
+io.on('connection', function(socket) {
+});
+
 /* const { Pool } = require('pg');
 
 var pool;
@@ -32,4 +42,9 @@ app.get('/db', async (req, res) => {
     }
   });
   */
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+/*
+setInterval(function() {
+  io.sockets.emit('message', 'hi!');
+}, 1000);
+*/

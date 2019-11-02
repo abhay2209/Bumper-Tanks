@@ -6,7 +6,12 @@ let canvas = document.getElementById("gameScreen");
 let gameScreen = canvas.getContext('2d');
 const image = document.getElementById('tank');
 const image1 = document.getElementById('bullet');
-
+/*
+var socket = io();
+socket.on('message', function(data) {
+  console.log(data);
+});
+*/
 // Creates new tanks
 let tank1 = new Tank(CANVAS_WIDTH, CANVAS_HEIGHT);
 
