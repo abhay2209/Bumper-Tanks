@@ -3,20 +3,25 @@
   <head>
     <title>Bumper Tanks</title>
     <meta charset="UTF-8" />
-    <link rel = "icon" type = "image/x-icon" href = "tankIcon.png">
+    <link rel = "icon" type = "image/x-icon" href = "/src/images/tankIcon.png">
     <link rel = "stylesheet" href = "/src/stylesheet/style.css" />
+    <script src="/socket.io/socket.io.js"></script>
   </head>
 
   <body>
-      <img src="/src/title.png" alt="Bumper Tank" class = "centerAlign">
+      <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
     <canvas id="gameScreen">
 
 		</canvas>
     <div style="display:none;">
-          <img id="tank" width="70" height="40" src="/src/tank.png" alt="Tanker">
-          <img id="bullet" width="10" height="4" src="/src/normal_bullet.jpg" alt="Bullet">
+          <img id="tank" width="1000px" height="608px" src="/src/images/tank.png" alt="Tanker">
+          <img id="bullet" width="10" height="4" src="/src/images/normal_bullet.jpg" alt="Bullet">
      </div>
-
-    <script type = "text/javascript" src = "/src/gameCanvas.js"></script>
+     <p> </p>
+     <img id="movement" width="220" height="150" class = "centerAlign" src="/src/images/WASD.png">
+     <script type = "text/javascript" src = "/src/scripts/bullet.js"></script>
+     <script type = "text/javascript" src = "/src/scripts/movement.js"></script>
+     <script type = "text/javascript" src = "/src/scripts/tank.js"></script>
+    <script type = "text/javascript" src = "/src/scripts/gameCanvas.js"></script>
   </body>
 </html>
