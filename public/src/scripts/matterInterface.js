@@ -1,5 +1,3 @@
-const CANVAS_WIDTH = 1070;
-const CANVAS_HEIGHT = 800;
 
 let canvas = document.getElementById("gameScreen");
 

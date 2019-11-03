@@ -19,6 +19,7 @@ class Tank{
     this.a = direction * Math.PI / 180; //convert from angle to radians
     this.linVel = 0;
     this.angVel = 0;
+    //this.brakes = 1;
   }
 /*
   fire(){
@@ -27,6 +28,7 @@ class Tank{
 */
   accelerate(direction)
   {
+    //this.brakes = 0;
     if(direction && this.linVel < this.maxVel){
       this.linVel += this.accelRate;
     }else if(!direction && this.linVel > -this.maxVel){
@@ -40,7 +42,6 @@ class Tank{
       this.linVel = 0;
     }else{
       this.linVel *= 0.9;
-      this.deccelerate();
     }
   }
 
@@ -61,6 +62,29 @@ class Tank{
 
   update()
   {
+    if(KEY_MAP[W_KEY]){
+      this.accelerate(1);
+    }else if(KEY_MAP[S_KEY]){
+      this.accelerate(0);
+    }else{
+      this.deccelerate();
+    }
+
+    if(KEY_MAP[A_KEY]){
+      this.turnLeft();
+    }else if(KEY_MAP[D_KEY]){
+      this.turnRight();
+    }else{
+      this.stopTurn();
+    }
+
+    if(KEY_MAP[SPACE_KEY]){
+    }
+
+
+    //if(this.brakes){
+    //  this.deccelerate();
+    //}
     if(this.angVel != 0){
       Body.rotate(this.body, this.angVel);
     }
