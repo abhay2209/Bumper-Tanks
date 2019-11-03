@@ -63,9 +63,19 @@ const Events = Matter.Events;  //events interface
       tankBody
     ]);
 
-    Body.rotate(tankBody, tank.a);
+    Body.rotate(tankBody, tank.a); //set initial rotation //
 
     tank.body = tankBody; //control tank through this
+   }
+
+   addBullet(tank){
+    var firedBullet = Bodies.circle(/*x in front of tank*/, /*y in front of tank*/, /*size of bullet*/, { frictionAir:0.01 });
+
+    World.add(this.world, [
+      firedBullet
+    ]);
+
+    return firedBullet;
    }
 
    //This function adds walls just outside of view
