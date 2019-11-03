@@ -1,17 +1,15 @@
 
 // Class to create tank objects
-
+const TAU = Math.PI * 2;
 
 class Tank{
-  constructor(canvasWidth, canvasHeight)
+  constructor(xPos, yPos, direction)
   {
-    this.width = 30;
-    this.height = 15;
-    this.x = 0;
-    this.y = 0;
-    this.maxSpeed = 4;
-    this.xSpeed = 0;
-    this.ySpeed = 0;
+    this.width = 50;
+    this.height = 50;
+    this.x = xPos;
+    this.y = yPos;
+    this.a = direction * Math.PI / 180; //convert from angle to radians
   }
 /*
   fire(){
@@ -20,22 +18,28 @@ class Tank{
 */
   moveUp()
   {
-    this.ySpeed = -this.maxSpeed;
+    var fx = Math.cos(this.body.angle)*3;
+    var fy = Math.sin(this.body.angle)*3;
+
+    Body.setVelocity(this.body, { x: -fx, y: -fy});
   }
 
   moveDown()
   {
-    this.ySpeed = this.maxSpeed;
+    var fx = Math.cos(this.body.angle);
+    var fy = Math.sin(this.body.angle);
+
+    Body.setVelocity(this.body, { x: fx, y: fy});
   }
 
   moveLeft()
   {
-    this.xSpeed = -this.maxSpeed;
+    Body.rotate(this.body, -0.1);
   }
 
   moveRight()
   {
-    this.xSpeed = this.maxSpeed;
+    Body.rotate(this.body, 0.1);
   }
 
   stop()
