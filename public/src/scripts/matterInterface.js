@@ -18,7 +18,6 @@ const Events = Matter.Events;  //events interface
     //initialize engine & world, world will be where physical objects reside in
     this.engine = Engine.create();
     this.world = this.engine.world;
-    this.world.gravity.x = 0;
     this.world.gravity.y = 0;
 
      //initialize renderer, this acts as a middle man for canvas api

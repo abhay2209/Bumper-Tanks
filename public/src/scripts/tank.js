@@ -1,7 +1,5 @@
 
 // Class to create tank objects
-const TAU = Math.PI * 2;
-
 class Tank{
   constructor(xPos, yPos, direction, maxVel, accelRate, turnRate)
   {
