@@ -49,6 +49,7 @@ class Tank{
   draw(ctx)
   {
     ctx.drawImage(image, this.x, this.y, this.width, this.height);
+
     for (var i = 0; i<this.bullets.length ; i++){
       this.bullets[i].draw(ctx);
     }

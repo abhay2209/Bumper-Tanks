@@ -47,10 +47,10 @@ class InputHandler{
         if(tank.xSpeed > 0)
           tank.stop();
         break;
-
         // case 32: // Spacebar
         //  tank.fire();
         //  break;
+
       }
     });
 
