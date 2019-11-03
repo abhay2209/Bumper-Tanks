@@ -12,12 +12,14 @@ class Tank{
     this.maxSpeed = 4;
     this.xSpeed = 0;
     this.ySpeed = 0;
+    this.bullets = [];
   }
-/*
+
   fire(){
-    let bullet = new Bullet(canvasWidth,canvasHeight, this);
+    let bullet = new Bullet(this);
+    this.bullets.push(bullet);
   }
-*/
+
   moveUp()
   {
     this.ySpeed = -this.maxSpeed;
@@ -47,6 +49,10 @@ class Tank{
   draw(ctx)
   {
     ctx.drawImage(image, this.x, this.y, this.width, this.height);
+
+    for (var i = 0; i<this.bullets.length ; i++){
+      this.bullets[i].draw(ctx);
+    }
   }
 
   update(frameRate)
@@ -68,5 +74,10 @@ class Tank{
 
     if( this.y + this.height > 150 )
         this.y = 150 - this.height;
+
+    for (var i = 0; i<this.bullets.length ; i++){
+      this.bullets[i].update();
+    }
+    
   }
 };
