@@ -57,6 +57,11 @@ const Events = Matter.Events;  //events interface
   }
 
   addTank(tank){
+    //updates position of tank if we have user input
+    Events.on(this.engine, "afterUpdate", function(){
+      tank.update();
+    });
+
     var tankBody = Bodies.rectangle(tank.x, tank.y, tank.width, tank.height, { frictionAir: 0.2 });
 
     World.add(this.world, [
@@ -68,15 +73,15 @@ const Events = Matter.Events;  //events interface
     tank.body = tankBody; //control tank through this
    }
 
-   addBullet(tank){
-    var firedBullet = Bodies.circle(/*x in front of tank*/, /*y in front of tank*/, /*size of bullet*/, { frictionAir:0.01 });
+   //addBullet(tank){
+    //var firedBullet = Bodies.circle(/*x in front of tank*/, /*y in front of tank*/, /*size of bullet*/, { frictionAir:0.01 });
 
-    World.add(this.world, [
-      firedBullet
-    ]);
+    //World.add(this.world, [
+    //  firedBullet
+    //]);
 
-    return firedBullet;
-   }
+    //return firedBullet;
+   //}
 
    //This function adds walls just outside of view
   addWalls(){

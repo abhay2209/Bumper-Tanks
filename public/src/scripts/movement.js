@@ -4,19 +4,19 @@ class InputHandler{
       switch(event.keyCode)
       {
         case 87: //W
-        tank.moveUp();
-        break;
+          tank.accelerate(1);
+          break;
 
         case 65: //A
-          tank.moveLeft();
+          tank.turnLeft();
           break;
 
         case 83: //S
-          tank.moveDown();
-        break;
+          tank.accelerate(0);
+          break;
 
         case 68: //D
-          tank.moveRight();
+          tank.turnRight();
           break;
 
         case 32: // Spacebar
@@ -29,24 +29,20 @@ class InputHandler{
       switch(event.keyCode)
       {
         case 87: //W
-        if(tank.ySpeed < 0)
-          tank.stop();
+          tank.deccelerate(1);
           break;
 
         case 65: //A
-        if(tank.xSpeed < 0)
-          tank.stop();
-        break;
+          tank.stopTurn();
+          break;
 
         case 83: //S
-        if(tank.ySpeed > 0)
-          tank.stop();
+          tank.deccelerate(0);
           break;
 
         case 68: //D
-        if(tank.xSpeed > 0)
-          tank.stop();
-        break;
+          tank.stopTurn();
+          break;
 
         case 32: // Spacebar
          // fire();

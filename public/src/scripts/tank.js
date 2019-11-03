@@ -3,74 +3,70 @@
 const TAU = Math.PI * 2;
 
 class Tank{
-  constructor(xPos, yPos, direction)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate)
   {
+    //Attributes
     this.width = 50;
     this.height = 50;
+
+    this.maxVel = maxVel;
+    this.accelRate = accelRate;
+    this.turnRate = 0.01 * turnRate
+
+    //Initial Contitions
     this.x = xPos;
     this.y = yPos;
     this.a = direction * Math.PI / 180; //convert from angle to radians
+    this.linVel = 0;
+    this.angVel = 0;
   }
 /*
   fire(){
     let bullet = new Bullet(canvasWidth,canvasHeight, this);
   }
 */
-  moveUp()
+  accelerate(direction)
   {
-    var fx = Math.cos(this.body.angle)*3;
-    var fy = Math.sin(this.body.angle)*3;
-
-    Body.setVelocity(this.body, { x: -fx, y: -fy});
+    if(direction && this.linVel < this.maxVel){
+      this.linVel += this.accelRate;
+    }else if(!direction && this.linVel > -this.maxVel){
+      this.linVel -= this.accelRate;
+    }
   }
 
-  moveDown()
+  deccelerate()
   {
-    var fx = Math.cos(this.body.angle);
-    var fy = Math.sin(this.body.angle);
-
-    Body.setVelocity(this.body, { x: fx, y: fy});
+    if(this.linVel < 0.5 && this.linVel > -0.5){
+      this.linVel = 0;
+    }else{
+      this.linVel *= 0.9;
+      this.deccelerate();
+    }
   }
 
-  moveLeft()
+  turnLeft()
   {
-    Body.rotate(this.body, -0.1);
+    this.angVel = -this.turnRate;
   }
 
-  moveRight()
+  turnRight()
   {
-    Body.rotate(this.body, 0.1);
+    this.angVel = this.turnRate;
   }
 
-  stop()
+  stopTurn()
   {
-    this.xSpeed = 0;
-    this.ySpeed = 0;
+    this.angVel = 0;
   }
 
-  draw(ctx)
+  update()
   {
-    ctx.drawImage(image, this.x, this.y, this.width, this.height);
-  }
-
-  update(frameRate)
-  {
-    if(!frameRate)
-      return;
-
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
-
-    if(this.x < 0)
-      this.x = 0;
-
-    if(this.y < 0)
-      this.y = 0;
-
-    if( this.x + this.width > 300 )
-      this.x = 300 - this.width;
-
-    if( this.y + this.height > 150 )
-        this.y = 150 - this.height;
+    if(this.angVel != 0){
+      Body.rotate(this.body, this.angVel);
+    }
+    if(this.linVel != 0){
+      Body.setVelocity(this.body, 
+        { x: -Math.cos(this.body.angle)*this.linVel, y: -Math.sin(this.body.angle)*this.linVel});
+    }
   }
 };
