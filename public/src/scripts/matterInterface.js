@@ -49,8 +49,8 @@ const Events = Matter.Events;  //events interface
   }
 
    pauseSimulation(){
-    Render.run(this.render);
-    Runner.run(this.runner, this.engine);
+    Render.stop(this.render);
+    Runner.stop(this.runner, this.engine);
   }
 
   addTank(tank){
