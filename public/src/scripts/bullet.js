@@ -1,7 +1,3 @@
-
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
-
 class Bullet{
   constructor(tank){
     this.width = 5
