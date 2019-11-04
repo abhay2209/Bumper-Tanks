@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/matter-build', express.static(__dirname + '/node_modules/matter-js/build/'))
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public/views'));
 app.set('view engine', 'ejs');
 
 app.use(cookieParser());
@@ -23,7 +23,7 @@ const pool = new Pool({
 app.use(session({
   secret: 'dummystatement',
   cookie:{
-    maxAge : 1000*60*60,  //to test for now
+    maxAge : 20000,  //to test for now
     name: 'mycookie',
     resave: true,
     saveUninitialized: false,
@@ -43,9 +43,10 @@ app.get('/', (req, res,next) => {
 
 
 // Renders Home Page
-app.get('/', (req, res) => {res.sendFile(__dirname + '/public/src/Home.html');
+app.get('/', (req, res) => {res.render('Home',{ isError:"false",regShown:1});
   //console.log("Cookies :  ", req.cookies);
 });
+
 
 //get player info from login page
 app.post("/:id",(req, res) => {
@@ -63,13 +64,20 @@ app.post("/:id",(req, res) => {
       }
       // if username found check for password
       if(result.rows.length){
+
         if(password_hash.verify(password, (result.rows[0].password))){
           req.session.loggedin = true;
           req.session.username = username;
           console.log("session:  ", req.session);
           res.sendFile(__dirname + '/public/src/gameCanvas.html');
+        }else{
+          var result = {'rows': result.rows}
+          res.render('Home',{ isError:"true",regShown:1});
         }
+      }else{
+        res.render('Home',{ isError:"true",regShown:1});
       }
+
     });
 
   // if user want to signUp
@@ -90,11 +98,9 @@ app.post("/:id",(req, res) => {
       if(error){
         if (error.code == "23505"){
           res.send("We could not make your account!")
-        }else{
-          res.end(error)
         }
       }else{
-        res.sendFile('/');
+        res.render('Home.ejs',{ isError:"false",regShown:1});
       }
     });
 

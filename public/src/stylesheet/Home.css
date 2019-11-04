@@ -42,14 +42,30 @@ body {font-family: Arial;
   background-color: #ccc;
 }
 
-.tabcontent {
-  display: none;
+#Login{
+    display: block;
+}
+#About{
+    display: none;
+}
+
+.tabcontent{
+
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
   float:left;
   opacity:0.8;
 }
+.tabcontent_error{
+  display: block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  float:left;
+  opacity:0.8;
+}
+
 
 /*For the sign-up*/
 #myForm
@@ -117,6 +133,10 @@ body {font-family: Arial;
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
   }
+.error_content{
+  display: block;
+  color: #D8000C;
+}
 
   #About{
     background-color:white;
