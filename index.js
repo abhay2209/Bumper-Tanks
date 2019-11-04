@@ -40,38 +40,122 @@ app.get('/db', async (req, res) => {
   */
   server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
+
+
+  // Class to create tank objects
+
+  class Bullet{
+    constructor(tank){
+      this.width = 5
+      this.height = 1.5
+      //this.x = where the tank at
+      //this.y = where the tank at
+      // this.maxSpeed = 4
+      this.speed = 8 //discuss for weather condition
+      this.numOfBullet = 5
+      this.x = tank.x;
+      this.y = tank.y + (tank.height/2) - 1.7;
+      this.color = "yellow";
+    }
+
+    draw(ctx)
+    {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+
+    update()
+    {
+      this.x -= this.speed;
+    }
+
+  }
+
+  class Tank{
+    constructor(canvasWidth, canvasHeight)
+    {
+      this.width = 60;
+      this.height = 40;
+      this.x = 0;
+      this.y = 0;
+      this.maxSpeed = 4;
+      this.xSpeed = 0;
+      this.ySpeed = 0;
+      this.bullets = new Bullet(this);
+      this.bulletX = 0;
+    }
+
+    fire(){
+      let bullet = new Bullet(this);
+      this.bullets.push(bullet);
+    }
+
+    stop()
+    {
+      this.xSpeed = 0;
+      this.ySpeed = 0;
+    }
+
+    draw(ctx)
+    {
+      ctx.drawImage(image, this.x, this.y, this.width, this.height);
+
+      for (var i = 0; i<this.bullets.length ; i++){
+        this.bullets[i].draw(ctx);
+      }
+    }
+
+    update(frameRate)
+    {
+      if(!frameRate)
+        return;
+
+      for (var i = 0; i<this.bullets.length ; i++){
+        this.bullets[i].update();
+      }
+
+    }
+  };
+
+
   var players = {};
+  var bullet = {};
   io.on('connection', function(socket) {
     socket.on('new player', function() {
-      players[socket.id] = {
-        x: 300,
-        y: 300
-      };
+      players[socket.id] = new Tank();
     });
-    socket.on('movement', function(data) {
+
+    socket.on('new bullet', function() {
+      bullet = new Bullet(players[socket.id]);
+    });
+    socket.on('movement', function(tankAction) {
       var player = players[socket.id] || {};
-      if (data.left) {
-        player.x -= 5;
+      if (tankAction.left) {
+          player.x -= 4;
+          if(player.x < 0)
+            player.x = 0;
       }
-      if (data.up) {
-        player.y -= 5;
+      if (tankAction.up) {
+          player.y -= 4;
+          if(player.y < 0)
+            player.y = 0;
       }
-      if (data.right) {
-        player.x += 5;
+      if (tankAction.right) {
+          player.x += 4;
+          if( player.x + player.width > 800 )
+              player.x = 800 - player.width;
       }
-      if (data.down) {
-        player.y += 5;
+      if (tankAction.down) {
+          player.y += 4;
+          if( player.y + player.height > 600 )
+              player.y = 600 - player.height;
+      }
+      if(tankAction.shoot){
+          bullet.x -= 8;
       }
     });
   });
 
   setInterval(function() {
-    io.sockets.emit('state', players);
+    io.sockets.emit('state', players, bullet);
   }, 1000 / 60);
-
-
-/*
-setInterval(function() {
-  io.sockets.emit('message', 'hi!');
-}, 1000);
-*/

@@ -24,7 +24,7 @@ class Bullet{
   // moveBullet(bullet)
   // {
   //   let bulletInterval = setInterval(()=>{
-      
+
   //     if(this.x === 300){
   //       bullet.remove()
   //     } else {
@@ -40,13 +40,13 @@ class Bullet{
 
   // reload()
   // {
-    
+
   // }
 
   draw(ctx)
   {
     // ctx.drawImage(image, this.x, this.y, this.width, this.height);
-    
+
     // ctx.beginPath();
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -60,7 +60,7 @@ class Bullet{
     // if(!frameRate)
     //   return;
 
-    
+
     this.x -= this.speed;
 
     // if(this.AABB(this.x, this.y, this.width, this.height, tank.x, tank.y, tank.width, tank.height)){
@@ -86,8 +86,8 @@ class Bullet{
     // this.x += this.xSpeed;
     // this.y += this.ySpeed;
 
-    // // if(this.x < 0 && this.y < 0 && this.x > 300 && this.y > 150) later 
-      
+    // // if(this.x < 0 && this.y < 0 && this.x > 300 && this.y > 150) later
+
 
     // if( this.x + this.width > 300 )
     //   this.x = 300 - this.width;
