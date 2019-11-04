@@ -1,23 +1,18 @@
-
 // Class to create tank objects
 class Tank{
   constructor(xPos, yPos, direction, maxVel, accelRate, turnRate)
   {
-    //Attributes
-    this.width = 50;
-    this.height = 50;
-
-    this.maxVel = maxVel;
-    this.accelRate = accelRate;
-    this.turnRate = 0.01 * turnRate
-
+    //Tank Traits
+      this.maxVel = maxVel;
+      this.accelRate = accelRate;
+      this.turnRate = 0.01 * turnRate
     //Initial Contitions
-    this.x = xPos;
-    this.y = yPos;
-    this.a = direction * Math.PI / 180; //convert from angle to radians
-    this.linVel = 0;
-    this.angVel = 0;
-    //this.brakes = 1;
+      this.linVel = 0;
+      this.angVel = 0;
+    //Matter Object
+      this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, { frictionAir: TANK_FRICTION });
+    //set initial rotation of tank
+      Body.rotate(this.body, direction * Math.PI / 180);
   }
 /*
   fire(){
@@ -26,7 +21,6 @@ class Tank{
 */
   accelerate(direction)
   {
-    //this.brakes = 0;
     if(direction && this.linVel < this.maxVel){
       this.linVel += this.accelRate;
     }else if(!direction && this.linVel > -this.maxVel){
@@ -60,6 +54,7 @@ class Tank{
 
   update()
   {
+    //update speed
     if(KEY_MAP[W_KEY]){
       this.accelerate(1);
     }else if(KEY_MAP[S_KEY]){
@@ -68,6 +63,7 @@ class Tank{
       this.deccelerate();
     }
 
+    //update direction
     if(KEY_MAP[A_KEY]){
       this.turnLeft();
     }else if(KEY_MAP[D_KEY]){
@@ -76,13 +72,11 @@ class Tank{
       this.stopTurn();
     }
 
+    //fire cannon
     if(KEY_MAP[SPACE_KEY]){
     }
 
-
-    //if(this.brakes){
-    //  this.deccelerate();
-    //}
+    //update position of Matter Object
     if(this.angVel != 0){
       Body.rotate(this.body, this.angVel);
     }

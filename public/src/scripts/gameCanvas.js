@@ -5,10 +5,13 @@ const image1 = document.getElementById('bullet');
 let matterInst = new matterObj;
 
 let tank1 = new Tank(300, 300, 90, 4, 0.5, 3);
+let bar1 = new Barrier_Triangle(500, 500, 90, 50);
+
 let tank1Controls = new InputHandler(tank1);
 
 matterInst.addWalls();
 matterInst.addTank(tank1);
+matterInst.addBarrier(bar1);
 
 matterInst.playSimulation();
 

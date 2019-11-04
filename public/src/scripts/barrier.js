@@ -1,10 +1,23 @@
-class Barrier{
-    constructor(xPos, yPos, direction, shape, size1, size2){
-        this.x = xPos;
-        this.y = yPos;
-        this.a = direction;
-        this.shape = shape;
-        this.size1 = size1; //width or radius
-        this.size2 = size2; //height if applicable
+class Barrier_Rectangle{
+    constructor(xPos, yPos, direction, width, height){
+        this.body = Bodies.rectangle(xPos, yPos, width, height, { frictionAir: BARRIER_FRICTION});
+        //set initial rotation of barrier
+        Body.rotate(this.body, direction * Math.PI / 180);
+    }
+}
+
+class Barrier_Circle{
+    constructor(xPos, yPos, radius){
+        this.body = Bodies.circle(xPos, yPos, radius, { frictionAir: BARRIER_FRICTION});
+        //set initial rotation of barrier
+        Body.rotate(this.body, 0);
+    }
+}
+
+class Barrier_Triangle{
+    constructor(xPos, yPos, direction, radius){
+        this.body = Bodies.polygon(xPos, yPos, 3, radius, { frictionAir: BARRIER_FRICTION});
+        //set initial rotation of barrier
+        Body.rotate(this.body, direction * Math.PI / 180);
     }
 }
