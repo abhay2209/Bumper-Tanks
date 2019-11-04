@@ -46,8 +46,8 @@ app.get('/db', async (req, res) => {
 
   class Bullet{
     constructor(tank){
-      this.width = 5
-      this.height = 1.5
+      this.width = 10
+      this.height = 4
       //this.x = where the tank at
       //this.y = where the tank at
       // this.maxSpeed = 4
@@ -119,7 +119,7 @@ app.get('/db', async (req, res) => {
 
 
   var players = {};
-  var bullet = {};
+  let bullet = {};
   io.on('connection', function(socket) {
     socket.on('new player', function() {
       players[socket.id] = new Tank();
