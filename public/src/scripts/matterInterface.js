@@ -14,7 +14,7 @@ class matterObj{
       engine: this.engine,
       options: {
         width: CANVAS_WIDTH,
-        width: CANVAS_HEIGHT,
+        height: CANVAS_HEIGHT,
         showVelocity: true,          //travel trails
         showAngleIndicator: true     //option to show direction of objects for testing purposes
       }

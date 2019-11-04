@@ -11,10 +11,21 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
     //Matter Object
-      this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, { frictionAir: TANK_FRICTION });
+      this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
+        frictionAir: TANK_FRICTION,
+      });
+
+      //this.body = Body.create({
+      //  parts: []
+      //})
     //set initial rotation of tank
       Body.rotate(this.body, direction * Math.PI / 180);
   }
+
+  bodyHelper(){
+    var componentList = [];
+  }
+
 /*
   fire(){
     let bullet = new Bullet(canvasWidth,canvasHeight, this);

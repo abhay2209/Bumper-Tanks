@@ -5,19 +5,20 @@ const TAU = Math.PI * 2;
 
 
 //MATTER-JS INTERFACES
-const Engine = Matter.Engine;  //engine interface
-const Render = Matter.Render;  //render interface
-const Runner = Matter.Runner;  //runner interface
-const World = Matter.World;    //world interface
-const Bodies = Matter.Bodies;  //bodies interface
-const Body = Matter.Body;      //body interface
-const Events = Matter.Events;  //events interface
+const Engine = Matter.Engine;           //engine interface
+const Render = Matter.Render;           //render interface
+const Runner = Matter.Runner;           //runner interface
+const World = Matter.World;             //world interface
+const Bodies = Matter.Bodies;           //bodies interface
+const Body = Matter.Body;               //body interface
+const Composite = Matter.Composite      //composite interface
+const Events = Matter.Events;           //events interface
 
 
 //WORLD CONSTANTS & CANVAS CONSTANTS
 const canvas = document.getElementById("gameScreen");
-const CANVAS_WIDTH = 1070;
-const CANVAS_HEIGHT = 700;
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
 const EAST_WIND = 0;
 const NORTH_WIND = 0;
 
@@ -48,7 +49,7 @@ const BULLET_FRICTION = 0.0;
 
 
 //BARRIER CONSTANTS
-const BARRIER_FRICTION = 0.8;
+const BARRIER_FRICTION = 0.99;
 
 //PLAYER INFO
 const PLAYERNUM = 1;
@@ -95,6 +96,4 @@ function OBJECT_MOVER(obj){
         { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});
     }
 }
-
-
 

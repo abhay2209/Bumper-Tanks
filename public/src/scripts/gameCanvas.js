@@ -1,6 +1,6 @@
 
-const image = document.getElementById('tank');
-const image1 = document.getElementById('bullet');
+//const image = document.getElementById('tank');
+//const image1 = document.getElementById('bullet');
 
 var TANK_LIST = [
   new Tank(300, 300, 90, 4, 0.5, 3, 1)
