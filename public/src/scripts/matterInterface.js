@@ -52,7 +52,10 @@ class matterObj{
 
   addTank(tank){
     //add tank updater to list of things to be updated
-    Events.on(this.engine, "afterUpdate", function(){ tank.update(); });
+    Events.on(this.engine, "afterUpdate", function(){
+      OBJECT_CONTROLLER(tank);
+      OBJECT_MOVER(tank);
+    });
     //add tank to matter world
     World.add(this.world, [tank.body]);
    }
@@ -72,7 +75,19 @@ class matterObj{
     //return firedBullet;
    //}
 
-
+  //Initialize map from list of tanks & barriers & walls
+  initializeMap(tankList, barrierList){
+    //add external walls
+    this.addWalls();
+    //add all tanks to map
+    for(var i = 0; i < tankList.length; i++){
+      this.addTank(tankList[i]);
+    }
+    //add all barriers to map
+    for(var i = 0; i < barrierList.length; i++){
+      this.addBarrier(barrierList[i]);
+    }
+  }
 
 
 
