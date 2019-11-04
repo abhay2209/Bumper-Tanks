@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+document.addEventListener('keydown', function(event) {
+  switch (event.keyCode) {
+    case 65: // A
+      movement.left = true;
+      break;
+    case 87: // W
+      movement.up = true;
+      break;
+    case 68: // D
+      movement.right = true;
+      break;
+    case 83: // S
+      movement.down = true;
+      break;
+    case 32: // Space
+      movement.shoot = true;
+      socket.emit('new bullet');
+      break;
+=======
 class InputHandler{
   constructor(tank){
     document.addEventListener("keydown", event => {
@@ -54,5 +74,22 @@ class InputHandler{
       }
     });
 
+>>>>>>> 6e35a556dc4c43bcbec38b225f7bf3cbeeb6fc9b
   }
-};
+});
+document.addEventListener('keyup', function(event) {
+  switch (event.keyCode) {
+    case 65: // A
+      movement.left = false;
+      break;
+    case 87: // W
+      movement.up = false;
+      break;
+    case 68: // D
+      movement.right = false;
+      break;
+    case 83: // S
+      movement.down = false;
+      break;
+  }
+});
