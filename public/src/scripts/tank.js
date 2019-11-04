@@ -6,7 +6,7 @@ class Tank{
     //Tank Traits
       this.maxVel = maxVel;
       this.accelRate = accelRate;
-      this.turnRate = 0.01 * turnRate
+      this.turnRate = 0.01 * turnRate;
     //Initial Contitions
       this.linVel = 0;
       this.angVel = 0;
@@ -28,7 +28,8 @@ class Tank{
 
 /*
   fire(){
-    let bullet = new Bullet(canvasWidth,canvasHeight, this);
+    let bullet = new Bullet(this);
+    this.bullets.push(bullet);
   }
 */
   accelerate(direction)
