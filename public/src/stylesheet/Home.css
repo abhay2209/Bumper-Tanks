@@ -141,3 +141,9 @@ body {font-family: Arial;
   #About{
     background-color:white;
   }
+
+  #wrongPass{
+    font-size: 10pt;
+    color: #A27322;
+    font-weight: bold;
+  }

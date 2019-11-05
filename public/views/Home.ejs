@@ -64,13 +64,14 @@
 
       <label for="rpsw"><b>New Password</b></label>
       <br>
-      <input class="signUp" type="password" placeholder="Enter Password" name = "password" id="rpsw" required>
+      <input class="signUp" type="password" placeholder="Enter Password" name = "password" id="rpsw" required >
 
       <label for="rpsw"><b>Re-enter Password</b></label>
       <br>
-      <input class="signUp" type="password" placeholder="Enter Password" id="spsw" required>
+      <input class="signUp" type="password" placeholder="Enter Password" id="spsw" required oninput="A2()">
+      <p id="wrongPass"></p>
       <br>
-      <button type="submit" class="btn">Sign-Up</button>
+      <button type="submit" class="btn" id="sign_in" disabled>Sign-Up</button>
       <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
   </div>

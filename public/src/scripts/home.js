@@ -20,3 +20,16 @@ function openGameTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+function A2()
+{
+    var newpass = document.getElementById("rpsw").value;
+    var prevpass = document.getElementById("spsw").value;
+    if(newpass!=prevpass)
+    { document.getElementById('wrongPass').innerHTML ='Password is not same as New password' ;
+    document.getElementById("sign_in").disabled = true;}
+    else
+    { document.getElementById('wrongPass').innerHTML ='Password matched' ;
+    document.getElementById("sign_in").disabled = false;}
+ }
+
