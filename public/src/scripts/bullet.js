@@ -14,7 +14,7 @@ class Bullet{
     var cosX = Math.cos(angle);
     var sinY = Math.sin(angle);
 
-    this.body = Bodies.rectangle(x+cosX*TANK_WIDTH, y+sinY*TANK_WIDTH, 2.5, 1.5,{
+    this.body = Bodies.rectangle(x-cosX*TANK_WIDTH, y-sinY*TANK_WIDTH, 5.5, 5.5,{
       frictionAir: BULLET_FRICTION,
       render: {
         fillStyle: 'yellow'
@@ -24,6 +24,6 @@ class Bullet{
     Body.rotate(this.body, angle);
     Body.setVelocity(
       this.body,
-    { x: cosX*10, y: sinY*10 })
+    { x: -cosX*10, y: -sinY*10 })
   }
 }

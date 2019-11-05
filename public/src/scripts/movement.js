@@ -39,6 +39,6 @@ function OBJECT_MOVER(obj){
   }
   if(obj.linVel != 0){
   Body.setVelocity(obj.body,
-      { x: Math.cos(obj.body.angle)*obj.linVel, y: Math.sin(obj.body.angle)*obj.linVel});
+      { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});
   }
 }
