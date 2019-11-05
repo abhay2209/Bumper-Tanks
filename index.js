@@ -72,10 +72,10 @@ app.post("/:id",(req, res) => {
           res.sendFile(__dirname + '/public/src/gameCanvas.html');
         }else{
           var result = {'rows': result.rows}
-          res.render('Home',{ isError:"true",regShown:1});
+          res.render('Home',{ isError:"true"});
         }
       }else{
-        res.render('Home',{ isError:"true",regShown:1});
+        res.render('Home',{ isError:"true"});
       }
 
     });
@@ -97,10 +97,10 @@ app.post("/:id",(req, res) => {
     pool.query(insertQuerry,(error)=>{
       if(error){
         if (error.code == "23505"){
-          res.send("We could not make your account!")
+          res.render('signUp.ejs');
         }
       }else{
-        res.render('Home.ejs',{ isError:"false",regShown:1});
+        res.render('Home.ejs',{ isError:"false"});
       }
     });
 

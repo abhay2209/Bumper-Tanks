@@ -9,13 +9,10 @@
 <body>
     <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
 
-<div id="home">
+<div id="home" style ="margin-left:30px;">
 
-<div class="tab">
-  <button class="tablinks" onclick="openGameTab(event, 'Login')">Log-in</button>
-  <button class="tablinks" onclick="openGameTab(event, 'About')">About</button>
-</div>
-<div id="Login" class="tabcontent">
+
+<!-- <div id="Login" class="tabcontent">
   <div class="form-container" id="form1">
     <form action="/login" method = "POST" >
       <h1>Login</h1>
@@ -27,19 +24,13 @@
 
       <input class="login" type="password" placeholder="Enter Password" name = "password_login" id="psw" required>
 
-      <%if (isError =="true") { %>
-      <div class="error_content">
-          <i class="fa fa-times-circle"></i>
-          Invalid password/username, please try again.
-        </div>
-      <% } %>
       <button type="submit" class="btn">Login</button>
 
     </form>
     <button class="open-button" onclick="openForm()" id="signbtn">Sign-Up</button>
   </div>
-</div>
-  <div class="form-popup" id="myForm">
+</div> -->
+  <div class="form-popup" id="myForm" style = "display: block;">
     <form action="/add" method="POST" class="form-container" id="form2">
 
       <h1>Sign-Up</h1>
@@ -67,20 +58,20 @@
       <br>
       <input class="signUp" type="password" placeholder="Enter Password" id="spsw" required oninput="A2()">
       <p id="wrongPass"></p>
+
+      <div class="error_content">
+          <i class="fa fa-times-circle"></i>
+          Couldn't Sign-Up, Username already exists.
+        </div>
+
       <br>
       <button type="submit" class="btn" id="sign_in" disabled>Sign-Up</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
     </form>
   </div>
 
 
-<div id="About" class="tabcontent">
-  <p>About the Game
-  Bumper Tanks is a drive around fun bumping shooting game. The Goal of the game is to stand up until the last among all your friends.</p>
-  <p> Have real-time weather experience inside the game with the cool weather themes. Pick power ups to have extra health, heavy attacks and increase spead. </p>
-  <p>Design your own tanks, with different type of guns that have their own speciality.</p>
-  <p>Be a Strategist!! Make use of the physics and kill enemies hidden in corners of the map.</p>
-</div>
+
 </div>
 <script type = "text/javascript" src = "/src/scripts/home.js"></script>
 </body>
