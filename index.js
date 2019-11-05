@@ -38,12 +38,14 @@ app.use(session({
 
 app.get('/db', async (req, res) => {
     try {
+      console.log("Database accessed");
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM test_table');
       const results = { 'results': (result) ? result.rows : null};
       res.render('pages/db', results );
       client.release();
     } catch (err) {
+      console.log("Database denied");
       console.error(err);
       res.send("Error " + err);
     }
@@ -78,9 +80,8 @@ app.post("/:id",(req, res) => {
 
     pool.query(check_password_username,(err,result)=>{
       if(err){
-        res.send(err);
+        res.end(err);
       }
-        res.render('Home',{ isError:"true"});
       // if username found check for password
       if(result.rows.length){
 
@@ -111,8 +112,9 @@ app.post("/:id",(req, res) => {
     console.log(password_hashed);
     //get each entry
     var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
-    values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}')`;
+    values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;
 
+    console.log(insertQuerry);
     pool.query(insertQuerry,(error)=>{
       if(error){
         if (error.code == "23505"){
