@@ -16,7 +16,8 @@ class matterObj{
         width: CANVAS_WIDTH,
         height: CANVAS_HEIGHT,
         showVelocity: true,          //travel trails
-        showAngleIndicator: true     //option to show direction of objects for testing purposes
+        showAngleIndicator: false,     //option to show direction of objects for testing purposes
+        wireframes: false
       }
     });
 

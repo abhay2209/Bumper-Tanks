@@ -1,6 +1,6 @@
 
 var TANK_LIST = [
-  new Tank(300, 300, 90, 4, 0.5, 3, 1)
+  new Tank(300, 300, 0, 4, 0.5, 3, 1)
 ];
 
 var BARRIER_LIST = [

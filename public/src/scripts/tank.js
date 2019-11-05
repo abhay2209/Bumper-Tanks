@@ -13,11 +13,32 @@ class Tank{
     //Matter Object
       this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         frictionAir: TANK_FRICTION,
+
       });
 
-      //this.body = Body.create({
-      //  parts: []
-      //})
+      var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
+        render: {
+          sprite: {
+            texture: "http://localhost:5000/src/images/tank.png",
+            xScale: 1/12,
+            yScale: 1/12
+        }}}),
+        tankGun = Bodies.rectangle(xPos-TANK_WIDTH/2, yPos, TANK_WIDTH, 5);//, {
+          //render: {
+          //  sprite: {
+          //    texture:
+          //    xScale:
+          //    yScale:
+          //  }
+          //}
+        //})
+
+
+      this.body = Body.create({
+        parts: [tankHull, tankGun],
+        frictionAir: TANK_FRICTION
+      });
+
     //set initial rotation of tank
       Body.rotate(this.body, direction * Math.PI / 180);
   }

@@ -41,7 +41,7 @@ document.addEventListener("keydown", event => {
 //Tank Constants
 const TANK_WIDTH = 50;
 const TANK_HEIGHT = 50;
-const TANK_FRICTION = 0.2;
+const TANK_FRICTION = 0.3;
 
 
 //Bullet Constants
