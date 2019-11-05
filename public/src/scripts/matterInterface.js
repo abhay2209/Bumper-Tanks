@@ -5,6 +5,7 @@ class matterObj{
     //initialize engine & world, world will be where physical objects reside in
     this.engine = Engine.create();
     this.world = this.engine.world;
+    WWWZZZ = this.world;
     this.world.gravity.y = 0;
 
      //initialize renderer, this acts as a middle man for canvas api
@@ -67,16 +68,6 @@ class matterObj{
     World.add(this.world, [barrier.body]);
   }
 
-   //addBullet(tank){
-    //var firedBullet = Bodies.circle(/*x in front of tank*/, /*y in front of tank*/, /*size of bullet*/, { frictionAir:0.01 });
-
-    //World.add(this.world, [
-    //  firedBullet
-    //]);
-
-    //return firedBullet;
-   //}
-
   //Initialize map from list of tanks & barriers & walls
   initializeMap(tankList, barrierList){
     //add external walls
@@ -94,4 +85,3 @@ class matterObj{
 
 
  }
-

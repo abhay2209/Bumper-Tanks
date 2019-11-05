@@ -1,4 +1,6 @@
 //Use this file to forward declare Global CONST & VAR
+var WWWZZZ
+
 
 //USEFUL CONSTANTS
 const TAU = Math.PI * 2;
@@ -49,10 +51,8 @@ const TANK_FRICTION = 0.3;
 //Bullet Constants
 const BULLET_FRICTION = 0.0;
 
-
 //BARRIER CONSTANTS
 const BARRIER_FRICTION = 0.99;
 
 //PLAYER INFO
 const PLAYERNUM = 1;
-

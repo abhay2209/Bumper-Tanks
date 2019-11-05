@@ -42,7 +42,7 @@ class Tank{
           strokeStyle: '#000000',
           lineWidth: 3
         }});
-      
+
 
       this.body = Body.create({
         parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
@@ -57,12 +57,12 @@ class Tank{
     var componentList = [];
   }
 
-/*
-  fire(){
-    let bullet = new Bullet(this);
-    this.bullets.push(bullet);
+
+  fire_cannon(){
+    var fired_bullet = new Bullet(this)
+    World.add(WWWZZZ, [fired_bullet.body]);
   }
-*/
+
   accelerate(direction)
   {
     if(direction && this.linVel < this.maxVel){

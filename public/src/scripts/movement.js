@@ -21,8 +21,10 @@ function OBJECT_CONTROLLER(obj){
       }
 
       //fire cannon
-      if(KEY_MAP[SPACE_KEY]){
-      }
+    if(KEY_MAP[SPACE_KEY]){
+        obj.fire_cannon();
+        KEY_MAP[SPACE_KEY] = 0;
+    }
 
       //send signals
   }else{
@@ -36,7 +38,7 @@ function OBJECT_MOVER(obj){
       Body.rotate(obj.body, obj.angVel);
   }
   if(obj.linVel != 0){
-  Body.setVelocity(obj.body, 
+  Body.setVelocity(obj.body,
       { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});
   }
 }
