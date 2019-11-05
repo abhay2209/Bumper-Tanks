@@ -1,72 +1,67 @@
-
 // Class to create tank objects
-
-
 class Tank{
-  constructor(canvasWidth, canvasHeight)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum)
   {
-    this.width = 30;
-    this.height = 15;
-    this.x = 0;
-    this.y = 0;
-    this.maxSpeed = 4;
-    this.xSpeed = 0;
-    this.ySpeed = 0;
+    this.playerNum = playerNum;
+    //Tank Traits
+      this.maxVel = maxVel;
+      this.accelRate = accelRate;
+      this.turnRate = 0.01 * turnRate;
+    //Initial Contitions
+      this.linVel = 0;
+      this.angVel = 0;
+    //Matter Object
+      this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
+        frictionAir: TANK_FRICTION,
+      });
+
+      //this.body = Body.create({
+      //  parts: []
+      //})
+    //set initial rotation of tank
+      Body.rotate(this.body, direction * Math.PI / 180);
   }
+
+  bodyHelper(){
+    var componentList = [];
+  }
+
 /*
   fire(){
-    let bullet = new Bullet(canvasWidth,canvasHeight, this);
+    let bullet = new Bullet(this);
+    this.bullets.push(bullet);
   }
 */
-  moveUp()
+  accelerate(direction)
   {
-    this.ySpeed = -this.maxSpeed;
+    if(direction && this.linVel < this.maxVel){
+      this.linVel += this.accelRate;
+    }else if(!direction && this.linVel > -this.maxVel){
+      this.linVel -= this.accelRate;
+    }
   }
 
-  moveDown()
+  deccelerate()
   {
-    this.ySpeed = this.maxSpeed;
+    if(this.linVel < 0.5 && this.linVel > -0.5){
+      this.linVel = 0;
+    }else{
+      this.linVel *= 0.9;
+    }
   }
 
-  moveLeft()
+  turnLeft()
   {
-    this.xSpeed = -this.maxSpeed;
+    this.angVel = -this.turnRate;
   }
 
-  moveRight()
+  turnRight()
   {
-    this.xSpeed = this.maxSpeed;
+    this.angVel = this.turnRate;
   }
 
-  stop()
+  stopTurn()
   {
-    this.xSpeed = 0;
-    this.ySpeed = 0;
-  }
-
-  draw(ctx)
-  {
-    ctx.drawImage(image, this.x, this.y, this.width, this.height);
-  }
-
-  update(frameRate)
-  {
-    if(!frameRate)
-      return;
-
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
-
-    if(this.x < 0)
-      this.x = 0;
-
-    if(this.y < 0)
-      this.y = 0;
-
-    if( this.x + this.width > 300 )
-      this.x = 300 - this.width;
-
-    if( this.y + this.height > 150 )
-        this.y = 150 - this.height;
+    this.angVel = 0;
   }
 };
