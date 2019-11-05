@@ -27,10 +27,10 @@ class Tank{
   }
 
 
-  //fire(){
-    //let bullet = new Bullet(this);
-    //FIRED_BULLETS.push(bullet);
-  //}
+  fire_cannon(){
+    var fired_bullet = new Bullet(this)
+    World.add(WWWZZZ, [fired_bullet.body]);
+  }
 
   accelerate(direction)
   {

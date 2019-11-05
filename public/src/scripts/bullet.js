@@ -11,10 +11,10 @@ class Bullet{
     var x = tank.body.position.x;
     var y = tank.body.position.y;
     var angle = tank.body.angle;
-    var cosX = x-Math.cos(angle);
-    var sinY = y-Math.sin(angle);
+    var cosX = Math.cos(angle);
+    var sinY = Math.sin(angle);
 
-    this.body = Bodies.rectangle(cosX*TANK_WIDTH, sinY*TANK_WIDTH, 2.5, 1.5,{
+    this.body = Bodies.rectangle(x+cosX*TANK_WIDTH, y+sinY*TANK_WIDTH, 2.5, 1.5,{
       frictionAir: BULLET_FRICTION,
       render: {
         fillStyle: 'yellow'
@@ -24,84 +24,6 @@ class Bullet{
     Body.rotate(this.body, angle);
     Body.setVelocity(
       this.body,
-    { x: cosX*8, y: sinY*8 })
+    { x: cosX*10, y: sinY*10 })
   }
-
-  // moveBullet(bullet)
-  // {
-  //   let bulletInterval = setInterval(()=>{
-
-  //     if(this.x === 300){
-  //       bullet.remove()
-  //     } else {
-  //       this.x = '${this.x + 4}px'
-  //     }
-  //   }, 10)
-  // }
-
-  // effect()
-  // {
-
-  // }
-
-  // reload()
-  // {
-
-  // }
-
-  draw(ctx)
-  {
-    // ctx.drawImage(image, this.x, this.y, this.width, this.height);
-
-    // ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-  }
-  // AABB(ax, ay, aw, ah, bx, by, bw, bh) {
-  //   return ax<bx+bw && ay<by+bh && bx<ax+aw && by<ay+ah;
-  // }
-
-  update()
-  {
-    // if(!frameRate)
-    //   return;
-
-
-    this.x -= this.speed;
-
-    // if(this.AABB(this.x, this.y, this.width, this.height, tank.x, tank.y, tank.width, tank.height)){
-    //   this.width = null;
-    //   this.y -= 10;
-    // }
-    // if(this.x < 0)
-    //   this.x = 0;
-
-    // if(this.y < 0)
-    //   this.y = 0;
-
-    // if( this.x + this.width > 300 )
-    //   this.x = 300 - this.width;
-
-    // if( this.y + this.height > 150 )
-    //     this.y = 150 - this.height;
-
-
-    // if(!frameRate)
-    //   return;
-
-    // this.x += this.xSpeed;
-    // this.y += this.ySpeed;
-
-    // // if(this.x < 0 && this.y < 0 && this.x > 300 && this.y > 150) later
-
-
-    // if( this.x + this.width > 300 )
-    //   this.x = 300 - this.width;
-
-    // if( this.y + this.height > 150 )
-    //     this.y = 150 - this.height;
-
-
-  }
-
 }

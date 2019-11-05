@@ -5,6 +5,7 @@ class matterObj{
     //initialize engine & world, world will be where physical objects reside in
     this.engine = Engine.create();
     this.world = this.engine.world;
+    WWWZZZ = this.world;
     this.world.gravity.y = 0;
 
      //initialize renderer, this acts as a middle man for canvas api
@@ -53,10 +54,7 @@ class matterObj{
   addTank(tank){
     //add tank updater to list of things to be updated
     Events.on(this.engine, "afterUpdate", function(){
-      var bullet = OBJECT_CONTROLLER(tank);
-      if(bullet){
-        FIRE_BULLET(tank);
-      }
+      OBJECT_CONTROLLER(tank);
       OBJECT_MOVER(tank);
     });
     //add tank to matter world
@@ -67,15 +65,6 @@ class matterObj{
     //add barrier to matter world
     World.add(this.world, [barrier.body]);
   }
-
-  // addBullet(tank){
-  //   var newBullet = new Bullet(tank);
-  //   console.log("HI")
-  //
-  //   World.add(this.world, [newBullet.body]);
-  //
-  //   // return firedBullet;
-  // }
 
   //Initialize map from list of tanks & barriers & walls
   initializeMap(tankList, barrierList){
