@@ -48,7 +48,7 @@ app.get('/db', async (req, res) => {
       res.send("Error " + err);
     }
   });
-  
+
  // check for session
 app.get('/', (req, res, next) => {
     if (req.session.loggedin){
@@ -80,6 +80,7 @@ app.post("/:id",(req, res) => {
       if(err){
         res.send(err);
       }
+        res.render('Home',{ isError:"true"});
       // if username found check for password
       if(result.rows.length){
 
