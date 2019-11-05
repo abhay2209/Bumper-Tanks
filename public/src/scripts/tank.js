@@ -11,24 +11,41 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
     //Matter Object
-      this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
-        frictionAir: TANK_FRICTION,
+      //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
+      //  frictionAir: TANK_FRICTION,
 
-      });
+      //});
 
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         render: {
-          sprite: {
-            texture: "http://localhost:5000/src/images/tankBodyMini.png"
-        }}}),
-        tankGun = Bodies.rectangle(xPos-TANK_WIDTH/3, yPos, TURRENT_WIDTH, 5, {
-          render: {
-            sprite: {
-              texture: "http://localhost:5000/src/images/tankGunMini.png"
-        }}})
+          fillStyle: '#005504'
+        }}),
+      tankGun = Bodies.rectangle(xPos-GUN_LENGTH/2-TURRENT_RADIUS, yPos, GUN_LENGTH, 5, {
+        render: {
+          fillStyle: '#7A8E7B'
+        }}),
+      tankTurrent = Bodies.circle(xPos, yPos, TURRENT_RADIUS, {
+        render: {
+          fillStyle: '#005504',
+          strokeStyle: '#000000',
+          lineWidth: 3
+        }}),
+      tankRightTrack = Bodies.rectangle(xPos, yPos+TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
+        render: {
+          fillStyle: '#5c5c5c',
+          strokeStyle: '#000000',
+          lineWidth: 3
+        }}),
+      tankLeftTrack = Bodies.rectangle(xPos, yPos-TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
+        render: {
+          fillStyle: '#5c5c5c',
+          strokeStyle: '#000000',
+          lineWidth: 3
+        }});
+      
 
       this.body = Body.create({
-        parts: [tankHull, tankGun],
+        parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
         frictionAir: TANK_FRICTION
       });
 

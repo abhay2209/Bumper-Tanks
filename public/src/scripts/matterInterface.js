@@ -17,7 +17,8 @@ class matterObj{
         height: CANVAS_HEIGHT,
         showVelocity: true,          //travel trails
         showAngleIndicator: false,     //option to show direction of objects for testing purposes
-        wireframes: false
+        wireframes: false,
+        background: "http://localhost:5000/src/images/grassTexture.png"
       }
     });
 

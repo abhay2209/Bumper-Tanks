@@ -39,10 +39,10 @@ document.addEventListener("keydown", event => {
 
 
 //Tank Constants
-const TANK_WIDTH = 64;
-const TANK_HEIGHT = 49;
-const TURRENT_WIDTH = 75;
-const TURRENT_HEIGHT = 26;
+const TANK_WIDTH = 65;
+const TANK_HEIGHT = 40;
+const TURRENT_RADIUS = 18;
+const GUN_LENGTH = 30;
 const TANK_FRICTION = 0.3;
 
 
