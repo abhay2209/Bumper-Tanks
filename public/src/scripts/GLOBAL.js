@@ -46,11 +46,10 @@ const TANK_FRICTION = 0.2;
 
 //Bullet Constants
 const BULLET_FRICTION = 0.0;
-
+//var FIRED_BULLETS = [];
 
 //BARRIER CONSTANTS
 const BARRIER_FRICTION = 0.99;
 
 //PLAYER INFO
 const PLAYERNUM = 1;
-

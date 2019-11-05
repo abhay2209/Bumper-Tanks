@@ -53,7 +53,10 @@ class matterObj{
   addTank(tank){
     //add tank updater to list of things to be updated
     Events.on(this.engine, "afterUpdate", function(){
-      OBJECT_CONTROLLER(tank);
+      var bullet = OBJECT_CONTROLLER(tank);
+      if(bullet){
+        FIRE_BULLET(tank);
+      }
       OBJECT_MOVER(tank);
     });
     //add tank to matter world
@@ -65,15 +68,14 @@ class matterObj{
     World.add(this.world, [barrier.body]);
   }
 
-   //addBullet(tank){
-    //var firedBullet = Bodies.circle(/*x in front of tank*/, /*y in front of tank*/, /*size of bullet*/, { frictionAir:0.01 });
-
-    //World.add(this.world, [
-    //  firedBullet
-    //]);
-
-    //return firedBullet;
-   //}
+  // addBullet(tank){
+  //   var newBullet = new Bullet(tank);
+  //   console.log("HI")
+  //
+  //   World.add(this.world, [newBullet.body]);
+  //
+  //   // return firedBullet;
+  // }
 
   //Initialize map from list of tanks & barriers & walls
   initializeMap(tankList, barrierList){
@@ -92,4 +94,3 @@ class matterObj{
 
 
  }
-

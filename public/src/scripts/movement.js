@@ -22,6 +22,8 @@ function OBJECT_CONTROLLER(obj){
 
       //fire cannon
       if(KEY_MAP[SPACE_KEY]){
+        var bullet = new Bullet(obj);
+        return bullet;
       }
 
       //send signals
@@ -36,7 +38,14 @@ function OBJECT_MOVER(obj){
       Body.rotate(obj.body, obj.angVel);
   }
   if(obj.linVel != 0){
-  Body.setVelocity(obj.body, 
+  Body.setVelocity(obj.body,
       { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});
   }
+}
+function FIRE_BULLET(obj){
+  
+    var newBullet = new Bullet(tank);
+    console.log("HI")
+    World.add(this.world, [newBullet.body]);
+
 }

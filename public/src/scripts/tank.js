@@ -26,12 +26,12 @@ class Tank{
     var componentList = [];
   }
 
-/*
-  fire(){
-    let bullet = new Bullet(this);
-    this.bullets.push(bullet);
-  }
-*/
+
+  //fire(){
+    //let bullet = new Bullet(this);
+    //FIRED_BULLETS.push(bullet);
+  //}
+
   accelerate(direction)
   {
     if(direction && this.linVel < this.maxVel){
