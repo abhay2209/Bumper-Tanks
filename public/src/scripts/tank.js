@@ -19,20 +19,13 @@ class Tank{
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         render: {
           sprite: {
-            texture: "http://localhost:5000/src/images/tank.png",
-            xScale: 1/12,
-            yScale: 1/12
+            texture: "http://localhost:5000/src/images/tankBodyMini.png"
         }}}),
-        tankGun = Bodies.rectangle(xPos-TANK_WIDTH/2, yPos, TANK_WIDTH, 5);//, {
-          //render: {
-          //  sprite: {
-          //    texture:
-          //    xScale:
-          //    yScale:
-          //  }
-          //}
-        //})
-
+        tankGun = Bodies.rectangle(xPos-TANK_WIDTH/3, yPos, TURRENT_WIDTH, 5, {
+          render: {
+            sprite: {
+              texture: "http://localhost:5000/src/images/tankGunMini.png"
+        }}})
 
       this.body = Body.create({
         parts: [tankHull, tankGun],
