@@ -6,19 +6,11 @@ const session = require('express-session')
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var password_hash = require('password-hash');
+
 var http = require('http');
-var app = express();
 var socketIO = require('socket.io');
 var server = http.Server(app);
 var io = socketIO(server);
-
-/* 
-var pool;
-pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-*/
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,8 +36,21 @@ app.use(session({
   },
 }))
 
+app.get('/db', async (req, res) => {
+    try {
+      const client = await pool.connect()
+      const result = await client.query('SELECT * FROM test_table');
+      const results = { 'results': (result) ? result.rows : null};
+      res.render('pages/db', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  });
+  
  // check for session
-app.get('/', (req, res,next) => {
+app.get('/', (req, res, next) => {
     if (req.session.loggedin){
         console.log("logged in");
        res.sendFile(__dirname + '/public/src/gameCanvas.html');
@@ -54,9 +59,9 @@ app.get('/', (req, res,next) => {
     }
 });
 
-
 // Renders Home Page
-app.get('/', (req, res) => {res.render('Home',{ isError:"false",regShown:1});
+app.get('/', (req, res) => {
+  res.render('Home', {isError:"false", regShown:1});
   //console.log("Cookies :  ", req.cookies);
 });
 
@@ -121,10 +126,7 @@ app.post("/:id",(req, res) => {
 
 });
 
-
-  });
-
-  server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+  app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 
 
@@ -245,4 +247,3 @@ app.post("/:id",(req, res) => {
   setInterval(function() {
     io.sockets.emit('state', players, bullet);
   }, 1000 / 60);
-
