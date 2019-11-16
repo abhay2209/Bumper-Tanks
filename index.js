@@ -88,7 +88,7 @@ app.post("/:id",(req, res) => {
         if(password_hash.verify(password, (result.rows[0].password))){
           req.session.loggedin = true;
           req.session.username = username;
-          console.log("session:  ", req.session);
+          //console.log("session:  ", req.session);
           res.sendFile(__dirname + '/public/src/gameCanvas.html');
         }else{
           var result = {'rows': result.rows}
@@ -109,7 +109,7 @@ app.post("/:id",(req, res) => {
     var userName = req.body.username_signup;
     var password = req.body.password;
     var password_hashed = password_hash.generate(password);
-    console.log(password_hashed);
+    //console.log(password_hashed);
     //get each entry
     var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
     values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;

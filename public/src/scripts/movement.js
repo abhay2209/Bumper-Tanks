@@ -42,3 +42,18 @@ function OBJECT_MOVER(obj){
       { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});
   }
 }
+
+
+function DETECT(){
+  Events.on(engineObject, 'collisionStart', function(event) {
+    let pairs = event.pairs;
+    pairs.forEach(function(pair) {
+      if(pair.bodyA.label ==='tank' && pair.bodyB.label ==='bullet'){
+        console.log("hit");
+      }
+      else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='tank'){
+        console.log("hit");
+      }
+    })
+  });
+}

@@ -13,7 +13,9 @@ var BARRIER_LIST = [
 
 var matterInst = new matterObj();
 matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+DETECT();
 matterInst.playSimulation();
+
 
 //Commentted out until we can migrate all simulation stuff to server-side
 /*var socket = io();

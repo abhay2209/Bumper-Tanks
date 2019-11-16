@@ -1,5 +1,6 @@
 //Use this file to forward declare Global CONST & VAR
-var WWWZZZ
+var worldObject;
+var engineObject;
 
 
 //USEFUL CONSTANTS

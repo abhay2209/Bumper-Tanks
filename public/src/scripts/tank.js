@@ -1,6 +1,6 @@
 // Class to create tank objects
 class Tank{
-  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum,health)
   {
     this.playerNum = playerNum;
     //Tank Traits
@@ -10,6 +10,7 @@ class Tank{
     //Initial Contitions
       this.linVel = 0;
       this.angVel = 0;
+      this.health = health;
     //Matter Object
       //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
       //  frictionAir: TANK_FRICTION,
@@ -45,6 +46,7 @@ class Tank{
 
 
       this.body = Body.create({
+        label:'tank',
         parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
         frictionAir: TANK_FRICTION
       });
@@ -60,7 +62,7 @@ class Tank{
 
   fire_cannon(){
     var fired_bullet = new Bullet(this)
-    World.add(WWWZZZ, [fired_bullet.body]);
+    World.add(worldObject, [fired_bullet.body]);
   }
 
   accelerate(direction)
