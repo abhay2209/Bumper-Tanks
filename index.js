@@ -68,23 +68,25 @@ app.get('/', (req, res) => {
   //console.log("Cookies :  ", req.cookies);
 });
 
-
-//get player info from login page
-app.post("/:id",(req, res) => {
-  var id = req.params.id;
-
-  if (id == "updateWeather"){
+app.get('/updateWeather', (req, res) => {
+  //if (id == "updateWeather"){
     var darkSkyStr = `https://api.darksky.net/forecast/'${DARKSKY_KEY}'/'${DARKSKY_LAT}','${DARKSKY_LON}'`;
     request(darkSkyStr, { json:true }, (err, res, body) => {
       if(err)
       {
         return console.log("Error: ", err);
       }
-
+  
       console.log("Response: ", res);
       console.log("Body: ", body);
     });
-  }
+  //}
+})
+
+
+//get player info from login page
+app.post("/:id",(req, res) => {
+  var id = req.params.id;
 
   // log in
   if (id == "login"){
