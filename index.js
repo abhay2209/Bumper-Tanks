@@ -55,7 +55,7 @@ app.get('/db', async (req, res) => {
 app.get('/', (req, res, next) => {
     if (req.session.loggedin){
         console.log("logged in");
-       res.sendFile(__dirname + '/public/src/gameCanvas.html');
+       res.render('gameCanvas');
     }else{
       next();
     }
@@ -72,59 +72,17 @@ app.get('/', (req, res) => {
 app.post("/:id",(req, res) => {
   var id = req.params.id;
 
-  // log in
-  if (id == "login"){
-    var username = req.body.username_login;
-    var password = req.body.password_login;
-    var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}';`;
-
-    pool.query(check_password_username,(err,result)=>{
-      if(err){
-        res.end(err);
-      }
-      // if username found check for password
-      if(result.rows.length){
-
-        if(password_hash.verify(password, (result.rows[0].password))){
-          req.session.loggedin = true;
-          req.session.username = username;
-          console.log("session:  ", req.session);
-          res.sendFile(__dirname + '/public/src/gameCanvas.html');
-        }else{
-          var result = {'rows': result.rows}
-          res.render('Home',{ isError:"true"});
-        }
-      }else{
-        res.render('Home',{ isError:"true"});
-      }
-
-    });
-
-  // if user want to signUp
-  }else if (id == "add"){
-
-    var email= req.body.email;
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var userName = req.body.username_signup;
-    var password = req.body.password;
-    var password_hashed = password_hash.generate(password);
-    console.log(password_hashed);
-    //get each entry
-    var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
-    values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;
-
-    console.log(insertQuerry);
-    pool.query(insertQuerry,(error)=>{
-      if(error){
-        if (error.code == "23505"){
-          res.render('signUp.ejs');
-        }
-      }else{
-        res.render('Home.ejs',{ isError:"false"});
-      }
-    });
-
+  if (id == "login")
+  {
+    SignIn(req, res);
+  }
+  else if (id == "add")
+  {
+    SignUp(req, res);
+  }
+  else if (id == "signout")
+  {
+    SignOut(req, res);
   }
 
 });
@@ -250,3 +208,66 @@ app.post("/:id",(req, res) => {
   setInterval(function() {
     io.sockets.emit('state', players, bullet);
   }, 1000 / 60);
+
+
+
+  function SignIn(req, res){
+    var username = req.body.username_login;
+    var password = req.body.password_login;
+    var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}';`;
+
+    pool.query(check_password_username,(err,result)=>{
+      if(err){
+        res.end(err);
+      }
+      // if username found check for password
+      if(result.rows.length){
+
+        if(password_hash.verify(password, (result.rows[0].password))){
+          req.session.loggedin = true;
+          req.session.username = username;
+          console.log("session:  ", req.session);
+          res.render('gameCanvas');
+        }else{
+          var result = {'rows': result.rows}
+          res.render('Home',{ isError:"true"});
+        }
+      }else{
+        res.render('Home',{ isError:"true"});
+      }
+
+    });
+  }
+
+  function SignUp(req, res){
+    var email= req.body.email;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var userName = req.body.username_signup;
+    var password = req.body.password;
+    var password_hashed = password_hash.generate(password);
+    console.log(password_hashed);
+    //get each entry
+    var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
+    values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;
+
+    console.log(insertQuerry);
+    pool.query(insertQuerry,(error)=>{
+      if(error){
+        if (error.code == "23505"){
+          res.render('signUp.ejs');
+        }
+      }else{
+        res.render('Home.ejs',{ isError:"false"});
+      }
+    });
+  }
+
+  function SignOut(req, res){
+    if(req.session.loggedin)
+    {
+      console.log("Signing Out");
+      req.session.loggedin = 0;
+      res.render('Home.ejs', { isError: "false" });
+    }
+  }
