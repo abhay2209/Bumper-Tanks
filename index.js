@@ -80,6 +80,10 @@ app.post("/:id",(req, res) => {
   {
     SignUp(req, res);
   }
+  else if (id == "signout")
+  {
+    SignOut(req, res);
+  }
 
 });
 
@@ -257,4 +261,13 @@ app.post("/:id",(req, res) => {
         res.render('Home.ejs',{ isError:"false"});
       }
     });
+  }
+
+  function SignOut(req, res){
+    if(req.session.loggedin)
+    {
+      console.log("Signing Out");
+      req.session.loggedin = 0;
+      res.render('Home.ejs');
+    }
   }
