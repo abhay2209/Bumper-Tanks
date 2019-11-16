@@ -227,7 +227,7 @@ app.post("/:id",(req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           console.log("session:  ", req.session);
-          res.sendFile('gameCanvas.html');
+          res.render('gameCanvas');
         }else{
           var result = {'rows': result.rows}
           res.render('Home',{ isError:"true"});
@@ -268,6 +268,6 @@ app.post("/:id",(req, res) => {
     {
       console.log("Signing Out");
       req.session.loggedin = 0;
-      res.render('Home.ejs');
+      res.render('Home.ejs', { isError: "false" });
     }
   }
