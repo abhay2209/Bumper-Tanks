@@ -9,6 +9,8 @@
     height: 600px;
     border: 1px solid white;
     background-color: black;
+    float:left;
+    margin-bottom:3%;
   }
 
     .centerAlign {
@@ -19,4 +21,23 @@
   body{
     background-image: url("background2.jpg");
     background-size: 100% 100%;
+  }
+  #Players{
+  float:left;
+  margin-left:5%;
+  margin-top: 15%;
+  width: 18%;
+  
+  }
+  #Buttons{
+    float:right;
+    margin-left:5%;
+    margin-top:15%;
+
+  }
+
+  .ul .li {
+    background: #ffe5e5;
+    padding: 5px;
+    margin-left: 35px;
   }

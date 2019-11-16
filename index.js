@@ -55,7 +55,7 @@ app.get('/db', async (req, res) => {
 app.get('/', (req, res, next) => {
     if (req.session.loggedin){
         console.log("logged in");
-       res.sendFile(__dirname + '/public/src/gameCanvas.html');
+       res.render('gameCanvas');
     }else{
       next();
     }
@@ -89,7 +89,7 @@ app.post("/:id",(req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           console.log("session:  ", req.session);
-          res.sendFile(__dirname + '/public/src/gameCanvas.html');
+          res.render('gameCanvas');
         }else{
           var result = {'rows': result.rows}
           res.render('Home',{ isError:"true"});
