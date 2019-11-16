@@ -227,7 +227,7 @@ app.post("/:id",(req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           console.log("session:  ", req.session);
-          res.sendFile(__dirname + '/public/src/gameCanvas.html');
+          res.sendFile('gameCanvas.html');
         }else{
           var result = {'rows': result.rows}
           res.render('Home',{ isError:"true"});
