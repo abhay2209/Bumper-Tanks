@@ -72,6 +72,10 @@ app.get('/', (req, res) => {
 app.post("/:id",(req, res) => {
   var id = req.params.id;
 
+  if (id == "updateWeather"){
+    
+  }
+
   // log in
   if (id == "login"){
     var username = req.body.username_login;
