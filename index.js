@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
-const session = require('express-session')
+const session = require('express-session');
+const request = require('request');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var password_hash = require('password-hash');
@@ -73,7 +74,16 @@ app.post("/:id",(req, res) => {
   var id = req.params.id;
 
   if (id == "updateWeather"){
-    
+    var darkSkyStr = `https://api.darksky.net/forecast/'${DARKSKY_KEY}'/'${DARKSKY_LAT}','${DARKSKY_LON}'`;
+    request(darkSkyStr, { json:true }, (err, res, body) => {
+      if(err)
+      {
+        return console.log("Error: ", err);
+      }
+
+      console.log("Response: ", res);
+      console.log("Body: ", body);
+    });
   }
 
   // log in
