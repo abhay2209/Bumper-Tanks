@@ -43,16 +43,27 @@ function OBJECT_MOVER(obj){
   }
 }
 
-
-function DETECT(){
+//function to detect collision
+function detectCollision(){
   Events.on(engineObject, 'collisionStart', function(event) {
     let pairs = event.pairs;
     pairs.forEach(function(pair) {
       if(pair.bodyA.label ==='tank' && pair.bodyB.label ==='bullet'){
-        console.log("hit");
+        World.remove(worldObject,pair.bodyB);
+        pair.bodyA.parent.health -= pair.bodyB.damage;
+        console.log(pair.bodyA.parent.health);
       }
       else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='tank'){
-        console.log("hit");
+        World.remove(worldObject,pair.bodyA);
+        pair.bodyB.parent.health -= pair.bodyA.damage;
+        console.log(pair.bodyA.parent.health);
+
+      }else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='barrier'){
+        World.remove(worldObject,pair.bodyA);
+      }else if(pair.bodyA.label ==='barrier' && pair.bodyB.label ==='bullet'){
+        World.remove(worldObject,pair.bodyB);
+      }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
+        World.remove(worldObject,pair.bodyB);
       }
     })
   });
