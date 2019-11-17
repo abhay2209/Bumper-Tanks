@@ -1,41 +1,44 @@
 
-  #gameScreen {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+  #gameScreen 
+  {
+    border: 1px solid black;
+    background-color: black;
+
     width: 800px;
     height: 600px;
-    border: 1px solid white;
-    background-color: black;
-    float:left;
-    margin-bottom:3%;
+
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -400px;
+    left: 50%;
   }
 
-    .centerAlign {
-          margin: 10px auto 20px;
-          display: block;
-    }
+  .centerAlign {
+        margin: 10px auto 20px;
+        display: static;
+  }
 
-  body{
+  notbody{
     background-image: url("background2.jpg");
     background-size: 100% 100%;
   }
+
   #Players{
-  float:left;
-  margin-left:5%;
-  margin-top: 15%;
-  width: 18%;
-  
+
   }
+
   #sign_out{
-    float:right;
-    margin-right:8%;
-    margin-top:15%;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.8);
     background: rgb(112, 238, 103);
+
+    width: 200px;
+
+    position: absolute;
+    left: 50%;
+    margin-left: 400px;
+    margin-top: 10px;
+
     padding: 15px 40px;
     border-radius: 4px;
     font-weight:bold;
@@ -43,7 +46,8 @@
     transition: all 0.2s ease-in-out;
   }
 
-  .glow-button:hover {
+  .glow-button:hover 
+  {
     color: rgba(255, 255, 255, 1);
     box-shadow: 0 7px 15px rgba(112, 238, 103, .4);
   }
@@ -53,4 +57,21 @@
     background: #ffe5e5;
     padding: 5px;
     margin-left: 35px;
+  }
+
+  #topTable {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+
+    width: 1200px;
+    height: 50px;
+
+    position: absolute;
+    left: 50%;
+    margin-left: -600px;
+  }
+
+  #topTable td{
+
   }
