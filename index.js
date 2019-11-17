@@ -213,7 +213,7 @@ app.post("/:id", async, (req, res) => {
 
   function getCurrentWeather() {
     var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
-      return weatherPromise = new Promise(resolve => {
+      return new Promise(resolve => {
         request(darkSkyStr, { json:true }, (err, result, body) => {
           if(err)
           {
@@ -225,7 +225,7 @@ app.post("/:id", async, (req, res) => {
       });
   }
 
-  function SignIn(req, res){
+  async function SignIn(req, res){
     var username = req.body.username_login;
     var password = req.body.password_login;
     var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}';`;
