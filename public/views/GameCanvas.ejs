@@ -13,15 +13,20 @@
       <div>
             <div id="Players">
                 <ul>
-                  <%if (currentWeather) { %>
-                    <li>
-                      Current Weather: <%=currentWeather.icon%>, Wind: <%=currentWeather.windSpeed%> @ <%=currentWeather.windBearing%>
-                    </li>
-                  <% } %>
                   <li>This is Check for list 2</li>
                 </ul>
                 </div>
             <div>
+            <div id="topTable">
+              <table>
+                <tr>
+                  <td> Weather Conditions               </td>
+                  <td> <%=currentWeather.icon%>         </td>
+                  <td> <%=currentWeather.windBearing%>  </td>
+                  <td> <%=currentWeather.windSpeed%>    </td>
+                  <td> <&=currentWeather.windGust%>     </td>
+                </tr>              
+            </div>
              <canvas id="gameScreen">
   
              </canvas>
