@@ -12,6 +12,7 @@ var http = require('http');
 var socketIO = require('socket.io');
 var server = http.Server(app);
 var io = socketIO(server);
+var currentWeather;
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,20 +68,6 @@ app.get('/', (req, res) => {
   res.render('Home', {isError:"false", regShown:1});
   //console.log("Cookies :  ", req.cookies);
 });
-
-app.get('/updateWeather', (req, res) => {
-  var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
-  console.log (darkSkyStr);
-  request(darkSkyStr, { json:true }, (err, result, body) => {
-    if(err)
-    {
-      return console.log("Error: ", err);
-    }
-
-    console.log("Body: ", body.currently);
-  });
-});
-
 
 //get player info from login page
 app.post("/:id",(req, res) => {
@@ -264,3 +251,16 @@ app.post("/:id",(req, res) => {
   setInterval(function() {
     io.sockets.emit('state', players, bullet);
   }, 1000 / 60);
+
+
+  function getCurrentWeather() {
+    var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
+    console.log (darkSkyStr);
+    request(darkSkyStr, { json:true }, (err, result, body) => {
+      if(err)
+      {
+        return console.log("Error: ", err);
+      }
+      currentWeather = body.currently;
+    });
+  }
