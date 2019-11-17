@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 //get player info from login page
-app.post("/:id", async, (req, res) => {
+app.post("/:id", async (req, res) => {
   var id = req.params.id;
 
   if (id == "login")
@@ -225,12 +225,12 @@ app.post("/:id", async, (req, res) => {
       });
   }
 
-  async function SignIn(req, res){
+  function SignIn(req, res){
     var username = req.body.username_login;
     var password = req.body.password_login;
     var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}';`;
 
-    pool.query(check_password_username,(err,result)=>{
+    pool.query(check_password_username, async function(err,result){
       if(err){
         res.end(err);
       }

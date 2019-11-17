@@ -15,7 +15,7 @@
                 <ul>
                   <%if (currentWeather) { %>
                     <li>
-                      Current Weather: <%currentWeather.icon%>, <%currentWeather.windSpeed%>
+                      Current Weather: <%=currentWeather.icon%>, Wind: <%=currentWeather.windSpeed%> @ <%=currentWeather.windBearing%>
                     </li>
                   <% } %>
                   <li>This is Check for list 2</li>
