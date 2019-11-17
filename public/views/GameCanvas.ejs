@@ -6,6 +6,7 @@
     <link rel = "icon" type = "image/x-icon" href = "/src/images/tankIcon.png">
     <link rel = "stylesheet" href = "/src/stylesheet/style.css" />
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://kit.fontawesome.com/09c537c0bd.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -18,25 +19,28 @@
                   <td> <%=currentWeather.icon%>         </td>
                   <td> <%=currentWeather.windBearing%>  </td>
                   <td> <%=currentWeather.windSpeed%>    </td>
+
+                  <td> <form action ="/updateWeather" method="POST">
+                    <button type = 'submit' class= 'button glow-button' id = 'refresh_weather'>Update Weather</button>
+                  </form> </td>
+
+                  <td> <form action ="/signout" method="POST">
+                    <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
+                  </form> </td>
+
                 </tr>  
               </table>            
             </div>
 
             <div id="Players">
-                <ul>
-                  <li>This is Check for list 2</li>
-                </ul>
-                </div>
-            <div>
+                <table id= "playerTable">
+                  <tr>
+                    <td> This is Check for list 2       </td>
+                  </tr>
+                </table>
+            </div>
 
             <canvas id="gameScreen"> </canvas>
-
-            </div>
-            <form action ="/signout" method="POST">
-            <div id="Buttons">
-              <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
-            </div>
-            </form>
          
          </div>
 
