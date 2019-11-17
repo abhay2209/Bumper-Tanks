@@ -69,19 +69,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/updateWeather', (req, res) => {
-  //if (id == "updateWeather"){
-    var darkSkyStr = `https://api.darksky.net/forecast/'${DARKSKY_KEY}'/'${DARKSKY_LAT}','${DARKSKY_LON}'`;
-    request(darkSkyStr, { json:true }, (err, res, body) => {
-      if(err)
-      {
-        return console.log("Error: ", err);
-      }
-  
-      console.log("Response: ", res);
-      console.log("Body: ", body);
-    });
-  //}
-})
+  var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
+  console.log (darkSkyStr);
+  request(darkSkyStr, { json:true }, (err, result, body) => {
+    if(err)
+    {
+      return console.log("Error: ", err);
+    }
+
+    console.log("Body: ", body.currently);
+  });
+});
 
 
 //get player info from login page
