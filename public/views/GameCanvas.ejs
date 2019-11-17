@@ -13,7 +13,12 @@
       <div>
             <div id="Players">
                 <ul>
-                   <li>This is Check for list 2</li>
+                  <%if (currentWeather) { %>
+                    <li>
+                      Current Weather: <%currentWeather.icon%>, <%currentWeather.windSpeed%>
+                    </li>
+                  <% } %>
+                  <li>This is Check for list 2</li>
                 </ul>
                 </div>
             <div>

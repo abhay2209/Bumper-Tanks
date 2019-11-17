@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 //get player info from login page
-app.post("/:id",(req, res) => {
+app.post("/:id", async, (req, res) => {
   var id = req.params.id;
 
   if (id == "login")
@@ -213,14 +213,16 @@ app.post("/:id",(req, res) => {
 
   function getCurrentWeather() {
     var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
-    console.log (darkSkyStr);
-    request(darkSkyStr, { json:true }, (err, result, body) => {
-      if(err)
-      {
-        return console.log("Error: ", err);
-      }
-      currentWeather = body.currently;
-    });
+      return weatherPromise = new Promise(resolve => {
+        request(darkSkyStr, { json:true }, (err, result, body) => {
+          if(err)
+          {
+            return console.log("Error: ", err);
+          }
+          currentWeather = body.currently;
+          resolve(currentWeather);
+        });
+      });
   }
 
   function SignIn(req, res){
@@ -238,10 +240,11 @@ app.post("/:id",(req, res) => {
         if(password_hash.verify(password, (result.rows[0].password))){
           req.session.loggedin = true;
           req.session.username = username;
-          console.log("session:  ", req.session);
-          res.render('gameCanvas');
+          await getCurrentWeather(); //update weather
+          console.log("session: ", req.session);
+          res.render('gameCanvas',{ currentWeather });
         }else{
-          var result = {'rows': result.rows}
+          var result = {'rows': result.rows };
           res.render('Home',{ isError:"true"});
         }
       }else{
