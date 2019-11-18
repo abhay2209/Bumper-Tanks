@@ -13,23 +13,41 @@
       <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
       <div>
             <div id="topDiv">
-              <table id="topTable">
-                <tr>
-                  <td> Weather Conditions               </td>
-                  <td> <%=currentWeather.icon%>         </td>
-                  <td> <%=currentWeather.windBearing%>  </td>
-                  <td> <%=currentWeather.windSpeed%>    </td>
 
-                  <td> <form action ="/updateWeather" method="POST">
-                    <button type = 'submit' class= 'button glow-button' id = 'refresh_weather'>Update Weather</button>
-                  </form> </td>
+              <div id='weatherIcon'>
+                <% if (currentWeather.icon.search("rain") > -1) { %>
+                  <i class="fas fa-cloud-rain"></i>
+                  <p>Rainy</p>
+                <% } else if (currentWeather.icon.search("cloud") > -1) { %>
+                  <i class="fas fa-cloud"></i>
+                  <p>Cloudy</p>
+                <% } else if (currentWeather.icon.search("sun") > -1) { %>
+                  <i class="fas fa-sun"></i>
+                  <p>Sunny</p>
+                <% } %>
+              </div>
 
-                  <td> <form action ="/signout" method="POST">
-                    <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
-                  </form> </td>
+              <div id='windIcon'>
+                <p><i styleclass="fas fa-wind"></i></p>
 
-                </tr>  
-              </table>            
+                <p>Bearing:
+                <% if (currentWeather.windBearing > 315 || currentWeather.windBearing <= 45) { %>
+                  <i styleclass="fas fa-arrow-up"></i>
+                <% } else if (currentWeather.windBearing > 45 || currentWeather.windBearing <= 135) { %>
+                  <i class="fas fa-arrow-right"></i>
+                <% } else if (currentWeather.windBearing > 135 || currentWeather.windBearing <= 225) { %>
+                  <i class="fas fa-arrow-down"></i>
+                <% } else if (currentWeather.windBearing > 225 || currentWeather.windBearing <= 315) { %>
+                  <i class="fas fa-arrow-left"></i>
+                <% } %> </p>
+
+                <p>Speed: <%=currentWeather.windSpeed%> KPH</p>
+              </div>
+
+              <form action ="/signout" method="POST">
+                <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
+              </form>
+
             </div>
 
             <div id="Players">
