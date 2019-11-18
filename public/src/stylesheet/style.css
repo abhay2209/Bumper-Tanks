@@ -1,14 +1,14 @@
 
   #gameScreen 
   {
-    border: 1px solid black;
-    background-color: black;
+    outline: none;
+    background-color: #fff;
 
     width: 800px;
     height: 600px;
 
     position: absolute;
-    margin-top: -65px;
+    margin-top: -80px;
     margin-left: -400px;
     top: 50%;
     left: 50%;
@@ -22,13 +22,6 @@
   body{
     background-image: url("background2.jpg");
     font-family: sans-serif;
-  }
-
-  #Players{
-    float:left;
-    margin-left:5%;
-    margin-top: 15%;
-    width: 18%;
   }
 
   #sign_out{
@@ -60,22 +53,18 @@
     border-collapse: separate;
   }
 
-  #gameScreen {
-    width: 800px;
-    height: 600px;
-    margin-left: 16%;
-    outline: none;
-    background-color: #fff;
-  }
-  #chat-container {
-  width: 200px;
+#chat-container {
+  width: 195px;
   height: 596px;
   padding: 0;
   border: 1px solid black;
   background-color: #fff;
-  margin-left:35.5%;
-  margin-top:1.2%;
   position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-top: -80px;
+  margin-left: 405px;
 }
 
 #chat-display {
@@ -86,18 +75,19 @@
   overflow-y: scroll;
 
 }
-  li {
-    list-style-type: none;
-    padding: 5px;
-  }
 
-  li:nth-child(even) {
-    background: #ccc;
-  }
+li {
+  list-style-type: none;
+  padding: 5px;
+}
 
-  li:nth-child(odd) {
-    background: #aaa;
-  }
+li:nth-child(even) {
+  background: #ccc;
+}
+
+li:nth-child(odd) {
+  background: #aaa;
+}
 
   .notification {
     font-weight: bold;
@@ -199,15 +189,9 @@
   }
 
   #playerList ul {
-    padding: 0;
-  }
-
-  #playerList ul li {
-    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
     border: 1px solid black;
-    background-color: #ccc;
-    margin: 10px;
-    padding: 5px;
   }
 
   #playerList ul li p {
