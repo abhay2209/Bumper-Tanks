@@ -6,6 +6,7 @@
     <link rel = "icon" type = "image/x-icon" href = "/src/images/tankIcon.png">
     <link rel = "stylesheet" href = "/src/stylesheet/style.css" />
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://kit.fontawesome.com/09c537c0bd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
     $(function () {
@@ -24,32 +25,69 @@
   </head>
 
   <body>
-      <div id = 'container'>
-        <table>
-          <tr>
-            <td>
-              <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
-            </td>
-          </tr>
-          <tr>
-            <td id = canvas-container>
-               <canvas id="gameScreen"></canvas>
-            </td>
-            <td id = 'chat-container'>
-              <ul id ="chat-display"></ul>
-              <form id = "chat">
-                <input id='chat-input' autocomplete="off" type='text' placeholder='Press Enter to send' name='chat'/><button>Send</button>
-              </form>
-            </td>
-          </tr>
-       </table>
-       <form action ="/signout" method="POST">
-            <div id="Buttons">
-              <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
-            </div>
-       </form>
-       <p> </p>
-     </div>
+    <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
+
+    <div id="topDiv">
+      
+      <div id='weatherIcon'>
+        <% if (currentWeather.icon.search("rain") > -1) { %>
+          <i class="fas fa-cloud-rain"></i>
+          <p>Vancouver, CA<br>Rainy</p>
+        <% } else if (currentWeather.icon.search("cloud") > -1) { %>
+          <i class="fas fa-cloud"></i>
+          <p>Vancouver, CA<br>Cloudy</p>
+        <% } else if (currentWeather.icon.search("sun") > -1) { %>
+          <i class="fas fa-sun"></i>
+          <p>Vancouver, CA<br>Sunny</p>
+        <% } else if (currentWeather.icon.search("fog") > -1) { %>
+          <i class="fas fa-smog"></i>
+          <p>Vancouver, CA<br>Foggy</p>
+        <% } else { %>
+          <%= currentWeather.icon %>
+        <% } %>
+      </div>
+
+      <div id='windIcon'>
+        Wind <i class="fas fa-wind"></i><br>
+        Bearing
+        <% if (currentWeather.windBearing > 315 || currentWeather.windBearing <= 45) { %>
+          <i class="fas fa-arrow-up"></i>
+        <% } else if (currentWeather.windBearing > 45 || currentWeather.windBearing <= 135) { %>
+          <i class="fas fa-arrow-right"></i>
+        <% } else if (currentWeather.windBearing > 135 || currentWeather.windBearing <= 225) { %>
+          <i class="fas fa-arrow-down"></i>
+        <% } else if (currentWeather.windBearing > 225 || currentWeather.windBearing <= 315) { %>
+          <i class="fas fa-arrow-left"></i>
+        <% } %><br>
+        Speed <%=currentWeather.windSpeed%> KPH
+      </div>
+
+      <form action ="/signout" method="POST">
+        <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
+      </form>
+
+    </div>
+
+    <canvas id="gameScreen"> </canvas>
+
+    <div id = 'playerList'>
+      <ul>
+        <li>
+          <div id=p1C></div><p>PLAYER 1</p>
+        </li>
+        <li>
+          <div id=p1C></div><p>PLAYER 1</p>
+        </li>
+      </ul>
+    </div>
+
+    <div id = 'chat-container'>
+      <ul id ="chat-display"></ul>
+      <form id = "chat">
+        <input id='chat-input' autocomplete="off" type='text' placeholder='Press Enter to send' name='chat'/><button>Send</button>
+      </form>
+    </div>
+
      <script type = "text/javascript" src = "matter-build/matter.js"></script>
      <script type = "text/javascript" src = "/src/scripts/GLOBAL.js"></script>
      <script type = "text/javascript" src = "/src/scripts/matterInterface.js"></script>

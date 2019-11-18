@@ -4,7 +4,8 @@ var socketIO = require('socket.io');
 const path = require('path');
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
-const session = require('express-session')
+const session = require('express-session');
+const request = require('request');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var password_hash = require('password-hash');
@@ -66,9 +67,8 @@ app.get('/', (req, res) => {
   //console.log("Cookies :  ", req.cookies);
 });
 
-
 //get player info from login page
-app.post("/:id",(req, res) => {
+app.post("/:id", async (req, res) => {
   var id = req.params.id;
 
   if (id == "login")
@@ -113,6 +113,19 @@ app.post("/:id",(req, res) => {
   }, 1000 / 60);
 
 
+  function getCurrentWeather() {
+    var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
+      return new Promise(resolve => {
+        request(darkSkyStr, { json:true }, (err, result, body) => {
+          if(err)
+          {
+            return console.log("Error: ", err);
+          }
+          currentWeather = body.currently;
+          resolve(currentWeather);
+        });
+      });
+  }
 
   function SignIn(req, res){
     var username = req.body.username_login;
@@ -120,7 +133,7 @@ app.post("/:id",(req, res) => {
     app.locals.username = username;
     var check_password_username = `SELECT username, password FROM gamedata WHERE username = '${username}';`;
 
-    pool.query(check_password_username,(err,result)=>{
+    pool.query(check_password_username, async function(err,result){
       if(err){
         res.end(err);
       }
@@ -130,10 +143,11 @@ app.post("/:id",(req, res) => {
         if(password_hash.verify(password, (result.rows[0].password))){
           req.session.loggedin = true;
           req.session.username = username;
+          await getCurrentWeather(); //update weather
           console.log("session:  ", req.session);
           res.render('GameCanvas', {username: req.session.username} );
         }else{
-          var result = {'rows': result.rows}
+          var result = {'rows': result.rows };
           res.render('Home',{ isError:"true"});
         }
       }else{
