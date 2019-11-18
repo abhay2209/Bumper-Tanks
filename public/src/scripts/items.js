@@ -24,7 +24,7 @@ class Items {
         label: 'power',
         parent:this.body,
         render: {
-          fillStyle: blue;
+          fillStyle: blue
         }})
 
 
@@ -36,7 +36,7 @@ class Items {
         label: 'health',
         parent:this.body,
         render: {
-          fillStyle: red;
+          fillStyle: red
         }})
 
 
@@ -46,9 +46,10 @@ class Items {
   poison(xPos, yPos, width, length){
     var poison = Bodies.rectangle(xPos, yPos, width, length, {
         label: 'poison',
+        damage: 20,
         parent:this.body,
         render: {
-          fillStyle: '#005504'
+          fillStyle: purple
         }})
 
 
@@ -58,9 +59,10 @@ class Items {
   speed_up(xPos, yPos, width, length){
     var speedUp = Bodies.rectangle(xPos, yPos, width, length, {
         label: 'speed',
+        
         parent:this.body,
         render: {
-          fillStyle: '#005504'
+          fillStyle: orange
         }})
 
 

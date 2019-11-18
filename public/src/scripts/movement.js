@@ -64,6 +64,20 @@ function detectCollision(){
         World.remove(worldObject,pair.bodyB);
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
         World.remove(worldObject,pair.bodyB);
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+        World.remove(worldObject,pair.bodyB);
+
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
+        World.remove(worldObject,pair.bodyB);
+        pair.bodyA.parent.health +=20;
+        if(pair.bodyA.parent.health>100){
+            pair.bodyA.parent.health=100;
+         }
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='poison'){
+        pair.bodyB.parent.health -= pair.bodyA.damage;
+        World.remove(worldObject,pair.bodyB);
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
+        World.remove(worldObject,pair.bodyB);
       }
     })
   });
