@@ -10,6 +10,12 @@ var BARRIER_LIST = [
   new Barrier_Triangle(900, 200, 0, 25)
 
 ];
+var ITEM_LIST = [
+  new Items(200,200,10,10),
+  new Items(800,200,10,10),
+  new Items(800,600,10,10),
+  new Items(200,600,10,10)
+];
 
 var matterInst = new matterObj();
 matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
