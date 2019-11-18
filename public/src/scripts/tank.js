@@ -1,8 +1,8 @@
 // Class to create tank objects
 class Tank{
-  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum,health)
   {
-    this.playerNum = playerNum;
+      this.playerNum = playerNum;
     //Tank Traits
       this.maxVel = maxVel;
       this.accelRate = accelRate;
@@ -15,38 +15,48 @@ class Tank{
       //  frictionAir: TANK_FRICTION,
 
       //});
-
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
+        label: 'tank',
+        parent:this.body,
         render: {
           fillStyle: '#005504'
         }}),
       tankGun = Bodies.rectangle(xPos-GUN_LENGTH/2-TURRENT_RADIUS, yPos, GUN_LENGTH, 5, {
+        label: 'tank',
         render: {
           fillStyle: '#7A8E7B'
         }}),
       tankTurrent = Bodies.circle(xPos, yPos, TURRENT_RADIUS, {
+        label: 'tank',
+        parent:this.body,
         render: {
           fillStyle: '#005504',
           strokeStyle: '#000000',
           lineWidth: 3
         }}),
       tankRightTrack = Bodies.rectangle(xPos, yPos+TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
+        label: 'tank',
+        parent:this.body,
         render: {
           fillStyle: '#5c5c5c',
           strokeStyle: '#000000',
           lineWidth: 3
         }}),
       tankLeftTrack = Bodies.rectangle(xPos, yPos-TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
+        label: 'tank',
+        parent:this.body,
         render: {
           fillStyle: '#5c5c5c',
           strokeStyle: '#000000',
           lineWidth: 3
         }});
 
-
       this.body = Body.create({
-        parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
-        frictionAir: TANK_FRICTION
+          health: health,
+          parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
+          //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
+          frictionAir: TANK_FRICTION
+
       });
 
     //set initial rotation of tank
@@ -57,10 +67,9 @@ class Tank{
     var componentList = [];
   }
 
-
   fire_cannon(){
-    var fired_bullet = new Bullet(this)
-    World.add(WWWZZZ, [fired_bullet.body]);
+    var fired_bullet = new Bullet(this,10);
+    World.add(worldObject, [fired_bullet.body]);
   }
 
   accelerate(direction)

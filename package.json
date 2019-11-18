@@ -9,6 +9,7 @@
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "jquery": "^3.4.1",
     "matter-js": "^0.14.2",
     "node": "^12.13.0",
     "nodemon": "^1.19.4",
