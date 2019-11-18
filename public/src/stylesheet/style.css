@@ -8,8 +8,9 @@
     height: 600px;
 
     position: absolute;
+    margin-top: -65px;
     margin-left: -400px;
-    margin-top: 90px;
+    top: 50%;
     left: 50%;
   }
 
@@ -18,9 +19,9 @@
         display: static;
   }
 
-  notbody{
+  body{
     background-image: url("background2.jpg");
-    background-size: 100% 100%;
+    font-family: sans-serif;
   }
 
   #Players{
@@ -31,12 +32,12 @@
     text-decoration: none;
     color: rgba(255, 255, 255, 0.8);
     background: rgb(112, 238, 103);
-    border-radius: 4px;
+    border-radius: 4px; 
 
 
     position: absolute;
-    top: 5px;
-    right: 10px;
+    top: 23px;
+    right: 23px;
     
     padding: 15px 40px;
     font-weight:bold;
@@ -58,9 +59,8 @@
   }
 
   #topDiv {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
+    background-color: #f1f1f1;
+    opacity: 0.8;
 
     width: 1202px;
     height: 100px;
@@ -70,17 +70,16 @@
     margin-left: -601px;
   } 
 
-  #playerTable {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
+  #playerList {
+    background-color: #f1f1f1;
+    opacity: 0.8;
     
-    width: 200px;
+    width: 195px;
     height: 600px;
 
     position: absolute;
     right: 50%;
-    margin-right: 400px;
+    margin-right: 405px;
     margin-top: 105px;
   }
 
@@ -95,21 +94,60 @@
   }
 
   #weatherIcon p {
-    font-weight:bold;
-    
     position: absolute;
     right: 50%;
     bottom: 50%;
-    margin-bottom: 15px;
-    margin-right: 40px;
+    margin-bottom: -5px;
+    margin-right: 45px;
   }
 
   #windIcon {
-    font-weight:bold;
+    display: inline;
 
     position: absolute;
     left: 50%;
     bottom: 50%;
-    margin-left: 60px;
-    margin-bottom: -18px;
+    margin-left: 65px;
+    margin-bottom: -22px;
+  }
+
+  .fa-cloud-rain {
+    color: lightblue;
+  }
+
+  .fa-cloud {
+    color: grey;
+  }
+
+  .fa-smog {
+    color: lightgrey;
+  }
+
+  .fa-sun {
+    color: yellow;
+  }
+
+  #playerList ul {
+    padding: 0;
+  }
+
+  #playerList ul li {
+    list-style-type: none;
+    border: 1px solid black;
+    background-color: #ccc;
+    margin: 10px;
+    padding: 5px;
+  }
+
+  #playerList ul li p {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  #p1C {
+    width: 15px;
+    height: 15px;
+    background-color: green;
+    display: inline-block;
   }

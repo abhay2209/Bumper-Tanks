@@ -11,58 +11,62 @@
 
   <body>
       <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
-      <div>
-            <div id="topDiv">
 
-              <div id='weatherIcon'>
-                <% if (currentWeather.icon.search("rain") > -1) { %>
-                  <i class="fas fa-cloud-rain"></i>
-                  <p>Rainy</p>
-                <% } else if (currentWeather.icon.search("cloud") > -1) { %>
-                  <i class="fas fa-cloud"></i>
-                  <p>Cloudy</p>
-                <% } else if (currentWeather.icon.search("sun") > -1) { %>
-                  <i class="fas fa-sun"></i>
-                  <p>Sunny</p>
-                <% } %>
-              </div>
+      <div id="topDiv">
+        
+        <div id='weatherIcon'>
+          <% if (currentWeather.icon.search("rain") > -1) { %>
+            <i class="fas fa-cloud-rain"></i>
+            <p>Vancouver, CA<br>Rainy</p>
+          <% } else if (currentWeather.icon.search("cloud") > -1) { %>
+            <i class="fas fa-cloud"></i>
+            <p>Vancouver, CA<br>Cloudy</p>
+          <% } else if (currentWeather.icon.search("sun") > -1) { %>
+            <i class="fas fa-sun"></i>
+            <p>Vancouver, CA<br>Sunny</p>
+          <% } else if (currentWeather.icon.search("fog") > -1) { %>
+            <i class="fas fa-smog"></i>
+            <p>Vancouver, CA<br>Foggy</p>
+          <% } else { %>
+            <%= currentWeather.icon %>
+          <% } %>
+        </div>
 
-              <div id='windIcon'>
-                <p><i styleclass="fas fa-wind"></i></p>
+        <div id='windIcon'>
+          Wind <i class="fas fa-wind"></i><br>
+          Bearing
+          <% if (currentWeather.windBearing > 315 || currentWeather.windBearing <= 45) { %>
+            <i class="fas fa-arrow-up"></i>
+          <% } else if (currentWeather.windBearing > 45 || currentWeather.windBearing <= 135) { %>
+            <i class="fas fa-arrow-right"></i>
+          <% } else if (currentWeather.windBearing > 135 || currentWeather.windBearing <= 225) { %>
+            <i class="fas fa-arrow-down"></i>
+          <% } else if (currentWeather.windBearing > 225 || currentWeather.windBearing <= 315) { %>
+            <i class="fas fa-arrow-left"></i>
+          <% } %><br>
+          Speed <%=currentWeather.windSpeed%> KPH
+        </div>
 
-                <p>Bearing:
-                <% if (currentWeather.windBearing > 315 || currentWeather.windBearing <= 45) { %>
-                  <i styleclass="fas fa-arrow-up"></i>
-                <% } else if (currentWeather.windBearing > 45 || currentWeather.windBearing <= 135) { %>
-                  <i class="fas fa-arrow-right"></i>
-                <% } else if (currentWeather.windBearing > 135 || currentWeather.windBearing <= 225) { %>
-                  <i class="fas fa-arrow-down"></i>
-                <% } else if (currentWeather.windBearing > 225 || currentWeather.windBearing <= 315) { %>
-                  <i class="fas fa-arrow-left"></i>
-                <% } %> </p>
+        <form action ="/signout" method="POST">
+          <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
+        </form>
 
-                <p>Speed: <%=currentWeather.windSpeed%> KPH</p>
-              </div>
+      </div>
 
-              <form action ="/signout" method="POST">
-                <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
-              </form>
+      <canvas id="gameScreen"> </canvas>
 
-            </div>
-
-            <div id="Players">
-                <table id= "playerTable">
-                  <tr>
-                    <td> This is Check for list 2       </td>
-                  </tr>
-                </table>
-            </div>
-
-            <canvas id="gameScreen"> </canvas>
+      <div id = 'playerList'>
+        <ul>
+          <li>
+            <div id=p1C></div><p>PLAYER 1</p>
+          </li>
+          <li>
+            <div id=p1C></div><p>PLAYER 1</p>
+          </li>
+        </ul>
+      </div>
          
-         </div>
 
-     <p> </p>
      <script type = "text/javascript" src = "matter-build/matter.js"></script>
      <script type = "text/javascript" src = "/src/scripts/GLOBAL.js"></script>
      <script type = "text/javascript" src = "/src/scripts/matterInterface.js"></script>
