@@ -188,10 +188,13 @@ li:nth-child(odd) {
     color: yellow;
   }
 
+  #playerList {
+    border: 1px solid black;
+  }
+
   #playerList ul {
     padding: 0px;
     margin: 0px;
-    border: 1px solid black;
   }
 
   #playerList ul li p {
