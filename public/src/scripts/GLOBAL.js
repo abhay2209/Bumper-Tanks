@@ -1,10 +1,10 @@
 //Use this file to forward declare Global CONST & VAR
-var WWWZZZ
+var worldObject;
+var engineObject;
 
 
 //USEFUL CONSTANTS
 const TAU = Math.PI * 2;
-
 
 //MATTER-JS INTERFACES
 const Engine = Matter.Engine;           //engine interface
@@ -50,6 +50,7 @@ const TANK_FRICTION = 0.3;
 
 //Bullet Constants
 const BULLET_FRICTION = 0.0;
+const BULLET_DAMAGE = 10;
 
 //BARRIER CONSTANTS
 const BARRIER_FRICTION = 0.99;

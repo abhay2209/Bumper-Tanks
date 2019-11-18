@@ -1,6 +1,5 @@
-
 var TANK_LIST = [
-  new Tank(300, 300, 0, 4, 0.5, 3, 1)
+  new Tank(300, 300, 0, 4, 0.5, 3, 1,100)
 ];
 
 var BARRIER_LIST = [
@@ -13,7 +12,9 @@ var BARRIER_LIST = [
 
 var matterInst = new matterObj();
 matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+detectCollision();
 matterInst.playSimulation();
+
 
 //Commentted out until we can migrate all simulation stuff to server-side
 /*var socket = io();
