@@ -31,7 +31,7 @@ const W_KEY = 87;
 const S_KEY = 83;
 const A_KEY = 65;
 const D_KEY = 68;
-const SPACE_KEY = 32;
+const J_KEY = 74;
 document.addEventListener("keydown", event => {
     KEY_MAP[event.keyCode] = 1;
 });
