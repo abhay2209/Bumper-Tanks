@@ -1,18 +1,3 @@
-
-  #gameScreen {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 800px;
-    height: 600px;
-    border: 1px solid white;
-    background-color: black;
-    float:left;
-    margin-bottom:3%;
-  }
-
     .centerAlign {
           margin: 10px auto 20px;
           display: block;
@@ -27,7 +12,7 @@
   margin-left:5%;
   margin-top: 15%;
   width: 18%;
-  
+
   }
   #sign_out{
     float:right;
@@ -43,11 +28,79 @@
     transition: all 0.2s ease-in-out;
   }
 
+  #canvas-container {
+    border: 1px solid black;
+    max-width: 1000px;
+    position: absolute;
+  }
+
+
+  table {
+    margin: auto;
+    border-collapse: separate;
+  }
+
+  #gameScreen {
+    width: 800px;
+    height: 600px;
+    margin-left: 16%;
+    outline: none;
+    background-color: #fff;
+  }
+  #chat-container {
+  width: 200px;
+  height: 596px;
+  padding: 0;
+  border: 1px solid black;
+  background-color: #fff;
+  margin-left:35.5%;
+  margin-top:1.2%;
+  position: absolute;
+}
+
+#chat-display {
+  height: 570px;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  overflow-y: scroll;
+
+}
+  li {
+    list-style-type: none;
+    padding: 5px;
+  }
+
+  li:nth-child(even) {
+    background: #ccc;
+  }
+
+  li:nth-child(odd) {
+    background: #aaa;
+  }
+
+  .notification {
+    font-weight: bold;
+    color: #b30000;
+    padding: 6px;
+  }
+
+
+#chat-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  border-top: 1px solid black;
+}
+
+
+
   .glow-button:hover {
     color: rgba(255, 255, 255, 1);
     box-shadow: 0 7px 15px rgba(112, 238, 103, .4);
   }
- 
+
 
   .ul .li {
     background: #ffe5e5;

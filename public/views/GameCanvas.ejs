@@ -6,39 +6,50 @@
     <link rel = "icon" type = "image/x-icon" href = "/src/images/tankIcon.png">
     <link rel = "stylesheet" href = "/src/stylesheet/style.css" />
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    $(function () {
+        var socket = io();
+        $('#chat').submit(function(e){
+          e.preventDefault(); // prevents page reloading
+          socket.emit('chat message', $('#chat-input').val(), '<%= username %>');
+          $('#chat-input').val('');
+          return false;
+        });
+      socket.on('chat message', function(msg){
+      $('#chat-display').append($('<li>').text(msg));
+      });
+    });
+    </script>
   </head>
 
   <body>
-      <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
-      <div>
-            <div id="Players">
-                <ul>
-                   <li>This is Check for list 2</li>
-                </ul>
-                </div>
-            <div>
-             <canvas id="gameScreen">
-  
-             </canvas>
-            </div>
-            <form action ="/signout" method="POST">
+      <div id = 'container'>
+        <table>
+          <tr>
+            <td>
+              <img src="/src/images/title.png" alt="Bumper Tank" class = "centerAlign">
+            </td>
+          </tr>
+          <tr>
+            <td id = canvas-container>
+               <canvas id="gameScreen"></canvas>
+            </td>
+            <td id = 'chat-container'>
+              <ul id ="chat-display"></ul>
+              <form id = "chat">
+                <input id='chat-input' autocomplete="off" type='text' placeholder='Press Enter to send' name='chat'/><button>Send</button>
+              </form>
+            </td>
+          </tr>
+       </table>
+       <form action ="/signout" method="POST">
             <div id="Buttons">
               <button type="submit" class="button glow-button" id="sign_out">Sign Out</button>
             </div>
-            </form>
-         
-         </div>
-      <div style="display:none;">
-            <img id="tank" width="1000px" height="608px" src="/src/images/tank.png" alt="Tanker">
-            <img id="bullet" width="10" height="4" src="/src/images/normal_bullet.jpg" alt="Bullet">
-            
-       </div>
-    <div style="display:none;">
-          <img id="tank" width="1000px" height="608px" src="/src/images/tank.png" alt="Tanker">
-          <img id="bullet" width="10" height="4" src="/src/images/normal_bullet.jpg" alt="Bullet">
+       </form>
+       <p> </p>
      </div>
-     <p> </p>
-     <img id="movement" width="220" height="150" class = "centerAlign" src="/src/images/WASD.png">
      <script type = "text/javascript" src = "matter-build/matter.js"></script>
      <script type = "text/javascript" src = "/src/scripts/GLOBAL.js"></script>
      <script type = "text/javascript" src = "/src/scripts/matterInterface.js"></script>
