@@ -185,10 +185,7 @@ app.post("/:id", async (req, res) => {
   }
 
   function SignOut(req, res){
-    if(req.session.loggedin)
-    {
       console.log("Signing Out");
       req.session.loggedin = 0;
       res.render('Home.ejs', { isError: "false" });
-    }
   }
