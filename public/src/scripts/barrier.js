@@ -2,7 +2,11 @@ class Barrier_Rectangle{
     constructor(xPos, yPos, direction, width, height){
         this.body = Bodies.rectangle(xPos, yPos, width, height, {
           label:'barrier',
-          frictionAir: BARRIER_FRICTION
+          frictionAir: BARRIER_FRICTION,
+          isStatic: true,
+          render: {
+            fillStyle: '#1506CF7'
+          }
         });
         //set initial rotation of barrier
         Body.rotate(this.body, direction * Math.PI / 180);

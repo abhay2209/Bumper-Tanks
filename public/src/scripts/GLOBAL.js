@@ -31,7 +31,7 @@ const W_KEY = 87;
 const S_KEY = 83;
 const A_KEY = 65;
 const D_KEY = 68;
-const SPACE_KEY = 32;
+const J_KEY = 74;
 document.addEventListener("keydown", event => {
     KEY_MAP[event.keyCode] = 1;
 });
@@ -41,10 +41,10 @@ document.addEventListener("keydown", event => {
 
 
 //Tank Constants
-const TANK_WIDTH = 65;
-const TANK_HEIGHT = 40;
-const TURRENT_RADIUS = 18;
-const GUN_LENGTH = 30;
+const TANK_WIDTH = 60;
+const TANK_HEIGHT = 35;
+const TURRENT_RADIUS = 16;
+const GUN_LENGTH = 23;
 const TANK_FRICTION = 0.3;
 
 
