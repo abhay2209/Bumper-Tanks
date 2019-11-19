@@ -115,6 +115,7 @@ app.post("/:id", async (req, res) => {
 
   function getCurrentWeather() {
     var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
+    console.log(darkSkyStr);
       return new Promise(resolve => {
         request(darkSkyStr, { json:true }, (err, result, body) => {
           if(err)
@@ -123,6 +124,7 @@ app.post("/:id", async (req, res) => {
           }
           currentWeather = body.currently;
           resolve(currentWeather);
+          console.log("DarkSky response");
         });
       });
   }
@@ -145,7 +147,8 @@ app.post("/:id", async (req, res) => {
           req.session.username = username;
           await getCurrentWeather(); //update weather
           console.log("session:  ", req.session);
-          res.render('GameCanvas', {username: req.session.username} );
+          console.log("rendering game canvas")
+          res.render('GameCanvas', {username: req.session.username, currentWeather} );
         }else{
           var result = {'rows': result.rows };
           res.render('Home',{ isError:"true"});
