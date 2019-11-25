@@ -92,12 +92,6 @@ app.post("/:id", async (req, res) => {
   let bullet = {};
   io.on('connection', function(socket) {
     console.log("A user connected")
-    //limit number of players
-    //if(players.length < 4){
-      players.push('x')
-      console.log('x', " joined as player #", players.indexOf('x'))
-      socket.emit('player list', players)
-    //}
     socket.on('username', function(username) {
         socket.username = username;
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
@@ -113,6 +107,15 @@ app.post("/:id", async (req, res) => {
 
     socket.on('xyz', function(x, y, a) {
       //console.log("X:", x, " Y:", y, " A:", a)
+    })
+
+    socket.on('request join', function(username){
+      //limit number of players
+      if(players.length < 4){
+      players.push(username)
+      console.log(username, " joined as player #", players.indexOf(username))
+      socket.emit('accept join', username, players)
+      }
     })
 
 

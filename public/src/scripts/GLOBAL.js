@@ -60,6 +60,8 @@ const PLAYERNUM = 1;
 
 //Socket
 const socket = io();
-socket.on('player list', function(players){
-  console.log(players)
-})
+
+socket.on('accept join'), function(username, players){
+  console.log('current player: ', username)
+  console.log('player list: ', players)
+}

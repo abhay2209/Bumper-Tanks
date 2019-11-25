@@ -11,6 +11,7 @@
     <script>
     $(function () {
         var socket = io();
+        socket.emit('request join', '<%=username %>')
         $('#chat').submit(function(e){
           e.preventDefault(); // prevents page reloading
           socket.emit('chat message', $('#chat-input').val(), '<%= username %>');
