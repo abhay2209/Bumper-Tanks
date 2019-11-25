@@ -57,6 +57,7 @@ class matterObj{
     Events.on(engineObject, "afterUpdate", function(){
       OBJECT_CONTROLLER(tank);
       OBJECT_MOVER(tank);
+      EMIT_STATE(tank);
     });
     //add tank to matter world
     World.add(worldObject, [tank.body]);

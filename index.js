@@ -88,10 +88,16 @@ app.post("/:id", async (req, res) => {
 
   server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-  var players = {};
+  var players = [];
   let bullet = {};
   io.on('connection', function(socket) {
     console.log("A user connected")
+    //limit number of players
+    //if(players.length < 4){
+      players.push('x')
+      console.log('x', " joined as player #", players.indexOf('x'))
+      socket.emit('player list', players)
+    //}
     socket.on('username', function(username) {
         socket.username = username;
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
@@ -105,6 +111,10 @@ app.post("/:id", async (req, res) => {
         io.emit('chat message', username + ': ' + message);
     });
 
+    socket.on('xyz', function(x, y, a) {
+      //console.log("X:", x, " Y:", y, " A:", a)
+    })
+
 
   });
 
@@ -115,7 +125,6 @@ app.post("/:id", async (req, res) => {
 
   function getCurrentWeather() {
     var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
-    console.log(darkSkyStr);
       return new Promise(resolve => {
         request(darkSkyStr, { json:true }, (err, result, body) => {
           if(err)
@@ -124,7 +133,6 @@ app.post("/:id", async (req, res) => {
           }
           currentWeather = body.currently;
           resolve(currentWeather);
-          console.log("DarkSky response");
         });
       });
   }

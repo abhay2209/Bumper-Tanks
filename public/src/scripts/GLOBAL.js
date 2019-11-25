@@ -57,3 +57,9 @@ const BARRIER_FRICTION = 0.99;
 
 //PLAYER INFO
 const PLAYERNUM = 1;
+
+//Socket
+const socket = io();
+socket.on('player list', function(players){
+  console.log(players)
+})
