@@ -72,7 +72,7 @@ class matterObj{
   }
 
   //Initialize map from list of tanks & barriers & walls
-  initializeMap(tankList, barrierList, itemList){
+  initializeMap(tankList, barrierList){
     //add external walls
     this.addWalls();
     //add all tanks to map
