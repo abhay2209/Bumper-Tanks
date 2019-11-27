@@ -37,8 +37,8 @@
         <% } else if (currentWeather.icon.search("cloud") > -1) { %>
           <i class="fas fa-cloud"></i>
           <p>Vancouver, CA<br>Cloudy</p>
-        <% } else if (currentWeather.icon.search("sun") > -1) { %>
-          <i class="fas fa-sun"></i>
+        <% } else if (currentWeather.icon.search("sun") > -1 || currentWeather.icon.search("day" > -1)) { %>
+            <i class="fas fa-sun"></i>
           <p>Vancouver, CA<br>Sunny</p>
         <% } else if (currentWeather.icon.search("fog") > -1) { %>
           <i class="fas fa-smog"></i>
