@@ -10,6 +10,7 @@ class Tank{
     //Initial Contitions
       this.linVel = 0;
       this.angVel = 0;
+      // this.bullet_damage = 10;
     //Matter Object
       //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
       //  frictionAir: TANK_FRICTION,

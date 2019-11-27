@@ -26,8 +26,6 @@ class Items {
         render: {
           fillStyle: blue
         }})
-
-
     return powerUp;
   }
 
@@ -59,7 +57,7 @@ class Items {
   speed_up(xPos, yPos, width, length){
     var speedUp = Bodies.rectangle(xPos, yPos, width, length, {
         label: 'speed',
-        
+
         parent:this.body,
         render: {
           fillStyle: orange
