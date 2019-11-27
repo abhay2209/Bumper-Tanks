@@ -17,7 +17,7 @@ var ITEM_LIST = [
 ];
 
 var matterInst = new matterObj();
-matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+matterInst.initializeMap(TANK_LIST, BARRIER_LIST, ITEM_LIST);
 detectCollision();
 matterInst.playSimulation();
 
