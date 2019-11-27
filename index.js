@@ -13,6 +13,15 @@ const app = express()
 const server = http.Server(app)
 const io = socketIO(server)
 
+//couple these together so we know where to send messages
+class player_socket_pair{
+  constructor(player, socket_id)
+  {
+    this.player = player
+    this.socket_id = socket_id
+  }
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -91,7 +100,7 @@ app.post("/:id", async (req, res) => {
   var players = [];
   let bullet = {};
   io.on('connection', function(socket) {
-    console.log("A user connected")
+    //console.log("A user connected")
     socket.on('username', function(username) {
         socket.username = username;
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
@@ -109,15 +118,21 @@ app.post("/:id", async (req, res) => {
       //console.log("X:", x, " Y:", y, " A:", a)
     })
 
-    socket.on('request join', function(username){
-      //limit number of players
-      if(players.length < 4){
-      players.push(username)
-      console.log(username, " joined as player #", players.indexOf(username))
-      socket.emit('accept join', username, players)
+    socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
+    {
+      console.log("id: ", socket_id)
+      if (players.length < 4)
+      {
+        var pair = new player_socket_pair(PLAYER, socket_id)
+        players.push( pair ) //couple and save into player list
+        playerNum = players.indexOf(pair)
+        io.to(socket_id).emit('join success', playerNum)
+      }
+      else
+      {
+        console.log("game is full")
       }
     })
-
 
   });
 
@@ -157,8 +172,8 @@ app.post("/:id", async (req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           await getCurrentWeather(); //update weather
-          console.log("session:  ", req.session);
-          console.log("rendering game canvas")
+          //console.log("session:  ", req.session);
+          //console.log("rendering game canvas")
           res.render('GameCanvas', {username: req.session.username, currentWeather} );
         }else{
           var result = {'rows': result.rows };
@@ -178,7 +193,7 @@ app.post("/:id", async (req, res) => {
     var userName = req.body.username_signup;
     var password = req.body.password;
     var password_hashed = password_hash.generate(password);
-    console.log(password_hashed);
+    //console.log(password_hashed);
     //get each entry
     var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
     values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;
@@ -196,7 +211,7 @@ app.post("/:id", async (req, res) => {
   }
 
   function SignOut(req, res){
-      console.log("Signing Out");
+      //console.log("Signing Out");
       req.session.loggedin = 0;
       res.render('Home.ejs', { isError: "false" });
   }

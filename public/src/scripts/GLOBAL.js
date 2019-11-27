@@ -59,9 +59,11 @@ const BARRIER_FRICTION = 0.99;
 const PLAYERNUM = 1;
 
 //Socket
-const socket = io();
+//const socket = io();
 
-socket.on('accept join'), function(username, players){
-  console.log('current player: ', username)
-  console.log('player list: ', players)
-}
+//socket.on('accept join'), function(players){
+//  console.log('current player: ', username)
+//  console.log('player list: ', players)
+//}
+
+

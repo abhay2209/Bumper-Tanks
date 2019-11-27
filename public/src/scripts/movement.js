@@ -71,5 +71,5 @@ function detectCollision(){
 
 function EMIT_STATE(obj)
 {
-  socket.emit('xyz', obj.body.position.x, obj.body.position.y, obj.body.angle)
+  //socket.emit('xyz', obj.body.position.x, obj.body.position.y, obj.body.angle)
 }

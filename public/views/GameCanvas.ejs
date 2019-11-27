@@ -9,19 +9,31 @@
     <script src="https://kit.fontawesome.com/09c537c0bd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-    $(function () {
-        var socket = io();
-        socket.emit('request join', '<%=username %>')
-        $('#chat').submit(function(e){
-          e.preventDefault(); // prevents page reloading
-          socket.emit('chat message', $('#chat-input').val(), '<%= username %>');
-          $('#chat-input').val('');
-          return false;
+
+    var PLAYERNAME = '<%=username%>'  //shares username for js files
+    var SOCKET = io()                 //shares this socket with js files
+    SOCKET.on('connect', function(){
+      var socket_id = SOCKET.id
+
+      SOCKET.on('join success', function(pnum){
+        console.log("CONGRATULATIONS you are ", pnum)
+      })
+      
+      $(function () {
+          console.log('send user join req')
+          console.log("id: ", socket_id)
+          SOCKET.emit('user join req', PLAYERNAME, socket_id)  //send socket back so that server knows which player is each socket
+          $('#chat').submit(function(e){
+            e.preventDefault(); // prevents page reloading
+            SOCKET.emit('chat message', $('#chat-input').val(), PLAYERNAME);
+            $('#chat-input').val('');
+            return false;
+          });
+        SOCKET.on('chat message', function(msg){
+        $('#chat-display').append($('<li>').text(msg));
         });
-      socket.on('chat message', function(msg){
-      $('#chat-display').append($('<li>').text(msg));
       });
-    });
+    })
     </script>
   </head>
 
