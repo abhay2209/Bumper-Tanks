@@ -21,9 +21,9 @@ function OBJECT_CONTROLLER(obj){
       }
 
       //fire cannon
-    if(KEY_MAP[SPACE_KEY]){
+    if(KEY_MAP[J_KEY]){
         obj.fire_cannon();
-        KEY_MAP[SPACE_KEY] = 0;
+        KEY_MAP[J_KEY] = 0;
     }
 
       //send signals

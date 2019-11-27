@@ -62,6 +62,7 @@ class Tank{
 
     //set initial rotation of tank
       Body.rotate(this.body, direction * Math.PI / 180);
+      return this;
   }
 
   bodyHelper(){
@@ -105,4 +106,18 @@ class Tank{
   {
     this.angVel = 0;
   }
+
+
 };
+
+try{
+  module.exports = {
+    sayHello: function(){
+    return "Hello";
+  }
+}
+}
+catch(err)
+{
+
+}
