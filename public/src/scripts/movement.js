@@ -4,6 +4,40 @@
 //Movement Controller
 function OBJECT_CONTROLLER(obj){
   if(obj.playerNum == PLAYERNUM){
+    if(KEY_MAP[W_KEY]){
+      SOCKET.emit('tcm', obj.playerNum, W_KEY)
+    }else if(KEY_MAP[S_KEY]){
+      SOCKET.emit('tcm', obj.playerNum, S_KEY)
+    }
+
+    if(KEY_MAP[A_KEY]){
+      SOCKET.emit('tcm', obj.playerNum, A_KEY)
+    }else if(KEY_MAP[D_KEY]){
+      SOCKET.emit('tcm', obj.playerNum, D_KEY)
+    }
+
+    if(KEY_MAP[J_KEY]){
+      SOCKET.emit('tcm', obj.playerNum, J_KEY)
+      KEY_MAP[J_KEY] = 0;
+    }
+  }
+
+  SOCKET.on('tsm', function (inc_player_num, inc_command){
+    if(inc_player_num != obj.playerNum) return
+
+    if(inc_command == W_KEY)      obj.accelerate(1)
+    else if(inc_command == S_KEY) obj.accelerate(0)
+    else                          obj.deccelerate()
+
+    if(inc_command == A_KEY)      obj.turnLeft()
+    else if(inc_command == D_KEY) obj.turnRight()
+    else                          obj.stopTurn()
+
+    if(inc_command == J_KEY)      obj.fire_cannon()
+  }
+
+       
+  /*if(obj.playerNum == PLAYERNUM){
       //update speed
       if(KEY_MAP[W_KEY]){
           obj.accelerate(1);
@@ -31,23 +65,14 @@ function OBJECT_CONTROLLER(obj){
 
     SOCKET.emit('tank client move', obj.body.position, obj.body.angle, PLAYERNUM)
   }
-  else
-  {
     SOCKET.on('tank server move', function(inc_position, inc_angle, inc_player_num){
       if(obj.playerNum == inc_player_num)
       {
         obj.body.position = inc_position
         obj.body.angle = inc_angle
       }
-    })
-
-    SOCKET.on('tank server shoot', function(inc_player_num){
-      if(obj.playerNum == inc_player_num)
-      {
-        obj.fire_cannon();
-      }
-    })
-  }
+    })*/
+  
 }
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
