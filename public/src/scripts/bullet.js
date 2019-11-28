@@ -6,7 +6,7 @@ class Bullet{
     var angle = tank.body.angle;
     var cosX = Math.cos(angle);
     var sinY = Math.sin(angle);
-    this.body = Bodies.rectangle(x-cosX*TANK_WIDTH, y-sinY*TANK_WIDTH, 5.5, 5.5,{
+    this.body = Bodies.circle(x-cosX*TANK_WIDTH, y-sinY*TANK_WIDTH, 3,{
       label: 'bullet',
       damage:damage,
       frictionAir: BULLET_FRICTION,
