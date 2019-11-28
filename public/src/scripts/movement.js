@@ -1,3 +1,5 @@
+import { Socket } from "dgram";
+
 //GENERAL PURPOSE FUNCTIONS
 //Movement Controller
 function OBJECT_CONTROLLER(obj){
@@ -26,7 +28,8 @@ function OBJECT_CONTROLLER(obj){
         KEY_MAP[J_KEY] = 0;
     }
 
-      //send signals
+    Socket.emit('TANK_UPDATE', PLAYERNUM, obj.body.position, obj.body.angle)
+
   }else{
       //some socket.io stuff here
       //recieve signals

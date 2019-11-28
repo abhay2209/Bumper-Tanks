@@ -54,16 +54,3 @@ const BULLET_DAMAGE = 10;
 
 //BARRIER CONSTANTS
 const BARRIER_FRICTION = 0.99;
-
-//PLAYER INFO
-const PLAYERNUM = 1;
-
-//Socket
-//const socket = io();
-
-//socket.on('accept join'), function(players){
-//  console.log('current player: ', username)
-//  console.log('player list: ', players)
-//}
-
-
