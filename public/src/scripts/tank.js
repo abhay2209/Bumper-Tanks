@@ -57,8 +57,7 @@ class Tank{
   }
 
   fire_cannon(){
-    var fired_bullet = new Bullet(this,10);
-    World.add(worldObject, [fired_bullet.body]);
+    World.add(worldObject, [bullet(this.body.position, this.body.angle, 10)]);
   }
 
   accelerate(direction)
