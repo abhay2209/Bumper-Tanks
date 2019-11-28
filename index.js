@@ -114,12 +114,12 @@ app.post("/:id", async (req, res) => {
         io.emit('chat message', username + ': ' + message);
     });
 
-    socket.on('tank move', function(position, angle, player_num) {
-      io.broadcast.emit('tank move', position, angle, player_num)
+    socket.on('tank client move', function(position, angle, player_num) {
+      io.emit('tank server move', position, angle, player_num)
     })
 
-    socket.on('tank shoot', function(player_num) {
-      io.broadcast.emit('tank shoot', player_num)
+    socket.on('tank client shoot', function(player_num) {
+      io.emit('tank server shoot', player_num)
     })
 
     socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
