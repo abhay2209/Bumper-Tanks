@@ -20,10 +20,10 @@ var BARRIER_LIST = [
 
 ];
 var ITEM_LIST = [
-  new Items(200,200,10,10),
-  new Items(800,200,10,10),
-  new Items(800,600,10,10),
-  new Items(200,600,10,10)
+  new Items_Power(200,200,10,10),
+  new Items_Poison(800,200,10,10),
+  new Items_Speed(800,600,10,10),
+  new Items_Health(200,600,10,10)
 ];
 
 var matterInst = new matterObj();

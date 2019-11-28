@@ -70,7 +70,7 @@ class Tank{
   }
 
   fire_cannon(){
-    var fired_bullet = new Bullet(this,bullet_damage);
+    var fired_bullet = new Bullet(this, this.bullet_damage);
     World.add(worldObject, [fired_bullet.body]);
   }
 
