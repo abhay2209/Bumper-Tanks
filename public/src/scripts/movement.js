@@ -49,21 +49,55 @@ function detectCollision(){
     let pairs = event.pairs;
     pairs.forEach(function(pair) {
       if(pair.bodyA.label ==='tank' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject,pair.bodyB);
+        World.remove(worldObject, pair.bodyB);
         pair.bodyA.parent.health -= pair.bodyB.damage;
         console.log(pair.bodyA.parent.health);
       }
       else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='tank'){
-        World.remove(worldObject,pair.bodyA);
+
+        World.remove(worldObject, pair.bodyA);
         pair.bodyB.parent.health -= pair.bodyA.damage;
         console.log(pair.bodyA.parent.health);
 
       }else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='barrier'){
-        World.remove(worldObject,pair.bodyA);
+        World.remove(worldObject, pair.bodyA);
       }else if(pair.bodyA.label ==='barrier' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject,pair.bodyB);
+        World.remove(worldObject, pair.bodyB);
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
+        World.remove(worldObject, pair.bodyB);
+
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+        World.remove(worldObject, pair.bodyB);
+
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
         World.remove(worldObject,pair.bodyB);
+        pair.bodyA.parent.health +=20;
+        if(pair.bodyA.parent.health>100){
+            pair.bodyA.parent.health=100;
+         }
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='poison'){
+        pair.bodyB.parent.health -= pair.bodyA.damage;
+
+        //TODO
+        //if health reached out less than 0, destroy
+        // if(pair.bodyB.parent.health <= 0){
+        //   //destroy objects
+        // }
+
+        World.remove(worldObject, pair.bodyB);
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
+        pair.bodyA.accelRate *= 1.3;
+        //TODO
+        //speed up by 30% temporarily
+        //should build temprorary speed up (maybe using time interval?)
+        World.remove(worldObject, pair.bodyB);
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+        pair.bodyA.parent.bullet_damage *= 2;
+        pair.bodyA.parent.bullet_size *= 6;
+        //TODO
+        //should be temporary too
+        //make the bullet damage two times stronger
+        World.remove(worldObject, pair.bodyB);
       }
     })
   });

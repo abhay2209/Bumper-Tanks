@@ -19,9 +19,18 @@ var BARRIER_LIST = [
 
 
 ];
+var ITEM_LIST = [
+  // for(var i = 0; i < ITEM_LIST.length; i++){
+    new Items(25, 300, 90, 20, 20),
+    new Items(275, 300, 90, 20,20),
+    new Items(520, 300, 90, 20,20),
+    new Items(760, 300, 90, 20,20)
+  // }
+];
 
 var matterInst = new matterObj();
 matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+matterInst.itemSpawnMap(ITEM_LIST);
 detectCollision();
 matterInst.playSimulation();
 
