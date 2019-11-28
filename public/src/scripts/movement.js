@@ -4,37 +4,33 @@
 //Movement Controller
 function OBJECT_CONTROLLER(obj){
   if(obj.playerNum == PLAYERNUM){
-    if(KEY_MAP[W_KEY]){
-      SOCKET.emit('tcm', obj.playerNum, W_KEY)
-    }else if(KEY_MAP[S_KEY]){
-      SOCKET.emit('tcm', obj.playerNum, S_KEY)
-    }
-
-    if(KEY_MAP[A_KEY]){
-      SOCKET.emit('tcm', obj.playerNum, A_KEY)
-    }else if(KEY_MAP[D_KEY]){
-      SOCKET.emit('tcm', obj.playerNum, D_KEY)
-    }
-
-    if(KEY_MAP[J_KEY]){
-      SOCKET.emit('tcm', obj.playerNum, J_KEY)
-      KEY_MAP[J_KEY] = 0;
-    }
+    SOCKET.emit('tcm', obj.playerNum, KEY_MAP)
   }
 
-  SOCKET.on('tsm', function (inc_player_num, inc_command){
+  SOCKET.on('tsm', function (inc_player_num, inc_km){
     if(inc_player_num != obj.playerNum) return
 
-    if(inc_command == W_KEY)      obj.accelerate(1)
-    else if(inc_command == S_KEY) obj.accelerate(0)
-    else                          obj.deccelerate()
+    if(inc_km[W_KEY])      
+      obj.accelerate(1)
+    else if(inc_km[S_KEY]) 
+      obj.accelerate(0)
+    else                          
+      obj.deccelerate()
 
-    if(inc_command == A_KEY)      obj.turnLeft()
-    else if(inc_command == D_KEY) obj.turnRight()
-    else                          obj.stopTurn()
+    if(inc_km[A_KEY])      
+      obj.turnLeft()
+    else if(inc_km[D_KEY]) 
+      obj.turnRight()
+    else                          
+      obj.stopTurn()
 
-    if(inc_command == J_KEY)      obj.fire_cannon()
-  }
+    if(inc_km[J_KEY])
+    {
+      inc_km[J_KEY] = 0
+      obj.fire_cannon()
+    }
+  })
+}
 
        
   /*if(obj.playerNum == PLAYERNUM){
@@ -73,7 +69,7 @@ function OBJECT_CONTROLLER(obj){
       }
     })*/
   
-}
+//}
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
   if(obj.angVel != 0){

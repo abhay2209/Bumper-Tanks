@@ -53,6 +53,7 @@ class Tank{
       });
 
       Body.rotate(this.body, direction * Math.PI / 180);
+      console.log(this.body)
       return this;
   }
 

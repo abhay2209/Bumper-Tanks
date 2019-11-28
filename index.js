@@ -14,6 +14,11 @@ const server = http.Server(app)
 const io = socketIO(server)
 
 //couple these together so we know where to send messages
+const W_KEY = 87;
+const S_KEY = 83;
+const A_KEY = 65;
+const D_KEY = 68;
+const J_KEY = 74;
 class player_socket_pair{
   constructor(player, socket_id)
   {
@@ -114,12 +119,8 @@ app.post("/:id", async (req, res) => {
         io.emit('chat message', username + ': ' + message);
     });
 
-    socket.on('tank client move', function(position, angle, player_num) {
-      io.emit('tank server move', position, angle, player_num)
-    })
-
-    socket.on('tank client shoot', function(player_num) {
-      io.emit('tank server shoot', player_num)
+    socket.on('tcm', function(player_num, KEY_MAP) {
+      io.emit('tsm', player_num, KEY_MAP)
     })
 
     socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
