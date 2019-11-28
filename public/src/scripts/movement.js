@@ -24,15 +24,13 @@ function OBJECT_CONTROLLER(obj){
 
       //fire cannon
     if(KEY_MAP[J_KEY]){
+        SOCKET.emit(PLAYERNUM + ' tank shoot')
         obj.fire_cannon();
         KEY_MAP[J_KEY] = 0;
     }
 
-    Socket.emit('TANK_UPDATE', PLAYERNUM, obj.body.position, obj.body.angle)
+    SOCKET.emit(PLAYERNUM + ' tank move', obj.body.position, obj.body.angle)
 
-  }else{
-      //some socket.io stuff here
-      //recieve signals
   }
 }
 //Update position of controlled objects
