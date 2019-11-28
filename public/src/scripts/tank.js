@@ -1,20 +1,14 @@
 // Class to create tank objects
 class Tank{
-  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum,health)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum, health)
   {
       this.playerNum = playerNum;
-    //Tank Traits
       this.maxVel = maxVel;
       this.accelRate = accelRate;
       this.turnRate = 0.01 * turnRate;
-    //Initial Contitions
       this.linVel = 0;
       this.angVel = 0;
-    //Matter Object
-      //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
-      //  frictionAir: TANK_FRICTION,
 
-      //});
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
         parent:this.body,
@@ -54,18 +48,12 @@ class Tank{
       this.body = Body.create({
           health: health,
           parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
-          //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
           frictionAir: TANK_FRICTION
 
       });
 
-    //set initial rotation of tank
       Body.rotate(this.body, direction * Math.PI / 180);
       return this;
-  }
-
-  bodyHelper(){
-    var componentList = [];
   }
 
   fire_cannon(){
