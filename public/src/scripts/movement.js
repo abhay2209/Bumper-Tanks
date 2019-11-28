@@ -30,7 +30,17 @@ function OBJECT_CONTROLLER(obj){
     }
 
     SOCKET.emit(PLAYERNUM + ' tank move', obj.body.position, obj.body.angle)
+  }
+  else if(obj)
+  {
+    SOCKET.on(PLAYERNUM + ' tank move', function(inc_position, inc_angle){
+      obj.position = inc_position
+      obj.angle = inc_angle
+    })
 
+    SOCKET.on(PLAYERNUM + ' tank shoot', function(){
+      obj.fire_cannon();
+    })
   }
 }
 //Update position of controlled objects
