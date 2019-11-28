@@ -12,14 +12,24 @@
 
     var PLAYERNAME = '<%=username%>'  //shares username for js files
     var PLAYERNUM = -1
+    var PLAYERLIST = null
     var SOCKET = io()                 //shares this socket with js files
 
     SOCKET.on('connect', function(){ //once socket setup success
+
+      SOCKET.on('join success', function(player_number, playerList)
+      {
+        console.log("You joined as player number ", player_number)
+        console.log(playerList)
+        PLAYERNUM = player_number
+        PLAYERLIST = playerList
+        //start the game
+      })
+
+      SOCKET.emit('user join req', PLAYERNAME, SOCKET.id)
       
       $(function () 
       {
-
-        SOCKET.emit('user join req', PLAYERNAME, SOCKET.id)
 
         $('#chat').submit(function(e)
         {
@@ -32,13 +42,6 @@
         SOCKET.on('chat message', function(msg)
         {
           $('#chat-display').append($('<li>').text(msg));
-        })
-
-        SOCKET.on('join success', function(player_number)
-        {
-          console.log("You joined as player number ", player_number)
-          PLAYERNUM = player_number
-          //start the game
         })
 
       })

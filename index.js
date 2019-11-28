@@ -126,7 +126,7 @@ app.post("/:id", async (req, res) => {
         var pair = new player_socket_pair(PLAYER, socket_id)
         players.push( pair ) //couple and save into player list
         playerNum = players.indexOf(pair)
-        io.to(socket_id).emit('join success', playerNum)
+        io.to(socket_id).emit('join success', playerNum, players)
       }
       else
       {
