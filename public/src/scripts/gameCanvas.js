@@ -20,14 +20,17 @@ var BARRIER_LIST = [
 
 ];
 var ITEM_LIST = [
-  new Items_Power(200,200,10,10),
-  new Items_Poison(800,200,10,10),
-  new Items_Speed(800,600,10,10),
-  new Items_Health(200,600,10,10)
+  // for(var i = 0; i < ITEM_LIST.length; i++){
+    new Items(25, 300, 90, 20, 20),
+    new Items(275, 300, 90, 20,20),
+    new Items(520, 300, 90, 20,20),
+    new Items(760, 300, 90, 20,20)
+  // }
 ];
 
 var matterInst = new matterObj();
-matterInst.initializeMap(TANK_LIST, BARRIER_LIST, ITEM_LIST);
+matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+matterInst.itemSpawnMap(ITEM_LIST);
 detectCollision();
 matterInst.playSimulation();
 

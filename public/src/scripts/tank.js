@@ -11,6 +11,7 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
       this.bullet_damage = 10;
+      this.bullet_size = 5.5;
     //Matter Object
       //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
       //  frictionAir: TANK_FRICTION,
@@ -70,7 +71,7 @@ class Tank{
   }
 
   fire_cannon(){
-    var fired_bullet = new Bullet(this, this.bullet_damage);
+    var fired_bullet = new Bullet(this, this.bullet_damage, this.bullet_size);
     World.add(worldObject, [fired_bullet.body]);
   }
 
