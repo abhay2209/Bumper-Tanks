@@ -24,22 +24,28 @@ function OBJECT_CONTROLLER(obj){
 
       //fire cannon
     if(KEY_MAP[J_KEY]){
-        SOCKET.emit(PLAYERNUM + ' tank shoot')
+        SOCKET.emit('tank shoot', PLAYERNUM)
         obj.fire_cannon();
         KEY_MAP[J_KEY] = 0;
     }
 
-    SOCKET.emit(PLAYERNUM + ' tank move', obj.body.position, obj.body.angle)
+    SOCKET.emit('tank move', obj.body.position, obj.body.angle, PLAYERNUM)
   }
   else if(obj)
   {
-    SOCKET.on(PLAYERNUM + ' tank move', function(inc_position, inc_angle){
-      obj.position = inc_position
-      obj.angle = inc_angle
+    SOCKET.on('tank move', function(inc_position, inc_angle, inc_player_num){
+      if(PLAYERNUM == inc_player_num)
+      {
+        obj.position = inc_position
+        obj.angle = inc_angle
+      }
     })
 
-    SOCKET.on(PLAYERNUM + ' tank shoot', function(){
-      obj.fire_cannon();
+    SOCKET.on('tank shoot', function(inc_player_num){
+      if(PLAYERNUM == inc_player_num)
+      {
+        obj.fire_cannon();
+      }
     })
   }
 }
