@@ -76,7 +76,7 @@ function detectCollision(){
             pair.bodyA.parent.health=100;
          }
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='poison'){
-        pair.bodyB.parent.health -= pair.bodyA.damage;
+        pair.bodyA.parent.health -= pair.bodyB.damage;
 
         //TODO
         //if health reached out less than 0, destroy
@@ -92,12 +92,15 @@ function detectCollision(){
         //should build temprorary speed up (maybe using time interval?)
         World.remove(worldObject, pair.bodyB);
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+        console.log("pair.bodyA.parent.bullet_size");
+        World.remove(worldObject, pair.bodyB);
         pair.bodyA.parent.bullet_damage *= 2;
         pair.bodyA.parent.bullet_size *= 6;
+
         //TODO
         //should be temporary too
         //make the bullet damage two times stronger
-        World.remove(worldObject, pair.bodyB);
+
       }
     })
   });
