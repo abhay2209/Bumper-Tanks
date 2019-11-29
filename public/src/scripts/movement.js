@@ -21,6 +21,7 @@ function OBJECT_CONTROLLER(obj){
   if(KEY_MAP[J_KEY])
   {
     KEY_MAP[J_KEY] = 0
+    SOCKET.emit('cs', obj.playerNum)
   }
 }
 

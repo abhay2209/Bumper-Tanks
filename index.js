@@ -134,12 +134,18 @@ app.post("/:id", async (req, res) => {
       }
     })
 
-    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) {
+    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) 
+    {
       pList[pNum].active = 1
       pList[pNum].position = pPos
       pList[pNum].angle = pAng
       pList[pNum].velocity = pVel
       pList[pNum].angularVelocity = pAVel
+    })
+
+    socket.on('cs', function(pNum)
+    {
+      io.emit(pNum + 'ss')
     })
 
   });

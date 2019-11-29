@@ -30,6 +30,7 @@ class matterObj{
 
     //initialize runner, this allows us to run the simulation
     this.runner = Runner.create();
+    detectCollision() //set callbacks when objects collide
   }
 
   playSimulation(){
@@ -53,6 +54,7 @@ class matterObj{
   }
 
   addTank(tank){
+    //setup status reciever or sender
     if(tank.playerNum == PLAYERNUM)
     {
       setInterval(function(){
@@ -62,7 +64,8 @@ class matterObj{
         OBJECT_CONTROLLER(tank)
         OBJECT_MOVER(tank)
       });
-    }else{
+    }
+    else{
       SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel){
         Body.setPosition(tank.body, pPos)
         Body.setAngle(tank.body, pAng)
@@ -70,6 +73,10 @@ class matterObj{
         Body.setAngularVelocity(tank.body, pAVel)
       })
     }
+
+    SOCKET.on(tank.playerNum + 'ss', function(){
+      tank.fire_cannon()
+    })
     
     //add tank to matter world
     World.add(worldObject, [tank.body]);
