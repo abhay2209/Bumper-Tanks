@@ -17,6 +17,7 @@ const Composite = Matter.Composite      //composite interface
 const Events = Matter.Events;           //events interface
 
 
+
 //WORLD CONSTANTS & CANVAS CONSTANTS
 const canvas = document.getElementById("gameScreen");
 const CANVAS_WIDTH = 800;
