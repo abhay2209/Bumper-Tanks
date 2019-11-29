@@ -54,3 +54,19 @@ const BULLET_DAMAGE = 10;
 
 //BARRIER CONSTANTS
 const BARRIER_FRICTION = 0.99;
+
+const BARRIER_LIST = [
+  new Barrier_Circle(230,150,50),
+  new Barrier_Rectangle(50,100,0,100,50),
+  new Barrier_Rectangle(400,100,90,200,60),
+  new Barrier_Rectangle(750,100,0,100,50),
+  new Barrier_Triangle(570,150,90,70),
+  new Barrier_Triangle(230,450,90,70),
+  new Barrier_Circle(570,450,50),
+  new Barrier_Rectangle(50,500,0,100,50),
+  new Barrier_Rectangle(750,500,0,100,50),
+  new Barrier_Rectangle(400,500,90,200,60),
+  new Barrier_Rectangle(150,300,0,180,50),
+  new Barrier_Rectangle(400,300,0,180,50),
+  new Barrier_Rectangle(640,300,0,180,50)
+];

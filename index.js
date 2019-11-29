@@ -104,7 +104,6 @@ app.post("/:id", async (req, res) => {
   var pList = [];
   let bullet = {};
   io.on('connection', function(socket) {
-    //console.log("A user connected")
     socket.on('username', function(username) {
         socket.username = username;
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
@@ -112,6 +111,7 @@ app.post("/:id", async (req, res) => {
 
     socket.on('disconnect', function(username) {
         io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+        //remove player from list here
     })
 
     socket.on('chat message', function(message, username) {
@@ -120,7 +120,6 @@ app.post("/:id", async (req, res) => {
 
     socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
     {
-      console.log("id: ", socket_id)
       if (pList.length < 4)
       {
         var pair = new player_socket_pair(PLAYER, socket_id)
@@ -136,7 +135,6 @@ app.post("/:id", async (req, res) => {
     })
 
     socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) {
-      //console.log('server rec')
       pList[pNum].active = 1
       pList[pNum].position = pPos
       pList[pNum].angle = pAng
@@ -147,7 +145,6 @@ app.post("/:id", async (req, res) => {
   });
 
   setInterval(function() {
-    //console.log('server send')
     for(var i = 0; i < pList.length; i++){
       if(pList[i].active)
         io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity)
