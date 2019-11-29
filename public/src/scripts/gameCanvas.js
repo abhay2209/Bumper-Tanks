@@ -1,9 +1,9 @@
-var TANK_LIST = [
-  new Tank(50, 40, 180, 4, 0.5, 3, 0, 100),
-  new Tank(750, 40, 0, 4, 0.5, 3, 1, 100),
-  new Tank(50, 560, 180, 4, 0.5, 3, 2, 100),
-  new Tank(750, 560, 0, 4, 0.5, 3, 3, 100)
-];
+//var TANK_LIST = [
+  //new Tank(50, 40, 180, 4, 0.5, 3, 0, 100),
+  //new Tank(750, 40, 0, 4, 0.5, 3, 1, 100),
+  //new Tank(50, 560, 180, 4, 0.5, 3, 2, 100),
+  //new Tank(750, 560, 0, 4, 0.5, 3, 3, 100)
+//];
 
 var BARRIER_LIST = [
   new Barrier_Circle(230,150,50),
@@ -23,10 +23,10 @@ var BARRIER_LIST = [
 
 ];
 
-var matterInst = new matterObj();
-matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
-detectCollision();
-matterInst.playSimulation();
+//var matterInst = new matterObj();
+//matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+//detectCollision();
+//matterInst.playSimulation();
 
 
 //Commentted out until we can migrate all simulation stuff to server-side

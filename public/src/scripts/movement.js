@@ -3,73 +3,27 @@
 //GENERAL PURPOSE FUNCTIONS
 //Movement Controller
 function OBJECT_CONTROLLER(obj){
-  if(obj.playerNum == PLAYERNUM){
-    SOCKET.emit('tcm', obj.playerNum, KEY_MAP)
+  console.log("controller")
+  if(KEY_MAP[W_KEY])      
+    obj.accelerate(1)
+  else if(KEY_MAP[S_KEY]) 
+    obj.accelerate(0)
+  else                          
+    obj.deccelerate()
+
+  if(KEY_MAP[A_KEY])      
+    obj.turnLeft()
+  else if(KEY_MAP[D_KEY]) 
+    obj.turnRight()
+  else                          
+    obj.stopTurn()
+
+  if(KEY_MAP[J_KEY])
+  {
+    KEY_MAP[J_KEY] = 0
   }
-
-  SOCKET.on('tsm', function (inc_player_num, inc_km){
-    if(inc_player_num != obj.playerNum) return
-
-    if(inc_km[W_KEY])      
-      obj.accelerate(1)
-    else if(inc_km[S_KEY]) 
-      obj.accelerate(0)
-    else                          
-      obj.deccelerate()
-
-    if(inc_km[A_KEY])      
-      obj.turnLeft()
-    else if(inc_km[D_KEY]) 
-      obj.turnRight()
-    else                          
-      obj.stopTurn()
-
-    if(inc_km[J_KEY])
-    {
-      inc_km[J_KEY] = 0
-      obj.fire_cannon()
-    }
-  })
 }
 
-       
-  /*if(obj.playerNum == PLAYERNUM){
-      //update speed
-      if(KEY_MAP[W_KEY]){
-          obj.accelerate(1);
-      }else if(KEY_MAP[S_KEY]){
-          obj.accelerate(0);
-      }else{
-          obj.deccelerate();
-      }
-
-      //update direction
-      if(KEY_MAP[A_KEY]){
-          obj.turnLeft();
-      }else if(KEY_MAP[D_KEY]){
-          obj.turnRight();
-      }else{
-          obj.stopTurn();
-      }
-
-      //fire cannon
-    if(KEY_MAP[J_KEY]){
-        SOCKET.emit('tank client shoot', PLAYERNUM)
-        obj.fire_cannon();
-        KEY_MAP[J_KEY] = 0;
-    }
-
-    SOCKET.emit('tank client move', obj.body.position, obj.body.angle, PLAYERNUM)
-  }
-    SOCKET.on('tank server move', function(inc_position, inc_angle, inc_player_num){
-      if(obj.playerNum == inc_player_num)
-      {
-        obj.body.position = inc_position
-        obj.body.angle = inc_angle
-      }
-    })*/
-  
-//}
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
   if(obj.angVel != 0){

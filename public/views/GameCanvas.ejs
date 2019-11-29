@@ -14,16 +14,25 @@
     var PLAYERNUM = -1
     var PLAYERLIST = null
     var SOCKET = io()                 //shares this socket with js files
+    var TANK_LIST
 
     SOCKET.on('connect', function(){ //once socket setup success
 
-      SOCKET.on('join success', function(player_number, playerList)
+      SOCKET.on('join success', function(pNum, pList)
       {
-        console.log("You joined as player number ", player_number)
-        console.log(playerList)
-        PLAYERNUM = player_number
-        PLAYERLIST = playerList
-        //start the game
+        PLAYERNUM = pNum
+        PLAYERLIST = pList
+        TANK_LIST = [
+          new Tank(50, 40, 180, 4, 0.5, 3, 0, 100),
+          new Tank(750, 40, 0, 4, 0.5, 3, 1, 100),
+          new Tank(50, 560, 180, 4, 0.5, 3, 2, 100),
+          new Tank(750, 560, 0, 4, 0.5, 3, 3, 100)
+        ];
+
+        var matterInst = new matterObj();
+        matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+        detectCollision();
+        matterInst.playSimulation();
       })
 
       SOCKET.emit('user join req', PLAYERNAME, SOCKET.id)

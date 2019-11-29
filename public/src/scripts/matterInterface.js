@@ -54,10 +54,28 @@ class matterObj{
 
   addTank(tank){
     //add tank updater to list of things to be updated
-    Events.on(engineObject, "afterUpdate", function(){
-      OBJECT_CONTROLLER(tank);
-      OBJECT_MOVER(tank);
-    });
+    //console.log(tank)
+    //console.log(PLAYERNUM)
+    if(tank.playerNum == PLAYERNUM)
+    {
+      setInterval(function(){
+        //console.log("client send")
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity)
+      }, 50)
+      Events.on(engineObject, "afterUpdate", function(){
+        OBJECT_CONTROLLER(tank)
+        OBJECT_MOVER(tank)
+      });
+    }else{
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel){
+        //console.log('client rec')
+        Body.setPosition(tank.body, pPos)
+        Body.setAngle(tank.body, pAng)
+        Body.setVelocity(tank.body, pVel)
+        Body.setAngularVelocity(tank.body, pAVel)
+      })
+    }
+    
     //add tank to matter world
     World.add(worldObject, [tank.body]);
    }

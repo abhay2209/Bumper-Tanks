@@ -13,17 +13,16 @@ const app = express()
 const server = http.Server(app)
 const io = socketIO(server)
 
-//couple these together so we know where to send messages
-const W_KEY = 87;
-const S_KEY = 83;
-const A_KEY = 65;
-const D_KEY = 68;
-const J_KEY = 74;
 class player_socket_pair{
   constructor(player, socket_id)
   {
     this.player = player
     this.socket_id = socket_id
+    this.active = 0
+    this.position = null
+    this.angle = null
+    this.velocity = null
+    this.angularVelocity = null
   }
 }
 
@@ -102,7 +101,7 @@ app.post("/:id", async (req, res) => {
 
   server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-  var players = [];
+  var pList = [];
   let bullet = {};
   io.on('connection', function(socket) {
     //console.log("A user connected")
@@ -119,19 +118,16 @@ app.post("/:id", async (req, res) => {
         io.emit('chat message', username + ': ' + message);
     });
 
-    socket.on('tcm', function(player_num, KEY_MAP) {
-      io.emit('tsm', player_num, KEY_MAP)
-    })
-
     socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
     {
       console.log("id: ", socket_id)
-      if (players.length < 4)
+      if (pList.length < 4)
       {
         var pair = new player_socket_pair(PLAYER, socket_id)
-        players.push( pair ) //couple and save into player list
-        playerNum = players.indexOf(pair)
-        io.to(socket_id).emit('join success', playerNum, players)
+        pList.push( pair ) //couple and save into player list
+        pNum = pList.indexOf(pair)
+        console.log('playerNum:', pNum)
+        io.to(socket_id).emit('join success', pNum, pList)
       }
       else
       {
@@ -139,11 +135,24 @@ app.post("/:id", async (req, res) => {
       }
     })
 
+    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) {
+      //console.log('server rec')
+      pList[pNum].active = 1
+      pList[pNum].position = pPos
+      pList[pNum].angle = pAng
+      pList[pNum].velocity = pVel
+      pList[pNum].angularVelocity = pAVel
+    })
+
   });
 
   setInterval(function() {
-    io.sockets.emit('state', players, bullet);
-  }, 1000 / 60);
+    //console.log('server send')
+    for(var i = 0; i < pList.length; i++){
+      if(pList[i].active)
+        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity)
+    }
+  }, 50)
 
 
   function getCurrentWeather() {
