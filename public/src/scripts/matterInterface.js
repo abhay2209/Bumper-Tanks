@@ -75,7 +75,18 @@ class matterObj{
     }
 
     SOCKET.on(tank.playerNum + 'ss', function(){
-      tank.fire_cannon()
+      if(tank.playerNum != PLAYERNUM)
+      {
+        tank.fire_cannon()
+      }
+      var tShot = Date.now()
+      console.log(tShot)
+      console.log(tank.lastShot)
+      if(tShot - tank.lastShot >= tank.reloadTime)
+      {
+        tank.fire_cannon()
+        tank.lastShot = tShot
+      }
     })
     
     //add tank to matter world

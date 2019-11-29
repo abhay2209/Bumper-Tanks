@@ -3,7 +3,6 @@
 //GENERAL PURPOSE FUNCTIONS
 //Movement Controller
 function OBJECT_CONTROLLER(obj){
-  console.log("controller")
   if(KEY_MAP[W_KEY])      
     obj.accelerate(1)
   else if(KEY_MAP[S_KEY]) 

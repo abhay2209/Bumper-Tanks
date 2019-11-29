@@ -8,6 +8,8 @@ class Tank{
       this.turnRate = 0.01 * turnRate;
       this.linVel = 0;
       this.angVel = 0;
+      this.reloadTime = 1000;
+      this.lastShot = 0
 
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
