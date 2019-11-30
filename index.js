@@ -110,17 +110,6 @@ app.post("/:id", async (req, res) => {
 
     socket.on('disconnect', function(username) {
       io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
-
-      var i = pList.length - 1
-      while(i != -1){
-        if(pList[i].player == username){
-          pList.splice(i)
-          console.log(username, ' has disconnected from the match')
-          break
-        }
-        i--
-      }  
-      io.emit('update pList', pList)
     })
 
     socket.on('chat message', function(message, username) {
@@ -154,14 +143,14 @@ app.post("/:id", async (req, res) => {
         var pair = new player_socket_pair(PLAYER, socket_id)
         pList.push(pair)
         pNum = pList.indexOf(pair)
-        console.log("User join request accepted pList:", pList)
+        console.log(PLAYER, " join request accepted")
         io.to(socket_id).emit('join success', pNum)
         io.emit('update pList', pList)
       }
       //match is full so we must deny the join
       else
       {
-        console.log("User join request rejected (MATCH FULL)")
+        console.log(PLAYER, " join request rejected (MATCH FULL)")
         io.to(socket_id).emit('join failure')
       }
     })
@@ -169,6 +158,7 @@ app.post("/:id", async (req, res) => {
     //server recieves and updates it's state based on a client's tank
     socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) 
     {
+      if(!pList[pNum]) return
       pList[pNum].active = 1
       pList[pNum].position = pPos
       pList[pNum].angle = pAng
@@ -262,8 +252,22 @@ app.post("/:id", async (req, res) => {
     });
   }
 
+
+  //app.post("/:id", async (req, res) => {
+   //var id = req.params.id;
+  
   function SignOut(req, res){
       //console.log("Signing Out");
       req.session.loggedin = 0;
+      var i = pList.length - 1
+      while(i != -1){
+        if(pList[i].player == req.session.username){
+          pList.splice(i)
+          console.log(req.session.username, ' has disconnected from the match')
+          break
+        }
+        i--
+      }  
+      io.emit('update pList', pList)
       res.render('Home.ejs', { isError: "false" });
   }

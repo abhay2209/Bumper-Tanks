@@ -17,6 +17,13 @@ function OBJECT_CONTROLLER(obj){
   else                          
     obj.stopTurn()
 
+  if(KEY_MAP[H_KEY])      
+    obj.turrentLeft()
+  else if(KEY_MAP[K_KEY]) 
+    obj.turrentRight()
+  else                          
+    obj.stopTurrent()
+
   if(KEY_MAP[J_KEY])
   {
     KEY_MAP[J_KEY] = 0
@@ -29,6 +36,9 @@ function OBJECT_MOVER(obj){
   if(obj.angVel != 0){
       Body.rotate(obj.body, obj.angVel);
   }
+  if(obj.angVel2 != 0){
+    Body.rotate(obj.turrentRing, obj.angVel2);
+}
   if(obj.linVel != 0){
   Body.setVelocity(obj.body,
       { x: -Math.cos(obj.body.angle)*obj.linVel, y: -Math.sin(obj.body.angle)*obj.linVel});

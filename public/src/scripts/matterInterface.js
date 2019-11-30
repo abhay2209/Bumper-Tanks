@@ -90,7 +90,7 @@ class matterObj{
     })
     
     //add tank to matter world
-    World.add(worldObject, [tank.body]);
+    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint]);
    }
 
   addBarrier(barrier){
