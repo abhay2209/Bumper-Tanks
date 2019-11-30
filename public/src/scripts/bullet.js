@@ -22,3 +22,16 @@ class Bullet{
 
   }
 }
+
+
+try{
+  module.exports = {
+    sayHello: function(){
+    return "Hello";
+  }
+}
+}
+catch(err)
+{
+
+}
