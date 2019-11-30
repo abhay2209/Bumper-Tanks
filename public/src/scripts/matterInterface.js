@@ -57,11 +57,13 @@ class matterObj{
     Events.on(engineObject, "afterUpdate", function(){
       OBJECT_CONTROLLER(tank);
       OBJECT_MOVER(tank);
+     
     });
     //add tank to matter world
     World.add(worldObject, [tank.body]);
     console.log('tank added')
-    //World.add(worldObject, [tank.healthBar]);
+    World.add(worldObject, [tank.healthBar]);
+    console.log('health bar added')
    }
 
   addBarrier(barrier){
