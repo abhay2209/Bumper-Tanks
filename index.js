@@ -130,7 +130,21 @@ app.post("/:id", async (req, res) => {
     //server recieves join request from client
     socket.on('user join req', function(PLAYER, socket_id)
     {
-      if (pList.length < 4)
+      //see if player is already in match
+      var i = pList.length - 1
+      while(i != -1){
+        if(pList[i].player == username){
+          break
+        }
+        i--
+      }  
+
+      if (i != -1){
+        console.log(username, ' has reconnected to the match')
+        io.to(socket_id).emit('join success', i)
+        io.emit('update pList', pList)
+      }
+      else if (pList.length < 4)
       {
         var pair = new player_socket_pair(PLAYER, socket_id)
         pList.push(pair)
