@@ -133,17 +133,22 @@ app.post("/:id", async (req, res) => {
       //see if player is already in match
       var i = pList.length - 1
       while(i != -1){
-        if(pList[i].player == username){
+        if(pList[i].player == PLAYER){
           break
         }
         i--
       }  
 
+      //user already in list so we update/reset it's pair and reconnect
       if (i != -1){
-        console.log(username, ' has reconnected to the match')
-        io.to(socket_id).emit('join success', i)
+        console.log(PLAYER, ' has reconnected to the match')
+        pList[i].active = 0
+        pList[i].socket = socket_id
+        pNum = i
+        io.to(socket_id).emit('join success', pNum)
         io.emit('update pList', pList)
       }
+      //new connection of user
       else if (pList.length < 4)
       {
         var pair = new player_socket_pair(PLAYER, socket_id)
@@ -153,6 +158,7 @@ app.post("/:id", async (req, res) => {
         io.to(socket_id).emit('join success', pNum)
         io.emit('update pList', pList)
       }
+      //match is full so we must deny the join
       else
       {
         console.log("User join request rejected (MATCH FULL)")
