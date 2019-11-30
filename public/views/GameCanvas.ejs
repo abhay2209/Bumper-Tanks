@@ -50,6 +50,7 @@
         matterInst.playSimulation();
       })
 
+      //client asks server to join
       SOCKET.emit('user join req', PLAYERNAME, SOCKET.id)
       
       $(function () 
@@ -91,6 +92,9 @@
         <% } else if (currentWeather.icon.search("fog") > -1) { %>
           <i class="fas fa-smog"></i>
           <p>Vancouver, CA<br>Foggy</p>
+        <% } else if (currentWeather.icon.search("night") > -1) { %>
+          <i class="fas fa-moon"></i>
+          <p>Vancouver, CA<br>Night</p>
         <% } else { %>
           <%= currentWeather.icon %>
         <% } %>
