@@ -52,10 +52,19 @@ class Tank{
           strokeStyle: '#000000',
           lineWidth: 3
         }});
+      var healthBar = Bodies.rectangle(xPos, yPos-50, TANK_WIDTH - 8, health/15,{
+        label: 'bar',
+        parent:this.body,
+        render: {
+        fillStyle: 'green',
+        strokeStyle: '#000000',
+        lineWidth: 3
+
+        }});
 
       this.body = Body.create({
           health: health,
-          parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
+          parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun, healthBar],
           //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
           frictionAir: TANK_FRICTION
 

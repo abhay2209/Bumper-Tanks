@@ -60,6 +60,8 @@ class matterObj{
     });
     //add tank to matter world
     World.add(worldObject, [tank.body]);
+    console.log('tank added')
+    //World.add(worldObject, [tank.healthBar]);
    }
 
   addBarrier(barrier){

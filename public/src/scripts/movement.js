@@ -99,6 +99,27 @@ function detectCollision(){
         //make the bullet damage two times stronger
         World.remove(worldObject, pair.bodyB);
       }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='barrier'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='tank'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='bullet'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='power'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='speed'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='posion'){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label ==='health'){
+        pair.isActive=false;
+      }
     })
   });
 }
