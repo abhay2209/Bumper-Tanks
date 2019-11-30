@@ -102,7 +102,6 @@ app.post("/:id", async (req, res) => {
   server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
   var pList = [];
-  let bullet = {};
   io.on('connection', function(socket) {
     socket.on('username', function(username) {
         socket.username = username;
@@ -110,30 +109,44 @@ app.post("/:id", async (req, res) => {
     });
 
     socket.on('disconnect', function(username) {
-        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
-        //remove player from list here
+      io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+
+      var i = pList.length - 1
+      while(i != -1){
+        if(pList[i].player == username){
+          pList.splice(i)
+          console.log(username, ' has disconnected from the match')
+          break
+        }
+        i--
+      }  
+      io.emit('update pList', pList)
     })
 
     socket.on('chat message', function(message, username) {
         io.emit('chat message', username + ': ' + message);
     });
 
-    socket.on('user join req', function(PLAYER, socket_id) //save this as a player-socket pair
+    //server recieves join request from client
+    socket.on('user join req', function(PLAYER, socket_id)
     {
       if (pList.length < 4)
       {
         var pair = new player_socket_pair(PLAYER, socket_id)
-        pList.push( pair ) //couple and save into player list
+        pList.push(pair)
         pNum = pList.indexOf(pair)
-        console.log('playerNum:', pNum)
-        io.to(socket_id).emit('join success', pNum, pList)
+        console.log("User join request accepted pList:", pList)
+        io.to(socket_id).emit('join success', pNum)
+        io.emit('update pList', pList)
       }
       else
       {
-        console.log("game is full")
+        console.log("User join request rejected (MATCH FULL)")
+        io.to(socket_id).emit('join failure')
       }
     })
 
+    //server recieves and updates it's state based on a client's tank
     socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) 
     {
       pList[pNum].active = 1
@@ -143,6 +156,7 @@ app.post("/:id", async (req, res) => {
       pList[pNum].angularVelocity = pAVel
     })
 
+    //server recieves a fire_cannon command from a client
     socket.on('cs', function(pNum)
     {
       io.emit(pNum + 'ss')
@@ -150,6 +164,7 @@ app.post("/:id", async (req, res) => {
 
   });
 
+  //send out the server's state every 50ms to all clients
   setInterval(function() {
     for(var i = 0; i < pList.length; i++){
       if(pList[i].active)

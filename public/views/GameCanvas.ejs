@@ -69,6 +69,18 @@
           $('#chat-display').append($('<li>').text(msg));
         })
 
+        SOCKET.on('update pList', function(pList)
+        {
+          console.log('update pList')
+          $('#pList').empty()
+          for(var i = 0; i < pList.length; i++)
+          {
+            console.log('adding player to list')
+            pElem = `<li><div id=p1C></div><p>${pList[i].player}</p></li>`
+            $('#pList').append(pElem)
+          }
+        })
+
       })
     })
     </script>
@@ -124,14 +136,7 @@
     <canvas id="gameScreen"> </canvas>
 
     <div id = 'playerList'>
-      <ul>
-        <li>
-          <div id=p1C></div><p>PLAYER 1</p>
-        </li>
-        <li>
-          <div id=p1C></div><p>PLAYER 1</p>
-        </li>
-      </ul>
+      <ul id = 'pList'></ul>
     </div>
 
     <div id = 'chat-container'>
