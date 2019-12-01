@@ -1,5 +1,12 @@
 //GENERAL PURPOSE FUNCTIONS
 //Movement Controller
+var powerSize_trigger = 0;
+var health_trigger = 0;
+var speed_trigger = 0;
+var poison_trigger = 0;
+
+var time = 0;
+
 function OBJECT_CONTROLLER(obj){
   if(obj.playerNum == PLAYERNUM){
       //update speed
@@ -22,6 +29,16 @@ function OBJECT_CONTROLLER(obj){
 
       //fire cannon
     if(KEY_MAP[J_KEY]){
+        if(powerSize_trigger == 1)
+        {
+          obj.bullet_power = 1;
+          setTimeout(changePower, 3000);
+          // setInterval(changePower, 3000);
+        }
+        else{
+          // console.log("inside else");
+          obj.bullet_power = 0;
+        }
         obj.fire_cannon();
         KEY_MAP[J_KEY] = 0;
     }
@@ -31,6 +48,11 @@ function OBJECT_CONTROLLER(obj){
       //some socket.io stuff here
       //recieve signals
   }
+}
+function changePower(){
+  // console.log("j fucking power");
+  powerSize_trigger = 0;
+  // clearTimeout(time);
 }
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
@@ -66,8 +88,12 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
         World.remove(worldObject, pair.bodyB);
 
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
         World.remove(worldObject, pair.bodyB);
+        powerSize_trigger = 1;
+
+        // pair.bodyA.parent.bullet_damage *= 2;
+        // pair.bodyA.parent.bullet_size *= 6;
 
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
         World.remove(worldObject,pair.bodyB);
@@ -91,16 +117,6 @@ function detectCollision(){
         //speed up by 30% temporarily
         //should build temprorary speed up (maybe using time interval?)
         World.remove(worldObject, pair.bodyB);
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
-        console.log("pair.bodyA.parent.bullet_size");
-        World.remove(worldObject, pair.bodyB);
-        pair.bodyA.parent.bullet_damage *= 2;
-        pair.bodyA.parent.bullet_size *= 6;
-
-        //TODO
-        //should be temporary too
-        //make the bullet damage two times stronger
-
       }
     })
   });

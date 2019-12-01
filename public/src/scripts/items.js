@@ -5,7 +5,7 @@ class Items{
     switch (random) {
       case 1:
       this.body = Bodies.rectangle(xPos, yPos, width, length, {
-        label: 'power',
+        label: 'powerSize',
         render: {
           fillStyle: '#0000FF'
         }
@@ -21,10 +21,10 @@ class Items{
       break;
       case 3:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
-          label: 'poison',
+          label: 'powerNum',
           damage: 20,
           render: {
-            fillStyle: '#FF00FF'
+            fillStyle: '#FFA500'
           }
         });
       break;
@@ -32,7 +32,7 @@ class Items{
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'speed',
           render: {
-            fillStyle: '#FFA500'
+            fillStyle: '#FF00FF'
           }
         });
       break;
