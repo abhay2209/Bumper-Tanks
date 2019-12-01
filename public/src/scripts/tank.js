@@ -56,7 +56,7 @@ class Tank{
         label: 'bar',
         parent:this.body,
         colissionFilter : {
-          mask: 'health'
+         category: 0x0001
         },
         render: {
         fillStyle: 'green',
@@ -65,14 +65,17 @@ class Tank{
         
 
         }});
+      
 
       this.body = Body.create({
           health: health,
           parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
           //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
-          frictionAir: TANK_FRICTION
+          frictionAir: TANK_FRICTION,
+          category: 0x0008
 
       });
+     
 
     //set initial rotation of tank
       Body.rotate(this.body, direction * Math.PI / 180);
