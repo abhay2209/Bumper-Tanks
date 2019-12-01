@@ -6,7 +6,6 @@ var speed_trigger = 0;
 var poison_trigger = 0;
 var bullets_trigger = 0;
 var time = 0;
-
 function OBJECT_CONTROLLER(obj){
   if(obj.playerNum == PLAYERNUM){
       //update speed
@@ -99,6 +98,10 @@ function OBJECT_MOVER(obj){
   }
 }
 
+function respawnPowerup(xPos){
+  var newItem = new Items(xPos, 300, 90, 20, 20);
+  World.add(worldObject, [newItem.body]);
+}
 //function to detect collision
 function detectCollision(){
   Events.on(engineObject, 'collisionStart', function(event) {
@@ -123,37 +126,28 @@ function detectCollision(){
         World.remove(worldObject, pair.bodyB);
 
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
+        setTimeout(respawnPowerup, 5000, newX);
         powerSize_trigger = 1;
-
-        // pair.bodyA.parent.bullet_damage *= 2;
-        // pair.bodyA.parent.bullet_size *= 6;
-
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
-        World.remove(worldObject,pair.bodyB);
+        var newX = pair.bodyB.x;
+        World.remove(worldObject, pair.bodyB);
+        setTimeout(respawnPowerup, 5000, newX);
         pair.bodyA.parent.health +=20;
         if(pair.bodyA.parent.health>100){
             pair.bodyA.parent.health=100;
          }
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='poison'){
-        pair.bodyA.parent.health -= pair.bodyB.damage;
-
-        //TODO
-        //if health reached out less than 0, destroy
-        // if(pair.bodyB.parent.health <= 0){
-        //   //destroy objects
-        // }
-
-        World.remove(worldObject, pair.bodyB);
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
         speed_trigger = 1;
-        //TODO
-        //speed up by 30% temporarily
-        //should build temprorary speed up (maybe using time interval?)
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
+        setTimeout(respawnPowerup, 5000, newX);
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
         bullets_trigger = 1;
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
+        setTimeout(respawnPowerup, 5000, newX);
     };
   });
 });

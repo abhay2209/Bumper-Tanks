@@ -6,6 +6,7 @@ class Items{
       case 1:
       this.body = Bodies.rectangle(xPos, yPos, width, length, {
         label: 'powerSize',
+        x: xPos,
         render: {
           fillStyle: '#0000FF'
         }
@@ -14,6 +15,7 @@ class Items{
       case 2:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'health',
+          x: xPos,
           render: {
             fillStyle: '#FF0000'
           }
@@ -22,6 +24,7 @@ class Items{
       case 3:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'moreBullets',
+          x: xPos,
           render: {
             fillStyle: '#FFA500'
           }
@@ -30,6 +33,7 @@ class Items{
       default:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'speed',
+          x: xPos,
           render: {
             fillStyle: '#FF00FF'
           }
