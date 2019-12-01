@@ -35,6 +35,7 @@ function OBJECT_CONTROLLER(obj){
 function OBJECT_MOVER(obj){
   if(obj.angVel != 0){
       Body.rotate(obj.body, obj.angVel);
+      Body.rotate(obj.turrentRing, obj.angVel)
   }
   if(obj.angVel2 != 0){
     Body.rotate(obj.turrentRing, obj.angVel2);
