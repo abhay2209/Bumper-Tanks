@@ -57,9 +57,6 @@ class Bullet{
 
     }
   }
-<<<<<<< HEAD
-}
-
 
 try{
   module.exports = {
@@ -72,5 +69,3 @@ catch(err)
 {
 
 }
-=======
->>>>>>> Items
