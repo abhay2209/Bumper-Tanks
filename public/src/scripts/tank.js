@@ -11,6 +11,8 @@ class Tank{
       this.angVel2 = 0;
       this.reloadTime = 1000;
       this.lastShot = 0
+      this.bullet_damage = 10;
+      this.bullet_size = 5.5;
 
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
@@ -73,7 +75,8 @@ class Tank{
   }
 
   fire_cannon(){
-    World.add(worldObject, [bullet(this.turrentRing.position, this.turrentRing.angle, BULLET_DAMAGE)]);
+    var fired_bullet = new Bullet(this.turrentRing.position, this.turrentRing.angle, this.bullet_damage, this.bullet_size);
+    World.add(worldObject, [fired_bullet.body]);
   }
 
   accelerate(direction)

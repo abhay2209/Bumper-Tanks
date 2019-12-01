@@ -98,6 +98,10 @@ class matterObj{
     World.add(worldObject, [barrier.body]);
   }
 
+  spawnItems(item){
+    World.add(worldObject, [item.body]);
+  }
+
   //Initialize map from list of tanks & barriers & walls
   initializeMap(tankList, barrierList){
     //add external walls
@@ -111,6 +115,10 @@ class matterObj{
       this.addBarrier(barrierList[i]);
     }
   }
-
-
+  itemSpawnMap(itemList){
+    //add items
+    for(var i = 0; i < itemList.length; i++){
+      this.spawnItems(itemList[i]);
+    }
+  }
  }
