@@ -13,6 +13,8 @@ class Tank{
       this.lastShot = 0
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
+      this.bullet_power = 0;
+      this.bulletAmount = 0;
 
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
@@ -74,9 +76,40 @@ class Tank{
       return this;
   }
 
+  // tempPowerup(){
+  //   console.log("bullshit");
+  //   this.bullet_damage *= 2;
+  //   this.bulle_size *= 6;
+  //   setTimeout(regPower, 10000);
+  // }
+  regPower(){
+    this.bullet_damage = 10;
+    this.bullet_size = 5.5;
+    this.bullet_power = 0;
+  }
+
   fire_cannon(){
-    var fired_bullet = new Bullet(this.turrentRing.position, this.turrentRing.angle, this.bullet_damage, this.bullet_size);
-    World.add(worldObject, [fired_bullet.body]);
+    if (this.bullet_power == 1)
+    {
+      this.bullet_size = 30;
+      this.bullet_damage = 20;
+    }
+    else{
+      this.bullet_size = 5.5;
+      this.bullet_damage = 10;
+    }
+
+    if(this.bulletAmount == 3)
+    {
+      World.add(worldObject, 
+        [Bullet(this.turrentRing.position, this.turrentRing.angle + 0.175, this.bullet_damage, this.bullet_size)]);
+
+      World.add(worldObject, 
+        [Bullet(this.turrentRing.position, this.turrentRing.angle - 0.175, this.bullet_damage, this.bullet_size)]);
+    }
+
+    World.add(worldObject, 
+      [Bullet(this.turrentRing.position, this.turrentRing.angle, this.bullet_damage, this.bullet_size)]);
   }
 
   accelerate(direction)

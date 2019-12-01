@@ -167,9 +167,9 @@ app.post("/:id", async (req, res) => {
     })
 
     //server recieves a fire_cannon command from a client
-    socket.on('cs', function(pNum)
+    socket.on('cs', function(pNum, bullet_power, bullets_trigger)
     {
-      io.emit(pNum + 'ss')
+      io.emit(pNum + 'ss', bullet_power, bullets_trigger)
     })
 
   });

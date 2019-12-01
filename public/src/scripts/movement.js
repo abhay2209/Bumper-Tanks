@@ -1,12 +1,36 @@
 //GENERAL PURPOSE FUNCTIONS
 //Movement Controller
+var time = 0;
 function OBJECT_CONTROLLER(obj){
-  if(KEY_MAP[W_KEY])      
-    obj.accelerate(1)
-  else if(KEY_MAP[S_KEY]) 
-    obj.accelerate(0)
-  else                          
-    obj.deccelerate()
+  if(KEY_MAP[W_KEY]){
+      if(speed_trigger == 1)
+      {
+        obj.accelRate = 1;
+        obj.maxVel = 8;
+        setTimeout(changeSpeed, 10000);
+      }
+      else
+      {
+        obj.accelRate = 0.5;
+        obj.maxVel = 4;
+      }
+      obj.accelerate(1);
+  }else if(KEY_MAP[S_KEY]){
+    if(speed_trigger == 1)
+    {
+      obj.accelRate = 1;
+      obj.maxVel = 8;
+      setTimeout(changeSpeed, 10000);
+    }
+    else
+    {
+      obj.accelRate = 0.5;
+      obj.maxVel = 4;
+    }
+      obj.accelerate(0);
+  }else{
+      obj.deccelerate();
+  }
 
   if(KEY_MAP[A_KEY])      
     obj.turnLeft()
@@ -25,10 +49,20 @@ function OBJECT_CONTROLLER(obj){
   if(KEY_MAP[J_KEY])
   {
     KEY_MAP[J_KEY] = 0
-    SOCKET.emit('cs', obj.playerNum)
+    SOCKET.emit('cs', obj.playerNum, powerSize_trigger, bullets_trigger)
   }
 }
+function changePower(){
+  powerSize_trigger = 0;
+}
 
+function changeBullets(){
+  bullets_trigger = 0;
+}
+
+function changeSpeed(){
+  speed_trigger = 0;
+}
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
   if(obj.angVel != 0){
@@ -44,6 +78,10 @@ function OBJECT_MOVER(obj){
   }
 }
 
+function respawnPowerup(xPos){
+  var newItem = new Items(xPos, 300, 90, 20, 20);
+  World.add(worldObject, [newItem.body]);
+}
 //function to detect collision
 function detectCollision(){
   Events.on(engineObject, 'collisionStart', function(event) {
@@ -67,39 +105,30 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
         World.remove(worldObject, pair.bodyB);
 
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-
+        setTimeout(respawnPowerup, 5000, newX);
+        powerSize_trigger = 1;
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
-        World.remove(worldObject,pair.bodyB);
+        var newX = pair.bodyB.x;
+        World.remove(worldObject, pair.bodyB);
+        setTimeout(respawnPowerup, 5000, newX);
         pair.bodyA.parent.health +=20;
         if(pair.bodyA.parent.health>100){
             pair.bodyA.parent.health=100;
          }
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='poison'){
-        pair.bodyB.parent.health -= pair.bodyA.damage;
-
-        //TODO
-        //if health reached out less than 0, destroy
-        // if(pair.bodyB.parent.health <= 0){
-        //   //destroy objects
-        // }
-
-        World.remove(worldObject, pair.bodyB);
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
-        pair.bodyA.accelRate *= 1.3;
-        //TODO
-        //speed up by 30% temporarily
-        //should build temprorary speed up (maybe using time interval?)
+        speed_trigger = 1;
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='power'){
-        pair.bodyA.parent.bullet_damage *= 2;
-        pair.bodyA.parent.bullet_size *= 6;
-        //TODO
-        //should be temporary too
-        //make the bullet damage two times stronger
+        setTimeout(respawnPowerup, 5000, newX);
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
+        bullets_trigger = 1;
+        var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-      }
-    })
+        setTimeout(respawnPowerup, 5000, newX);
+    };
   });
+});
 }

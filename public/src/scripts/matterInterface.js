@@ -74,14 +74,24 @@ class matterObj{
       })
     }
 
-    SOCKET.on(tank.playerNum + 'ss', function(){
+    SOCKET.on(tank.playerNum + 'ss', function(bullet_power, bullets_trigger){
+      if(bullet_power){
+        tank.bullet_power = 1
+        setTimeout(function(){
+          tank.bullet_power = 0
+        }, 3000);
+      }
+      if(bullets_trigger){
+        tank.bulletAmount = 3
+        setTimeout(function(){
+          tank.bulletAmount = 1
+        })
+      }
       if(tank.playerNum != PLAYERNUM)
       {
         tank.fire_cannon()
       }
       var tShot = Date.now()
-      console.log(tShot)
-      console.log(tank.lastShot)
       if(tShot - tank.lastShot >= tank.reloadTime)
       {
         tank.fire_cannon()
