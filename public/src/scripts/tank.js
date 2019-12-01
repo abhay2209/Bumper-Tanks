@@ -20,17 +20,20 @@ class Tank{
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
         parent:this.body,
+        //category: 0x0008,
         render: {
           fillStyle: '#005504'
         }}),
       tankGun = Bodies.rectangle(xPos-GUN_LENGTH/2-TURRENT_RADIUS, yPos, GUN_LENGTH, 5, {
         label: 'tank',
+       // category: 0x0008,
         render: {
           fillStyle: '#7A8E7B'
         }}),
       tankTurrent = Bodies.circle(xPos, yPos, TURRENT_RADIUS, {
         label: 'tank',
         parent:this.body,
+       // category: 0x0008,
         render: {
           fillStyle: '#005504',
           strokeStyle: '#000000',
@@ -39,6 +42,7 @@ class Tank{
       tankRightTrack = Bodies.rectangle(xPos, yPos+TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
         parent:this.body,
+       // category: 0x0008,
         render: {
           fillStyle: '#5c5c5c',
           strokeStyle: '#000000',
@@ -47,6 +51,7 @@ class Tank{
       tankLeftTrack = Bodies.rectangle(xPos, yPos-TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
         parent:this.body,
+        //category: 0x0008,
         render: {
           fillStyle: '#5c5c5c',
           strokeStyle: '#000000',
@@ -56,7 +61,7 @@ class Tank{
         label: 'bar',
         parent:this.body,
         colissionFilter : {
-         category: 0x0001
+         group: -2
         },
         render: {
         fillStyle: 'green',
@@ -71,8 +76,11 @@ class Tank{
           health: health,
           parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
           //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
+          collisionFilter: {
+            group: -1
+          },
           frictionAir: TANK_FRICTION,
-          category: 0x0008
+      
 
       });
      

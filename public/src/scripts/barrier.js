@@ -4,7 +4,10 @@ class Barrier_Rectangle{
           label:'barrier',
           frictionAir: BARRIER_FRICTION,
           isStatic: true,
-          category: 0x0008,
+          //category: 0x0008,
+          collisionFilter:{
+            group: -2
+          },
           render: {
             fillStyle: '#1506CF7'
           }
@@ -19,7 +22,10 @@ class Barrier_Circle{
         this.body = Bodies.circle(xPos, yPos, radius, {
           label:'barrier',
           frictionAir: BARRIER_FRICTION,
-          category: 0x0008,
+          collisionFilter:{
+            group: -2
+          },
+          //category: 0x0008
         });
         //set initial rotation of barrier
         Body.rotate(this.body, 0);
@@ -31,7 +37,10 @@ class Barrier_Triangle{
         this.body = Bodies.polygon(xPos, yPos, 3, radius, {
           label:'barrier',
           frictionAir: BARRIER_FRICTION,
-          category: 0x0008,
+          collisionFilter:{
+            group: -2
+          },
+          //category: 0x0008,
         });
         //set initial rotation of barrier
         Body.rotate(this.body, direction * Math.PI / 180);
