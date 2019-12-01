@@ -99,12 +99,13 @@ function detectCollision(){
         //make the bullet damage two times stronger
         World.remove(worldObject, pair.bodyB);
       }
-      else if(pair.bodyA.label ==='barrier' && pair.bodyB.label === 'bar' ){
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label === 'barrier' ){
         pair.isActive=false;
       }
       else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='bar'){
         pair.isActive=false;
-      }
+     }
+    
       
     })
   });

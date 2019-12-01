@@ -79,14 +79,15 @@ class matterObj{
   initializeMap(tankList, barrierList){
     //add external walls
     this.addWalls();
+     //add all barriers to map
+     for(var i = 0; i < barrierList.length; i++){
+      this.addBarrier(barrierList[i]);
+    }
     //add all tanks to map
     for(var i = 0; i < tankList.length; i++){
       this.addTank(tankList[i]);
     }
-    //add all barriers to map
-    for(var i = 0; i < barrierList.length; i++){
-      this.addBarrier(barrierList[i]);
-    }
+   
   }
   itemSpawnMap(itemList){
     //add items
