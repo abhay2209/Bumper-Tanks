@@ -4,7 +4,7 @@ var powerSize_trigger = 0;
 var health_trigger = 0;
 var speed_trigger = 0;
 var poison_trigger = 0;
-
+var bullets_trigger = 0;
 var time = 0;
 
 function OBJECT_CONTROLLER(obj){
@@ -33,11 +33,17 @@ function OBJECT_CONTROLLER(obj){
         {
           obj.bullet_power = 1;
           setTimeout(changePower, 3000);
-          // setInterval(changePower, 3000);
         }
         else{
-          // console.log("inside else");
           obj.bullet_power = 0;
+        }
+        if(bullets_trigger == 1)
+        {
+          obj.bulletAmount = 3;
+          setTimeout(changeBullets, 3000);
+        }
+        else{
+          obj.bulletAmount = 0;
         }
         obj.fire_cannon();
         KEY_MAP[J_KEY] = 0;
@@ -50,9 +56,11 @@ function OBJECT_CONTROLLER(obj){
   }
 }
 function changePower(){
-  // console.log("j fucking power");
   powerSize_trigger = 0;
-  // clearTimeout(time);
+}
+
+function changeBullets(obj){
+  bullets_trigger = 0;
 }
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
@@ -117,7 +125,10 @@ function detectCollision(){
         //speed up by 30% temporarily
         //should build temprorary speed up (maybe using time interval?)
         World.remove(worldObject, pair.bodyB);
-      }
-    })
+      }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
+        bullets_trigger = 1;
+        World.remove(worldObject, pair.bodyB);
+    };
   });
+});
 }

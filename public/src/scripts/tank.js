@@ -13,6 +13,7 @@ class Tank{
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
       this.bullet_power = 0;
+      this.bulletAmount = 0;
     //Matter Object
       //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
       //  frictionAir: TANK_FRICTION,
@@ -92,6 +93,17 @@ class Tank{
     else{
       this.bullet_size = 5.5;
       this.bullet_damage = 10;
+    }
+
+    if(this.bulletAmount == 3)
+    {
+      var fired_bullet = new Bullet(this, this.bullet_damage, this.bullet_size);
+      fired_bullet.increaseAngle();
+      World.add(worldObject, [fired_bullet.body]);
+
+      var fired_bullet = new Bullet(this, this.bullet_damage, this.bullet_size);
+      fired_bullet.decreaseAngle();
+      World.add(worldObject, [fired_bullet.body]);
     }
 
     var fired_bullet = new Bullet(this, this.bullet_damage, this.bullet_size);

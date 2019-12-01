@@ -1,6 +1,6 @@
 class Items{
   constructor(xPos, yPos, direction, width, length){
-    var random = Math.floor(Math.random() * 4);
+    var random = Math.floor(Math.random() * 5);
 
     switch (random) {
       case 1:
@@ -28,6 +28,14 @@ class Items{
           }
         });
       break;
+      case 4:
+      this.body =  Bodies.rectangle(xPos, yPos, width, length, {
+          label: 'moreBullets',
+          render: {
+            fillStyle: '#000000'
+          }
+        });
+        break;
       default:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'speed',
