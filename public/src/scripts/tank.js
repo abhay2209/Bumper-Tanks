@@ -76,7 +76,7 @@ class Tank{
   // }
   regPower(){
     this.bullet_damage = 10;
-    this.bulle_size = 5.5;
+    this.bullet_size = 5.5;
     this.bullet_power = 0;
   }
 

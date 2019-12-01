@@ -11,8 +11,30 @@ function OBJECT_CONTROLLER(obj){
   if(obj.playerNum == PLAYERNUM){
       //update speed
       if(KEY_MAP[W_KEY]){
+          if(speed_trigger == 1)
+          {
+            obj.accelRate = 1;
+            obj.maxVel = 8;
+            setTimeout(changeSpeed, 10000);
+          }
+          else
+          {
+            obj.accelRate = 0.5;
+            obj.maxVel = 4;
+          }
           obj.accelerate(1);
       }else if(KEY_MAP[S_KEY]){
+        if(speed_trigger == 1)
+        {
+          obj.accelRate = 1;
+          obj.maxVel = 8;
+          setTimeout(changeSpeed, 10000);
+        }
+        else
+        {
+          obj.accelRate = 0.5;
+          obj.maxVel = 4;
+        }
           obj.accelerate(0);
       }else{
           obj.deccelerate();
@@ -59,8 +81,12 @@ function changePower(){
   powerSize_trigger = 0;
 }
 
-function changeBullets(obj){
+function changeBullets(){
   bullets_trigger = 0;
+}
+
+function changeSpeed(){
+  speed_trigger = 0;
 }
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
@@ -120,7 +146,7 @@ function detectCollision(){
 
         World.remove(worldObject, pair.bodyB);
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
-        pair.bodyA.accelRate *= 1.3;
+        speed_trigger = 1;
         //TODO
         //speed up by 30% temporarily
         //should build temprorary speed up (maybe using time interval?)
