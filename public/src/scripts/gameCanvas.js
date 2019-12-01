@@ -19,14 +19,12 @@ var BARRIER_LIST = [
 
 
 ];
-var ITEM_LIST = [
-  // for(var i = 0; i < ITEM_LIST.length; i++){
-    new Items(25, 300, 90, 20, 20),
-    new Items(275, 300, 90, 20,20),
-    new Items(520, 300, 90, 20,20),
-    new Items(760, 300, 90, 20,20)
-  // }
-];
+
+var one = new Items(25, 300, 90, 20, 20);
+var two = new Items(275, 300, 90, 20,20);
+var three = new Items(520, 300, 90, 20,20);
+var four = new Items(760, 300, 90, 20,20);
+var ITEM_LIST = [one, two, three, four];
 
 var matterInst = new matterObj();
 matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
