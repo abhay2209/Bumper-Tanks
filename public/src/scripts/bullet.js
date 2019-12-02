@@ -10,7 +10,7 @@ function Bullet(position, angle, damage, size)
       fillStyle: 'yellow'
     }
   });
-  Body.setVelocity(body, { x: -cosX*10, y: -sinY*10 })
+  Body.setVelocity(body, { x: -cosX*8, y: -sinY*8 })
   return body
 }
 

@@ -67,11 +67,11 @@ function detectCollision(){
         console.log(pair.bodyA.parent.health);
 
       }else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='barrier'){
-        World.remove(worldObject, pair.bodyA);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
       }else if(pair.bodyA.label ==='barrier' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject, pair.bodyB);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject, pair.bodyB);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
 
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
         var newX = pair.bodyB.x;

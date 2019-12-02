@@ -24,6 +24,7 @@ class player_socket_pair{
     this.velocity = null
     this.angularVelocity = null
     this.health=100
+    this.tAng = null
   }
 }
 
@@ -132,8 +133,14 @@ app.post("/:id", async (req, res) => {
       //user already in list so we update/reset it's pair and reconnect
       if (i != -1){
         console.log(PLAYER, ' has reconnected to the match')
-        pList[i].active = 0
         pList[i].socket = socket_id
+        pList[i].active = 0
+        pList[i].position = null
+        pList[i].angle = null
+        pList[i].velocity = null
+        pList[i].angularVelocity = null
+        pList[i].health=100
+        pList[i].tAng = null
         pNum = i
         io.to(socket_id).emit('join success', pNum)
         io.emit('update pList', pList)
@@ -157,7 +164,7 @@ app.post("/:id", async (req, res) => {
     })
 
     //server recieves and updates it's state based on a client's tank
-    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel, pHealth) 
+    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel, pHealth, tAng) 
     {
       if(!pList[pNum]) return
       pList[pNum].active = 1
@@ -166,6 +173,7 @@ app.post("/:id", async (req, res) => {
       pList[pNum].velocity = pVel
       pList[pNum].angularVelocity = pAVel
       pList[pNum].health=pHealth
+      pList[pNum].tAng = tAng
 
     })
 
@@ -187,7 +195,7 @@ app.post("/:id", async (req, res) => {
   setInterval(function() {
     for(var i = 0; i < pList.length; i++){
       if(pList[i].active)
-        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity,pList[i].health)
+        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity,pList[i].health, pList[i].tAng)
     }
   }, 50)
 

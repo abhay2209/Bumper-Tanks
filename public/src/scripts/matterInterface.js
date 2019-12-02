@@ -58,8 +58,8 @@ class matterObj{
     if(tank.playerNum == PLAYERNUM)
     {
       setInterval(function(){
-        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health)
-        Body.scale(tank.healthBar,1,tank.body.health/100)
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health, tank.turrentRing.angle)
+        //Body.scale(tank.healthBar,1,tank.body.health/100)
         tank.tankDeath(tank.body.health)
       }, 50)
 
@@ -69,13 +69,14 @@ class matterObj{
       });
     }
     else{
-      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel,pHealth){
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel,pHealth, tAng){
         Body.setPosition(tank.body, pPos)
         Body.setAngle(tank.body, pAng)
+        Body.setAngle(tank.turrentRing, tAng)
         Body.setVelocity(tank.body, pVel)
         Body.setAngularVelocity(tank.body, pAVel)
-        tank.health = pHealth
-        Body.scale(this.healthBar,1,pHealth/100)
+        tank.body.health = pHealth
+        //Body.scale(this.healthBar,1,tank.health/100)
         tank.tankDeath(pHealth)
       })
     }

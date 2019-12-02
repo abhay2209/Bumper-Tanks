@@ -9,7 +9,7 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
       this.angVel2 = 0;
-      this.reloadTime = 400;
+      this.reloadTime = 0;
       this.lastShot = 0
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
@@ -55,14 +55,15 @@ class Tank{
           lineWidth: 3
         }});
       this.healthBar = Bodies.rectangle(xPos, yPos , 7, health/3.5,{
-        label: 'bar',
+        label: 'tank',
         parent:this.body,
+        collisionFilter: { group: -playerNum - 10 },
+
         
         render: {
         fillStyle: 'orange',
         strokeStyle: '#000000',
         lineWidth: 3,
-        
 
         }});
       
@@ -72,7 +73,7 @@ class Tank{
           pNum: playerNum,
           parts:[tankLeftTrack, tankRightTrack, tankHull],
           frictionAir: TANK_FRICTION, 
-          collisionFilter: { group: -1 }
+          collisionFilter: { group: -playerNum - 10 }
       });
      
 
@@ -80,7 +81,7 @@ class Tank{
         pNum: playerNum,
         parts:[tankTurrent, tankGun],
         frictionAir: TANK_FRICTION,
-        collisionFilter: { group: -1 }
+        collisionFilter: { group: -playerNum - 10}
       })
 
       this.turrentConstraint = Constraint.create({
@@ -114,7 +115,7 @@ class Tank{
   fire_cannon(){
     if (this.bullet_power == 1)
     {
-      this.bullet_size = 20;
+      this.bullet_size = 10;
       this.bullet_damage = 20;
     }
     else{
@@ -184,11 +185,9 @@ class Tank{
   }
   tankDeath(health)
   {
-    
-    if(health==0)
+    if(health<=0)
     {
       World.remove(worldObject, [this.body, this.turrentRing, this.turrentConstraint, this.healthBar,this.healthConstraint]);
-
     }
   }
 
