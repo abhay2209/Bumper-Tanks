@@ -74,19 +74,8 @@ class matterObj{
       })
     }
 
-    SOCKET.on(tank.playerNum + 'ss', function(bullet_power, bullets_trigger){
-      if(bullet_power){
-        tank.bullet_power = 1
-        setTimeout(function(){
-          tank.bullet_power = 0
-        }, 3000);
-      }
-      if(bullets_trigger){
-        tank.bulletAmount = 3
-        setTimeout(function(){
-          tank.bulletAmount = 1
-        })
-      }
+    SOCKET.on(tank.playerNum + 'ss', function(){
+      console.log('shoot: ', tank.bullet_power, tank.bulletAmount)
       if(tank.playerNum != PLAYERNUM)
       {
         tank.fire_cannon()
@@ -98,6 +87,34 @@ class matterObj{
         tank.lastShot = tShot
       }
     })
+
+    SOCKET.on(tank.playerNum + 'sp', function(type){
+      console.log("power pick up!", type)
+      if(type == 1){
+        tank.bullet_power = 1
+        setTimeout(function(){
+          tank.bullet_power = 0
+        }, 7500)
+      }else if(type == 2){
+        tank.health += 20
+        if (tank.health > 100){
+          tank.health = 100
+        }
+      }else if(type == 3){
+        tank.maxVel = 6
+        tank.accelRate = 1
+        setTimeout(function(){
+          tank.maxVel = 2
+          tank.accelRate = 0.1
+        }, 7500)
+      }else if(type == 4){
+        tank.bulletAmount = 3
+        setTimeout(function(){
+          tank.bulletAmount = 1
+        }, 7500)
+      }
+    })
+
     
     //add tank to matter world
     World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint]);

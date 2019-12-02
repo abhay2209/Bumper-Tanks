@@ -11,6 +11,7 @@
     <script>
 
     var PLAYERNAME = '<%=username%>'  //shares username for js files
+    var PLAYERBODY = null
     var PLAYERNUM = -1
     var PLAYERLIST = null
     var SOCKET = io()                 //shares this socket with js files
@@ -28,6 +29,8 @@
           new Tank(50, 560, 180, 2, 0.1, 2, 2, 100, blue),
           new Tank(750, 560, 0, 2, 0.1, 2, 3, 100, white)
         ];
+        PLAYERBODY = TANK_LIST[PLAYERNUM]
+
 
         var BARRIER_LIST = [
           new Barrier_Circle(230,150,50),

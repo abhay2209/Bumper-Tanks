@@ -9,7 +9,7 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
       this.angVel2 = 0;
-      this.reloadTime = 1000;
+      this.reloadTime = 400;
       this.lastShot = 0
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
@@ -18,18 +18,20 @@ class Tank{
 
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
+        pNum: playerNum, 
         parent:this.body,
         render: {
           fillStyle: color[1]
         }}),
       tankGun = Bodies.rectangle(xPos-GUN_LENGTH/2-TURRENT_RADIUS, yPos, GUN_LENGTH, 5, {
         label: 'tank',
+        pNum: playerNum,
         render: {
           fillStyle: '#0d0d0d'
         }}),
       tankTurrent = Bodies.circle(xPos, yPos, TURRENT_RADIUS, {
         label: 'tank',
-        parent:this.body,
+        pNum: playerNum,
         render: {
           fillStyle: color[0],
           strokeStyle: '#000000',
@@ -37,7 +39,7 @@ class Tank{
         }}),
       tankRightTrack = Bodies.rectangle(xPos, yPos+TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
-        parent:this.body,
+        pNum: playerNum,
         render: {
           fillStyle: color[0],
           strokeStyle: '#000000',
@@ -45,7 +47,7 @@ class Tank{
         }}),
       tankLeftTrack = Bodies.rectangle(xPos, yPos-TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
-        parent:this.body,
+        pNum: playerNum,
         render: {
           fillStyle: color[0],
           strokeStyle: '#000000',
@@ -54,12 +56,14 @@ class Tank{
 
       this.body = Body.create({
           health: health,
+          pNum: playerNum,
           parts:[tankLeftTrack, tankRightTrack, tankHull],
           frictionAir: TANK_FRICTION, 
           collisionFilter: { group: -1 }
       });
 
       this.turrentRing = Body.create({
+        pNum: playerNum,
         parts:[tankTurrent, tankGun],
         frictionAir: TANK_FRICTION,
         collisionFilter: { group: -1 }
@@ -91,7 +95,7 @@ class Tank{
   fire_cannon(){
     if (this.bullet_power == 1)
     {
-      this.bullet_size = 30;
+      this.bullet_size = 20;
       this.bullet_damage = 20;
     }
     else{

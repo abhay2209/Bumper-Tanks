@@ -3,30 +3,8 @@
 var time = 0;
 function OBJECT_CONTROLLER(obj){
   if(KEY_MAP[W_KEY]){
-      if(speed_trigger == 1)
-      {
-        obj.accelRate = 1;
-        obj.maxVel = 8;
-        setTimeout(changeSpeed, 10000);
-      }
-      else
-      {
-        obj.accelRate = 0.5;
-        obj.maxVel = 4;
-      }
-      obj.accelerate(1);
+    obj.accelerate(1);
   }else if(KEY_MAP[S_KEY]){
-    if(speed_trigger == 1)
-    {
-      obj.accelRate = 1;
-      obj.maxVel = 8;
-      setTimeout(changeSpeed, 10000);
-    }
-    else
-    {
-      obj.accelRate = 0.5;
-      obj.maxVel = 4;
-    }
       obj.accelerate(0);
   }else{
       obj.deccelerate();
@@ -49,20 +27,10 @@ function OBJECT_CONTROLLER(obj){
   if(KEY_MAP[J_KEY])
   {
     KEY_MAP[J_KEY] = 0
-    SOCKET.emit('cs', obj.playerNum, powerSize_trigger, bullets_trigger)
+    SOCKET.emit('cs', obj.playerNum)
   }
 }
-function changePower(){
-  powerSize_trigger = 0;
-}
 
-function changeBullets(){
-  bullets_trigger = 0;
-}
-
-function changeSpeed(){
-  speed_trigger = 0;
-}
 //Update position of controlled objects
 function OBJECT_MOVER(obj){
   if(obj.angVel != 0){
@@ -109,25 +77,33 @@ function detectCollision(){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
         setTimeout(respawnPowerup, 5000, newX);
-        powerSize_trigger = 1;
+
+        if(PLAYERNUM == pair.bodyA.parent.pNum)
+          SOCKET.emit('cp', 1, PLAYERNUM)
+
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
         setTimeout(respawnPowerup, 5000, newX);
-        pair.bodyA.parent.health +=20;
-        if(pair.bodyA.parent.health>100){
-            pair.bodyA.parent.health=100;
-         }
+
+        if(PLAYERNUM == pair.bodyA.parent.pNum)
+          SOCKET.emit('cp', 2, PLAYERNUM)
+
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
-        speed_trigger = 1;
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
         setTimeout(respawnPowerup, 5000, newX);
+
+        if(PLAYERNUM == pair.bodyA.parent.pNum)
+          SOCKET.emit('cp', 3, PLAYERNUM)
+
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
-        bullets_trigger = 1;
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
         setTimeout(respawnPowerup, 5000, newX);
+
+        if(PLAYERNUM == pair.bodyA.parent.pNum)
+          SOCKET.emit('cp', 4, PLAYERNUM)
     };
   });
 });
