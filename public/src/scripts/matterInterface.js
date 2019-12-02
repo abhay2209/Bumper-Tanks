@@ -5,7 +5,7 @@ class matterObj{
     //initialize engine & world, world will be where physical objects reside in
     engineObject   = Engine.create();
     worldObject = engineObject.world;
-    worldObject.gravity.y = 0;
+    worldObject.gravity.y = 0
 
     //initialize renderer, this acts as a middle man for canvas api
     this.render = Render.create({
