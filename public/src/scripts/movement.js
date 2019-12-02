@@ -76,7 +76,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 1, PLAYERNUM)
@@ -84,7 +84,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 2, PLAYERNUM)
@@ -92,7 +92,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 3, PLAYERNUM)
@@ -100,7 +100,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 4, PLAYERNUM)
