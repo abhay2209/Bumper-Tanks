@@ -59,7 +59,9 @@ class matterObj{
     {
       setInterval(function(){
         SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health)
+        Body.scale(tank.healthBar,1,tank.body.health/100)
       }, 50)
+
       Events.on(engineObject, "afterUpdate", function(){
         OBJECT_CONTROLLER(tank)
         OBJECT_MOVER(tank)
@@ -72,7 +74,7 @@ class matterObj{
         Body.setVelocity(tank.body, pVel)
         Body.setAngularVelocity(tank.body, pAVel)
         tank.health = pHealth
-        Body.scale(this.healthBar,pHealth/100,1)
+        Body.scale(this.healthBar,1,pHealth/100)
       })
     }
      
