@@ -182,6 +182,17 @@ class Tank{
   {
     this.angVel2 = 0;
   }
+  tankDeath(health)
+  {
+    
+    if(health==90)
+    {
+      World.remove(worldObject, [this.body, this.turrentRing, this.turrentConstraint, this.healthBar,this.healthConstraint]);
+
+    }
+  }
+
+
 };
 
 try{
