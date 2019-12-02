@@ -67,16 +67,16 @@ function detectCollision(){
         console.log(pair.bodyA.parent.health);
 
       }else if(pair.bodyA.label ==='bullet' && pair.bodyB.label ==='barrier'){
-        World.remove(worldObject, pair.bodyA);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
       }else if(pair.bodyA.label ==='barrier' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject, pair.bodyB);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
       }else if(pair.bodyA.label ==='wall' && pair.bodyB.label ==='bullet'){
-        World.remove(worldObject, pair.bodyB);
+        setTimeout(function(){World.remove(worldObject, pair.bodyB)}, 1000)
 
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='powerSize'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 1, PLAYERNUM)
@@ -84,7 +84,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='health'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 2, PLAYERNUM)
@@ -92,7 +92,7 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='speed'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 3, PLAYERNUM)
@@ -100,11 +100,18 @@ function detectCollision(){
       }else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='moreBullets'){
         var newX = pair.bodyB.x;
         World.remove(worldObject, pair.bodyB);
-        setTimeout(respawnPowerup, 5000, newX);
+        //setTimeout(respawnPowerup, 5000, newX);
 
         if(PLAYERNUM == pair.bodyA.parent.pNum)
           SOCKET.emit('cp', 4, PLAYERNUM)
-    };
-  });
-});
+      }
+      else if(pair.bodyA.label ==='bar' && pair.bodyB.label === 'barrier' ){
+        pair.isActive=false;
+      }
+      else if(pair.bodyA.label ==='tank'&& pair.bodyB.label ==='bar'){
+        pair.isActive=false;
+      }
+      
+    })
+  })
 }

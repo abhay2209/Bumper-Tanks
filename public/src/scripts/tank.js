@@ -9,7 +9,7 @@ class Tank{
       this.linVel = 0;
       this.angVel = 0;
       this.angVel2 = 0;
-      this.reloadTime = 400;
+      this.reloadTime = 0;
       this.lastShot = 0
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
@@ -20,6 +20,7 @@ class Tank{
         label: 'tank',
         pNum: playerNum, 
         parent:this.body,
+      
         render: {
           fillStyle: color[1]
         }}),
@@ -53,25 +54,44 @@ class Tank{
           strokeStyle: '#000000',
           lineWidth: 3
         }});
+      this.healthBar = Bodies.rectangle(xPos, yPos , 7, health/3.5,{
+        label: 'tank',
+        parent:this.body,
+        collisionFilter: { group: -playerNum - 10 },
+
+        
+        render: {
+        fillStyle: 'orange',
+        strokeStyle: '#000000',
+        lineWidth: 3,
+
+        }});
+      
 
       this.body = Body.create({
           health: health,
           pNum: playerNum,
           parts:[tankLeftTrack, tankRightTrack, tankHull],
           frictionAir: TANK_FRICTION, 
-          collisionFilter: { group: -1 }
+          collisionFilter: { group: -playerNum - 10 }
       });
+     
 
       this.turrentRing = Body.create({
         pNum: playerNum,
         parts:[tankTurrent, tankGun],
         frictionAir: TANK_FRICTION,
-        collisionFilter: { group: -1 }
+        collisionFilter: { group: -playerNum - 10}
       })
 
       this.turrentConstraint = Constraint.create({
         bodyA: this.body,
         bodyB: this.turrentRing,
+        length: 0
+      })
+      this.healthConstraint = Constraint.create({
+        bodyA: this.body,
+        bodyB: this.healthBar,
         length: 0
       })
 
@@ -95,7 +115,7 @@ class Tank{
   fire_cannon(){
     if (this.bullet_power == 1)
     {
-      this.bullet_size = 20;
+      this.bullet_size = 10;
       this.bullet_damage = 20;
     }
     else{
@@ -163,6 +183,15 @@ class Tank{
   {
     this.angVel2 = 0;
   }
+  tankDeath(health)
+  {
+    if(health<=0)
+    {
+      World.remove(worldObject, [this.body, this.turrentRing, this.turrentConstraint, this.healthBar,this.healthConstraint]);
+    }
+  }
+
+
 };
 
 try{

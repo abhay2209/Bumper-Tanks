@@ -1,11 +1,12 @@
 class Items{
-  constructor(xPos, yPos, direction, width, length){
+  constructor(xPos, yPos, direction, width, length, type){
     var random = Math.floor(Math.random() * 4);
 
-    switch (random) {
+    switch (type) {
       case 1:
       this.body = Bodies.rectangle(xPos, yPos, width, length, {
         label: 'powerSize',
+        isStatic: true,
         x: xPos,
         render: {
           fillStyle: '#0000FF'
@@ -15,6 +16,7 @@ class Items{
       case 2:
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'health',
+          isStatic: true,
           x: xPos,
           render: {
             fillStyle: '#FF0000'
@@ -25,6 +27,7 @@ class Items{
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'moreBullets',
           x: xPos,
+          isStatic: true,
           render: {
             fillStyle: '#FFA500'
           }
@@ -34,6 +37,7 @@ class Items{
       this.body =  Bodies.rectangle(xPos, yPos, width, length, {
           label: 'speed',
           x: xPos,
+          isStatic: true,
           render: {
             fillStyle: '#FF00FF'
           }

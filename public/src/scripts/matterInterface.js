@@ -58,34 +58,31 @@ class matterObj{
     if(tank.playerNum == PLAYERNUM)
     {
       setInterval(function(){
-        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity)
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health, tank.turrentRing.angle)
+        //Body.scale(tank.healthBar,1,tank.body.health/100)
+        tank.tankDeath(tank.body.health)
       }, 50)
+
       Events.on(engineObject, "afterUpdate", function(){
         OBJECT_CONTROLLER(tank)
         OBJECT_MOVER(tank)
       });
     }
     else{
-      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel){
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel,pHealth, tAng){
         Body.setPosition(tank.body, pPos)
         Body.setAngle(tank.body, pAng)
+        Body.setAngle(tank.turrentRing, tAng)
         Body.setVelocity(tank.body, pVel)
         Body.setAngularVelocity(tank.body, pAVel)
+        tank.body.health = pHealth
+        //Body.scale(this.healthBar,1,tank.health/100)
+        tank.tankDeath(pHealth)
       })
     }
-
+     
     SOCKET.on(tank.playerNum + 'ss', function(){
-      console.log('shoot: ', tank.bullet_power, tank.bulletAmount)
-      if(tank.playerNum != PLAYERNUM)
-      {
         tank.fire_cannon()
-      }
-      var tShot = Date.now()
-      if(tShot - tank.lastShot >= tank.reloadTime)
-      {
-        tank.fire_cannon()
-        tank.lastShot = tShot
-      }
     })
 
     SOCKET.on(tank.playerNum + 'sp', function(type){
@@ -110,14 +107,15 @@ class matterObj{
       }else if(type == 4){
         tank.bulletAmount = 3
         setTimeout(function(){
-          tank.bulletAmount = 1
+          tank.bulletAmount = 0
         }, 7500)
       }
     })
 
     
     //add tank to matter world
-    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint]);
+    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint, tank.healthBar,tank.healthConstraint]);
+  
    }
 
   addBarrier(barrier){
@@ -133,14 +131,15 @@ class matterObj{
   initializeMap(tankList, barrierList){
     //add external walls
     this.addWalls();
+     //add all barriers to map
+     for(var i = 0; i < barrierList.length; i++){
+      this.addBarrier(barrierList[i]);
+    }
     //add all tanks to map
     for(var i = 0; i < tankList.length; i++){
       this.addTank(tankList[i]);
     }
-    //add all barriers to map
-    for(var i = 0; i < barrierList.length; i++){
-      this.addBarrier(barrierList[i]);
-    }
+   
   }
   itemSpawnMap(itemList){
     //add items
