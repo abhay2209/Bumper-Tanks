@@ -82,17 +82,7 @@ class matterObj{
     }
      
     SOCKET.on(tank.playerNum + 'ss', function(){
-      console.log('shoot: ', tank.bullet_power, tank.bulletAmount)
-      if(tank.playerNum != PLAYERNUM)
-      {
         tank.fire_cannon()
-      }
-      var tShot = Date.now()
-      if(tShot - tank.lastShot >= tank.reloadTime)
-      {
-        tank.fire_cannon()
-        tank.lastShot = tShot
-      }
     })
 
     SOCKET.on(tank.playerNum + 'sp', function(type){
@@ -117,7 +107,7 @@ class matterObj{
       }else if(type == 4){
         tank.bulletAmount = 3
         setTimeout(function(){
-          tank.bulletAmount = 1
+          tank.bulletAmount = 0
         }, 7500)
       }
     })
