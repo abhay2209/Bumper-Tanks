@@ -58,7 +58,7 @@ class matterObj{
     if(tank.playerNum == PLAYERNUM)
     {
       setInterval(function(){
-        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity)
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health)
       }, 50)
       Events.on(engineObject, "afterUpdate", function(){
         OBJECT_CONTROLLER(tank)
@@ -66,14 +66,16 @@ class matterObj{
       });
     }
     else{
-      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel){
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel,pHealth){
         Body.setPosition(tank.body, pPos)
         Body.setAngle(tank.body, pAng)
         Body.setVelocity(tank.body, pVel)
         Body.setAngularVelocity(tank.body, pAVel)
+        tank.health = pHealth
+        Body.scale(this.healthBar,pHealth/100,1)
       })
     }
-
+     
     SOCKET.on(tank.playerNum + 'ss', function(){
       console.log('shoot: ', tank.bullet_power, tank.bulletAmount)
       if(tank.playerNum != PLAYERNUM)
@@ -117,8 +119,8 @@ class matterObj{
 
     
     //add tank to matter world
-    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint]);
-    World.add(worldObject, [tank.healthBar]);
+    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint, tank.healthBar,tank.healthConstraint]);
+  
    }
 
   addBarrier(barrier){

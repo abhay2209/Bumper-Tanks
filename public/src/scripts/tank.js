@@ -54,12 +54,12 @@ class Tank{
           strokeStyle: '#000000',
           lineWidth: 3
         }});
-      this.healthBar = Bodies.rectangle(xPos-30, yPos , health/15,TANK_WIDTH/2,{
+      this.healthBar = Bodies.rectangle(xPos, yPos , 7, health/3.5,{
         label: 'bar',
         parent:this.body,
-       
+        
         render: {
-        fillStyle: 'red',
+        fillStyle: 'orange',
         strokeStyle: '#000000',
         lineWidth: 3,
         
@@ -86,6 +86,11 @@ class Tank{
       this.turrentConstraint = Constraint.create({
         bodyA: this.body,
         bodyB: this.turrentRing,
+        length: 0
+      })
+      this.healthConstraint = Constraint.create({
+        bodyA: this.body,
+        bodyB: this.healthBar,
         length: 0
       })
 

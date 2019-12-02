@@ -23,6 +23,7 @@ class player_socket_pair{
     this.angle = null
     this.velocity = null
     this.angularVelocity = null
+    this.health=100
   }
 }
 
@@ -156,7 +157,7 @@ app.post("/:id", async (req, res) => {
     })
 
     //server recieves and updates it's state based on a client's tank
-    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) 
+    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel, pHealth) 
     {
       if(!pList[pNum]) return
       pList[pNum].active = 1
@@ -164,6 +165,8 @@ app.post("/:id", async (req, res) => {
       pList[pNum].angle = pAng
       pList[pNum].velocity = pVel
       pList[pNum].angularVelocity = pAVel
+      pList[pNum].health=pHealth
+
     })
 
     //server recieves a fire_cannon command from a client
@@ -184,7 +187,7 @@ app.post("/:id", async (req, res) => {
   setInterval(function() {
     for(var i = 0; i < pList.length; i++){
       if(pList[i].active)
-        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity)
+        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity,pList[i].health)
     }
   }, 50)
 
