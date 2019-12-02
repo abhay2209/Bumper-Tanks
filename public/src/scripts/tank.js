@@ -113,10 +113,6 @@ class Tank{
   }
 
   fire_cannon(){
-<<<<<<< HEAD
-    var fired_bullet = new Bullet(this,BULLET_DAMAGE);
-    World.add(worldObject, [fired_bullet.body]);
-=======
     if (this.bullet_power == 1)
     {
       this.bullet_size = 10;
@@ -138,7 +134,6 @@ class Tank{
 
     World.add(worldObject, 
       [Bullet(this.turrentRing.position, this.turrentRing.angle, this.bullet_damage, this.bullet_size)]);
->>>>>>> master
   }
 
   accelerate(direction)
