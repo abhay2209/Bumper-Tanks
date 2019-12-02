@@ -15,8 +15,8 @@ class matterObj{
       options: {
         width: CANVAS_WIDTH,
         height: CANVAS_HEIGHT,
-        showVelocity: true,          //travel trails
-        showAngleIndicator: false,     //option to show direction of objects for testing purposes
+        showVelocity: false,
+        showAngleIndicator: false,
         wireframes: false,
         background: "/src/images/grassTexture.png"
       }
@@ -30,6 +30,7 @@ class matterObj{
 
     //initialize runner, this allows us to run the simulation
     this.runner = Runner.create();
+    detectCollision() //set callbacks when objects collide
   }
 
   playSimulation(){
@@ -53,13 +54,70 @@ class matterObj{
   }
 
   addTank(tank){
-    //add tank updater to list of things to be updated
-    Events.on(engineObject, "afterUpdate", function(){
-      OBJECT_CONTROLLER(tank);
-      OBJECT_MOVER(tank);
-    });
+    //setup status reciever or sender
+    if(tank.playerNum == PLAYERNUM)
+    {
+      setInterval(function(){
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity)
+      }, 50)
+      Events.on(engineObject, "afterUpdate", function(){
+        OBJECT_CONTROLLER(tank)
+        OBJECT_MOVER(tank)
+      });
+    }
+    else{
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel){
+        Body.setPosition(tank.body, pPos)
+        Body.setAngle(tank.body, pAng)
+        Body.setVelocity(tank.body, pVel)
+        Body.setAngularVelocity(tank.body, pAVel)
+      })
+    }
+
+    SOCKET.on(tank.playerNum + 'ss', function(){
+      console.log('shoot: ', tank.bullet_power, tank.bulletAmount)
+      if(tank.playerNum != PLAYERNUM)
+      {
+        tank.fire_cannon()
+      }
+      var tShot = Date.now()
+      if(tShot - tank.lastShot >= tank.reloadTime)
+      {
+        tank.fire_cannon()
+        tank.lastShot = tShot
+      }
+    })
+
+    SOCKET.on(tank.playerNum + 'sp', function(type){
+      console.log("power pick up!", type)
+      if(type == 1){
+        tank.bullet_power = 1
+        setTimeout(function(){
+          tank.bullet_power = 0
+        }, 7500)
+      }else if(type == 2){
+        tank.health += 20
+        if (tank.health > 100){
+          tank.health = 100
+        }
+      }else if(type == 3){
+        tank.maxVel = 6
+        tank.accelRate = 1
+        setTimeout(function(){
+          tank.maxVel = 2
+          tank.accelRate = 0.1
+        }, 7500)
+      }else if(type == 4){
+        tank.bulletAmount = 3
+        setTimeout(function(){
+          tank.bulletAmount = 1
+        }, 7500)
+      }
+    })
+
+    
     //add tank to matter world
-    World.add(worldObject, [tank.body]);
+    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint]);
    }
 
   addBarrier(barrier){
