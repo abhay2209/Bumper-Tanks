@@ -2,8 +2,10 @@ function Bullet(position, angle, damage, size)
 {
   var cosX = Math.cos(angle);
   var sinY = Math.sin(angle);
-  var xWind = Math.cos((-wind_direction+90)*Math.PI /180)*0.5;
-  var yWind = Math.sin((-wind_direction+90)*Math.PI / 180)*0.5;
+  var WindX = Math.cos( ((parseFloat(wind_direction)-90) * Math.PI) / 180 )
+  var WindY = Math.sin( ((parseFloat(wind_direction)-90) * Math.PI) / 180 )
+  console.log(WindX, WindY)
+
   body = Bodies.circle(position.x-cosX*TANK_WIDTH, position.y-sinY*TANK_WIDTH, size,{
     label: 'bullet',
     damage: damage,
@@ -12,7 +14,7 @@ function Bullet(position, angle, damage, size)
       fillStyle: 'yellow'
     }
   });
-  Body.setVelocity(body, { x: -cosX*8+xWind, y: -sinY*8-yWind })
+  Body.setVelocity(body, { x: -cosX*5 + WindX * 2, y: -sinY*5 + WindY * 2 })
   return body
 }
 
