@@ -9,18 +9,90 @@
     <script src="https://kit.fontawesome.com/09c537c0bd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-    $(function () {
-        var socket = io();
-        $('#chat').submit(function(e){
+
+    var PLAYERNAME = '<%=username%>'  //shares username for js files
+    var PLAYERBODY = null
+    var PLAYERNUM = -1
+    var PLAYERLIST = null
+    var SOCKET = io()                 //shares this socket with js files
+
+    SOCKET.on('connect', function(){ //once socket setup success
+
+      SOCKET.on('join success', function(pNum, pList)
+      {
+        PLAYERNUM = pNum
+        PLAYERLIST = pList
+
+        var TANK_LIST = [
+          new Tank(50, 40, 180, 2, 0.1, 2, 0, 100, green),
+          new Tank(750, 40, 0, 2, 0.1, 2, 1, 100, red),
+          new Tank(50, 560, 180, 2, 0.1, 2, 2, 100, blue),
+          new Tank(750, 560, 0, 2, 0.1, 2, 3, 100, white)
+        ];
+        PLAYERBODY = TANK_LIST[PLAYERNUM]
+
+
+        var BARRIER_LIST = [
+          new Barrier_Circle(230,150,50),
+          new Barrier_Rectangle(50,100,0,100,50),
+          new Barrier_Rectangle(400,100,90,200,60),
+          new Barrier_Rectangle(750,100,0,100,50),
+          new Barrier_Triangle(570,150,90,70),
+          new Barrier_Triangle(230,450,90,70),
+          new Barrier_Circle(570,450,50),
+          new Barrier_Rectangle(50,500,0,100,50),
+          new Barrier_Rectangle(750,500,0,100,50),
+          new Barrier_Rectangle(400,500,90,200,60),
+          new Barrier_Rectangle(150,300,0,180,50),
+          new Barrier_Rectangle(400,300,0,180,50),
+          new Barrier_Rectangle(640,300,0,180,50)
+        ];
+
+        var one = new Items(25, 300, 90, 20, 20);
+        var two = new Items(275, 300, 90, 20,20);
+        var three = new Items(520, 300, 90, 20,20);
+        var four = new Items(760, 300, 90, 20,20);
+        var ITEM_LIST = [one, two, three, four];
+
+        var matterInst = new matterObj();
+        matterInst.initializeMap(TANK_LIST, BARRIER_LIST);
+        matterInst.itemSpawnMap(ITEM_LIST);
+        matterInst.playSimulation();
+      })
+
+      //client asks server to join
+      SOCKET.emit('user join req', PLAYERNAME, SOCKET.id)
+      
+      $(function () 
+      {
+
+        $('#chat').submit(function(e)
+        {
           e.preventDefault(); // prevents page reloading
-          socket.emit('chat message', $('#chat-input').val(), '<%= username %>');
+          SOCKET.emit('chat message', $('#chat-input').val(), PLAYERNAME);
           $('#chat-input').val('');
           return false;
-        });
-      socket.on('chat message', function(msg){
-      $('#chat-display').append($('<li>').text(msg));
-      });
-    });
+        })
+
+        SOCKET.on('chat message', function(msg)
+        {
+          $('#chat-display').append($('<li>').text(msg));
+        })
+
+        SOCKET.on('update pList', function(pList)
+        {
+          console.log('update pList')
+          $('#pList').empty()
+          for(var i = 0; i < pList.length; i++)
+          {
+            console.log('adding player to list')
+            pElem = `<li><div id=p1C></div><p>${pList[i].player}</p></li>`
+            $('#pList').append(pElem)
+          }
+        })
+
+      })
+    })
     </script>
   </head>
 
@@ -36,12 +108,15 @@
         <% } else if (currentWeather.icon.search("cloud") > -1) { %>
           <i class="fas fa-cloud"></i>
           <p>Vancouver, CA<br>Cloudy</p>
-        <% } else if (currentWeather.icon.search("sun") > -1) { %>
-          <i class="fas fa-sun"></i>
+        <% } else if (currentWeather.icon.search("sun") > -1 || currentWeather.icon.search("day" > -1)) { %>
+            <i class="fas fa-sun"></i>
           <p>Vancouver, CA<br>Sunny</p>
         <% } else if (currentWeather.icon.search("fog") > -1) { %>
           <i class="fas fa-smog"></i>
           <p>Vancouver, CA<br>Foggy</p>
+        <% } else if (currentWeather.icon.search("night") > -1) { %>
+          <i class="fas fa-moon"></i>
+          <p>Vancouver, CA<br>Night</p>
         <% } else { %>
           <%= currentWeather.icon %>
         <% } %>
@@ -71,14 +146,7 @@
     <canvas id="gameScreen"> </canvas>
 
     <div id = 'playerList'>
-      <ul>
-        <li>
-          <div id=p1C></div><p>PLAYER 1</p>
-        </li>
-        <li>
-          <div id=p1C></div><p>PLAYER 1</p>
-        </li>
-      </ul>
+      <ul id = 'pList'></ul>
     </div>
 
     <div id = 'chat-container'>
@@ -96,6 +164,5 @@
      <script type = "text/javascript" src = "/src/scripts/bullet.js"></script>
      <script type = "text/javascript" src = "/src/scripts/barrier.js"></script>
      <script type = "text/javascript" src = "/src/scripts/items.js"></script>
-     <script type = "text/javascript" src = "/src/scripts/gameCanvas.js"></script>
   </body>
 </html>

@@ -1,59 +1,56 @@
 // Class to create tank objects
 class Tank{
-  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum,health)
+  constructor(xPos, yPos, direction, maxVel, accelRate, turnRate, playerNum, health, color)
   {
       this.playerNum = playerNum;
-    //Tank Traits
       this.maxVel = maxVel;
       this.accelRate = accelRate;
       this.turnRate = 0.01 * turnRate;
-    //Initial Contitions
       this.linVel = 0;
       this.angVel = 0;
+      this.angVel2 = 0;
+      this.reloadTime = 400;
+      this.lastShot = 0
       this.bullet_damage = 10;
       this.bullet_size = 5.5;
-    //Matter Object
-      //this.body = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
-      //  frictionAir: TANK_FRICTION,
+      this.bullet_power = 0;
+      this.bulletAmount = 0;
 
-      //});
       var tankHull = Bodies.rectangle(xPos, yPos, TANK_WIDTH, TANK_HEIGHT, {
         label: 'tank',
+        pNum: playerNum, 
         parent:this.body,
       
         render: {
-          fillStyle: '#005504'
+          fillStyle: color[1]
         }}),
       tankGun = Bodies.rectangle(xPos-GUN_LENGTH/2-TURRENT_RADIUS, yPos, GUN_LENGTH, 5, {
         label: 'tank',
-   
+        pNum: playerNum,
         render: {
-          fillStyle: '#7A8E7B'
+          fillStyle: '#0d0d0d'
         }}),
       tankTurrent = Bodies.circle(xPos, yPos, TURRENT_RADIUS, {
         label: 'tank',
-        parent:this.body,
-       
+        pNum: playerNum,
         render: {
-          fillStyle: '#005504',
+          fillStyle: color[0],
           strokeStyle: '#000000',
           lineWidth: 3
         }}),
       tankRightTrack = Bodies.rectangle(xPos, yPos+TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
-        parent:this.body,
-       
+        pNum: playerNum,
         render: {
-          fillStyle: '#5c5c5c',
+          fillStyle: color[0],
           strokeStyle: '#000000',
           lineWidth: 3
         }}),
       tankLeftTrack = Bodies.rectangle(xPos, yPos-TANK_HEIGHT/2, TANK_WIDTH+5, 10, {
         label: 'tank',
-        parent:this.body,
-       
+        pNum: playerNum,
         render: {
-          fillStyle: '#5c5c5c',
+          fillStyle: color[0],
           strokeStyle: '#000000',
           lineWidth: 3
         }});
@@ -72,27 +69,65 @@ class Tank{
 
       this.body = Body.create({
           health: health,
-          parts:[tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
-          //parts: [tankLeftTrack, tankRightTrack, tankHull, tankTurrent, tankGun],
-        
-          frictionAir: TANK_FRICTION,
-      
-
+          pNum: playerNum,
+          parts:[tankLeftTrack, tankRightTrack, tankHull],
+          frictionAir: TANK_FRICTION, 
+          collisionFilter: { group: -1 }
       });
      
 
-    //set initial rotation of tank
+      this.turrentRing = Body.create({
+        pNum: playerNum,
+        parts:[tankTurrent, tankGun],
+        frictionAir: TANK_FRICTION,
+        collisionFilter: { group: -1 }
+      })
+
+      this.turrentConstraint = Constraint.create({
+        bodyA: this.body,
+        bodyB: this.turrentRing,
+        length: 0
+      })
+
       Body.rotate(this.body, direction * Math.PI / 180);
+      Body.rotate(this.turrentRing, direction * Math.PI / 180)
       return this;
   }
 
-  bodyHelper(){
-    var componentList = [];
+  // tempPowerup(){
+  //   console.log("bullshit");
+  //   this.bullet_damage *= 2;
+  //   this.bulle_size *= 6;
+  //   setTimeout(regPower, 10000);
+  // }
+  regPower(){
+    this.bullet_damage = 10;
+    this.bullet_size = 5.5;
+    this.bullet_power = 0;
   }
 
   fire_cannon(){
-    var fired_bullet = new Bullet(this, this.bullet_damage, this.bullet_size);
-    World.add(worldObject, [fired_bullet.body]);
+    if (this.bullet_power == 1)
+    {
+      this.bullet_size = 20;
+      this.bullet_damage = 20;
+    }
+    else{
+      this.bullet_size = 5.5;
+      this.bullet_damage = 10;
+    }
+
+    if(this.bulletAmount == 3)
+    {
+      World.add(worldObject, 
+        [Bullet(this.turrentRing.position, this.turrentRing.angle + 0.175, this.bullet_damage, this.bullet_size)]);
+
+      World.add(worldObject, 
+        [Bullet(this.turrentRing.position, this.turrentRing.angle - 0.175, this.bullet_damage, this.bullet_size)]);
+    }
+
+    World.add(worldObject, 
+      [Bullet(this.turrentRing.position, this.turrentRing.angle, this.bullet_damage, this.bullet_size)]);
   }
 
   accelerate(direction)
@@ -128,7 +163,20 @@ class Tank{
     this.angVel = 0;
   }
 
+  turrentLeft()
+  {
+    this.angVel2 = -this.turnRate;
+  }
 
+  turrentRight()
+  {
+    this.angVel2 = this.turnRate;
+  }
+
+  stopTurrent()
+  {
+    this.angVel2 = 0;
+  }
 };
 
 try{

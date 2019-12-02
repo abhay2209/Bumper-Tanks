@@ -13,6 +13,19 @@ const app = express()
 const server = http.Server(app)
 const io = socketIO(server)
 
+class player_socket_pair{
+  constructor(player, socket_id)
+  {
+    this.player = player
+    this.socket_id = socket_id
+    this.active = 0
+    this.position = null
+    this.angle = null
+    this.velocity = null
+    this.angularVelocity = null
+  }
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -88,34 +101,96 @@ app.post("/:id", async (req, res) => {
 
   server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-  var players = {};
-  let bullet = {};
+  var pList = [];
   io.on('connection', function(socket) {
-    console.log("A user connected")
     socket.on('username', function(username) {
         socket.username = username;
         io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
     });
 
     socket.on('disconnect', function(username) {
-        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+      io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
     })
 
     socket.on('chat message', function(message, username) {
         io.emit('chat message', username + ': ' + message);
     });
 
+    //server recieves join request from client
+    socket.on('user join req', function(PLAYER, socket_id)
+    {
+      //see if player is already in match
+      var i = pList.length - 1
+      while(i != -1){
+        if(pList[i].player == PLAYER){
+          break
+        }
+        i--
+      }  
+
+      //user already in list so we update/reset it's pair and reconnect
+      if (i != -1){
+        console.log(PLAYER, ' has reconnected to the match')
+        pList[i].active = 0
+        pList[i].socket = socket_id
+        pNum = i
+        io.to(socket_id).emit('join success', pNum)
+        io.emit('update pList', pList)
+      }
+      //new connection of user
+      else if (pList.length < 4)
+      {
+        var pair = new player_socket_pair(PLAYER, socket_id)
+        pList.push(pair)
+        pNum = pList.indexOf(pair)
+        console.log(PLAYER, " join request accepted")
+        io.to(socket_id).emit('join success', pNum)
+        io.emit('update pList', pList)
+      }
+      //match is full so we must deny the join
+      else
+      {
+        console.log(PLAYER, " join request rejected (MATCH FULL)")
+        io.to(socket_id).emit('join failure')
+      }
+    })
+
+    //server recieves and updates it's state based on a client's tank
+    socket.on('tcm', function(pNum, pPos, pAng, pVel, pAVel) 
+    {
+      if(!pList[pNum]) return
+      pList[pNum].active = 1
+      pList[pNum].position = pPos
+      pList[pNum].angle = pAng
+      pList[pNum].velocity = pVel
+      pList[pNum].angularVelocity = pAVel
+    })
+
+    //server recieves a fire_cannon command from a client
+    socket.on('cs', function(pNum)
+    {
+      io.emit(pNum + 'ss')
+    })
+
+    socket.on('cp', function(type, pNum)
+    {
+      console.log('power ', type, pNum)
+      io.emit(pNum + 'sp', type)
+    })
 
   });
 
+  //send out the server's state every 50ms to all clients
   setInterval(function() {
-    io.sockets.emit('state', players, bullet);
-  }, 1000 / 60);
+    for(var i = 0; i < pList.length; i++){
+      if(pList[i].active)
+        io.emit(i + 'tsm', pList[i].position, pList[i].angle, pList[i].velocity, pList[i].angularVelocity)
+    }
+  }, 50)
 
 
   function getCurrentWeather() {
     var darkSkyStr = `https://api.darksky.net/forecast/${process.env.DARKSKY_KEY}/${process.env.VANCOUVER_LAT},${process.env.VANCOUVER_LON}`;
-    console.log(darkSkyStr);
       return new Promise(resolve => {
         request(darkSkyStr, { json:true }, (err, result, body) => {
           if(err)
@@ -124,7 +199,6 @@ app.post("/:id", async (req, res) => {
           }
           currentWeather = body.currently;
           resolve(currentWeather);
-          console.log("DarkSky response");
         });
       });
   }
@@ -146,8 +220,8 @@ app.post("/:id", async (req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           await getCurrentWeather(); //update weather
-          console.log("session:  ", req.session);
-          console.log("rendering game canvas")
+          //console.log("session:  ", req.session);
+          //console.log("rendering game canvas")
           res.render('GameCanvas', {username: req.session.username, currentWeather} );
         }else{
           var result = {'rows': result.rows };
@@ -167,7 +241,7 @@ app.post("/:id", async (req, res) => {
     var userName = req.body.username_signup;
     var password = req.body.password;
     var password_hashed = password_hash.generate(password);
-    console.log(password_hashed);
+    //console.log(password_hashed);
     //get each entry
     var insertQuerry = `insert into gamedata (email_id,first_name,last_name,username,password)
     values ('${email}','${firstName}','${lastName}','${userName}','${password_hashed}');`;
@@ -184,8 +258,22 @@ app.post("/:id", async (req, res) => {
     });
   }
 
+
+  //app.post("/:id", async (req, res) => {
+   //var id = req.params.id;
+  
   function SignOut(req, res){
-      console.log("Signing Out");
+      //console.log("Signing Out");
       req.session.loggedin = 0;
+      var i = pList.length - 1
+      while(i != -1){
+        if(pList[i].player == req.session.username){
+          pList.splice(i)
+          console.log(req.session.username, ' has disconnected from the match')
+          break
+        }
+        i--
+      }  
+      io.emit('update pList', pList)
       res.render('Home.ejs', { isError: "false" });
   }
