@@ -15,8 +15,8 @@ class matterObj{
       options: {
         width: CANVAS_WIDTH,
         height: CANVAS_HEIGHT,
-        showVelocity: true,          //travel trails
-        showAngleIndicator: false,     //option to show direction of objects for testing purposes
+        showVelocity: false,
+        showAngleIndicator: false,
         wireframes: false,
         background: "/src/images/grassTexture.png"
       }
@@ -30,6 +30,7 @@ class matterObj{
 
     //initialize runner, this allows us to run the simulation
     this.runner = Runner.create();
+    detectCollision() //set callbacks when objects collide
   }
 
   playSimulation(){
@@ -53,13 +54,68 @@ class matterObj{
   }
 
   addTank(tank){
-    //add tank updater to list of things to be updated
-    Events.on(engineObject, "afterUpdate", function(){
-      OBJECT_CONTROLLER(tank);
-      OBJECT_MOVER(tank);
-    });
+    //setup status reciever or sender
+    if(tank.playerNum == PLAYERNUM)
+    {
+      setInterval(function(){
+        SOCKET.emit('tcm', PLAYERNUM, tank.body.position, tank.body.angle, tank.body.velocity, tank.body.angularVelocity, tank.body.health, tank.turrentRing.angle)
+        //Body.scale(tank.healthBar,1,tank.body.health/100)
+        tank.tankDeath(tank.body.health)
+      }, 50)
+
+      Events.on(engineObject, "afterUpdate", function(){
+        OBJECT_CONTROLLER(tank)
+        OBJECT_MOVER(tank)
+      });
+    }
+    else{
+      SOCKET.on(tank.playerNum + 'tsm', function(pPos, pAng, pVel, pAVel,pHealth, tAng){
+        Body.setPosition(tank.body, pPos)
+        Body.setAngle(tank.body, pAng)
+        Body.setAngle(tank.turrentRing, tAng)
+        Body.setVelocity(tank.body, pVel)
+        Body.setAngularVelocity(tank.body, pAVel)
+        tank.body.health = pHealth
+        //Body.scale(this.healthBar,1,tank.health/100)
+        tank.tankDeath(pHealth)
+      })
+    }
+     
+    SOCKET.on(tank.playerNum + 'ss', function(){
+        tank.fire_cannon()
+    })
+
+    SOCKET.on(tank.playerNum + 'sp', function(type){
+      console.log("power pick up!", type)
+      if(type == 1){
+        tank.bullet_power = 1
+        setTimeout(function(){
+          tank.bullet_power = 0
+        }, 7500)
+      }else if(type == 2){
+        tank.health += 20
+        if (tank.health > 100){
+          tank.health = 100
+        }
+      }else if(type == 3){
+        tank.maxVel = 6
+        tank.accelRate = 1
+        setTimeout(function(){
+          tank.maxVel = 2
+          tank.accelRate = 0.1
+        }, 7500)
+      }else if(type == 4){
+        tank.bulletAmount = 3
+        setTimeout(function(){
+          tank.bulletAmount = 0
+        }, 7500)
+      }
+    })
+
+    
     //add tank to matter world
-    World.add(worldObject, [tank.body]);
+    World.add(worldObject, [tank.body, tank.turrentRing, tank.turrentConstraint, tank.healthBar,tank.healthConstraint]);
+  
    }
 
   addBarrier(barrier){
@@ -67,19 +123,28 @@ class matterObj{
     World.add(worldObject, [barrier.body]);
   }
 
+  spawnItems(item){
+    World.add(worldObject, [item.body]);
+  }
+
   //Initialize map from list of tanks & barriers & walls
   initializeMap(tankList, barrierList){
     //add external walls
     this.addWalls();
+     //add all barriers to map
+     for(var i = 0; i < barrierList.length; i++){
+      this.addBarrier(barrierList[i]);
+    }
     //add all tanks to map
     for(var i = 0; i < tankList.length; i++){
       this.addTank(tankList[i]);
     }
-    //add all barriers to map
-    for(var i = 0; i < barrierList.length; i++){
-      this.addBarrier(barrierList[i]);
+   
+  }
+  itemSpawnMap(itemList){
+    //add items
+    for(var i = 0; i < itemList.length; i++){
+      this.spawnItems(itemList[i]);
     }
   }
-
-
  }
